@@ -21,14 +21,14 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public boolean registe(String username, String password) {
+    public boolean registe(String account, String username, String password) {
 
         //获取userMapper对象 调用其方法
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
 
         //先确认同名用户是否存在
-//      User user  userMapper.确认用户是否存在的方法(username)
+//      User user  userMapper.确认用户是否存在的方法(account)
 
         //如果不存在 就添加到数据库
         //封装为User对象穿给持久层
