@@ -14,5 +14,5 @@ public interface UserService {
 
     //8.10 棒棒糖
 
-    boolean registe();
+    boolean registe(String username, String password);
 }
