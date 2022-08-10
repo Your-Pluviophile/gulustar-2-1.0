@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2a025d46-b1b5-44ed-b976-a13b640b0b9f" name="Changes" comment="gulustar-init" />
+    <list default="true" id="2a025d46-b1b5-44ed-b976-a13b640b0b9f" name="Changes" comment="gulustar-init">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,6 +47,10 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/java/gulu_star/src/main/resources/gulustar.mapper&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
@@ -75,6 +81,12 @@
       <updated>1659628500192</updated>
       <workItem from="1659628501518" duration="2218000" />
       <workItem from="1659634226494" duration="301000" />
+      <workItem from="1659702041207" duration="1868000" />
+      <workItem from="1659945630879" duration="87000" />
+      <workItem from="1659946751512" duration="1193000" />
+      <workItem from="1660115062481" duration="137000" />
+      <workItem from="1660115245263" duration="1054000" />
+      <workItem from="1660116731560" duration="670000" />
     </task>
     <task id="LOCAL-00001" summary="gulustar-init">
       <created>1659631498985</created>
@@ -97,7 +109,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659634282466</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="gulustar-init">
+      <created>1659702306959</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1659702306959</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
