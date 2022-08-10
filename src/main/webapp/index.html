@@ -17,6 +17,9 @@
 咕噜星
 <div id="app">
 
+    v-if 是管理员 显示10个图标 不是就显示7个这样子
+
+    this.data
 </div>
 
 <!--导入vue/axios/饿了么UI的Vue相关-->
@@ -28,18 +31,24 @@
     new Vue({
         el: "#app",
         mounted() {
-
+            this.init();
         },
         methods: {
-            // init(){
-            //     axios({
-            //         method: "",
-            //         url: "http://",
-            //         data: this
-            //     }).then(resp =>{
-            //
-            //     })
-            // },
+            //8.10 木木
+            // login(){},
+
+            //8.10 wo
+            //registe(){}
+            init(){
+                axios({
+                    method: "",
+                    url: "http://",
+                    data: this
+                }).then(resp =>{
+                    resp.后端传回来的
+                    this.data = 传回来的
+                })
+            },
         },
         data(){
 
