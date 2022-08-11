@@ -14,7 +14,6 @@ public interface UserService {
 
     //8.10 棒棒糖
 
-    boolean registe(String account,String password);
+    boolean registe(String account, String username, String password);
 
-    boolean selectByAccout(String account);
 }
