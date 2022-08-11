@@ -34,7 +34,7 @@ public interface UserMapper {
      */
     @Select("select * from user where account = #{account} and password = #{password}")
     @ResultMap("userResultMap")
-    User login(@Param("account") String account, @Param("password") String password);
+    User selectByAccAndPwd(@Param("account") String account, @Param("password") String password);
 
 
 

@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
 
-        User user = userMapper.selectByAccount(account, password);
+        User user = userMapper.selectByAccAndPwd(account, password);
         return user;
     }
 
@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
 
         //先确认同名用户是否存在
-        User isExsitsAcc = userMapper.selectByAccount(account, password);
+        User isExsitsAcc = userMapper.selectByAccount(account);
         User isExsitsnikename = userMapper.selectByUsername(username);
         if (isExsitsAcc == null){
             if (isExsitsnikename==null){
