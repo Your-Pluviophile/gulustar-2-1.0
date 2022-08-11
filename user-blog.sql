@@ -1,12 +1,12 @@
 CREATE DATABASE gulustar_DB;
-USE DATABASE gulustar_DB;
+USE gulustar_DB;
 
 
 #------------------以下为用户相关-------------------------------------
 
 # 用户表
 CREATE TABLE USER(
-	id INT PRIMARY AUTO_INCREMENT,
+	id INT PRIMARY KEY AUTO_INCREMENT,
 	username VARCHAR(10),
 	`account` VARCHAR(12),
 	`password` VARCHAR(20),
@@ -40,7 +40,7 @@ CREATE TABLE user_history(
 
 # 博客表
 CREATE TABLE blog(
-	id INT PRIMARY AUTO_INCREMENT,
+	id INT PRIMARY KEY AUTO_INCREMENT,
 	user_id INT,				#作者
 	category INT,
 	title VARCHAR(100),
@@ -55,7 +55,7 @@ CREATE TABLE blog(
 
 # 分类表
 CREATE TABLE category(
-	id INT PRIMARY,
+	id INT PRIMARY KEY,
 	`name` VARCHAR(20)
 )
 
@@ -67,10 +67,11 @@ CREATE TABLE blog_comment(
 
 # 评论表
 CREATE TABLE `comment`(
-	id INT PRIMARY AUTO_INCREMENT,
+	id INT PRIMARY KEY AUTO_INCREMENT,
 	content VARCHAR(1000),
 	user_id INT,
 	createTime TIMESTAMP
 )
 
 #-----------------------------以上博客---------------------------------------------
+

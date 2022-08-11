@@ -3,58 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <title>咕噜星</title>
-
-    <!-- 引入样式 -->
+    <!-- 引入饿了么ui样式 -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-
-    <style>
-
-    </style>
 </head>
+
 <body>
+    <div id="app">
+        <el-button @click="loginDialogVisible = true">登录</el-button>
+        <el-dialog
+                title="提示"
+                :visible.sync="loginDialogVisible"
+                width="30%"
+                center>
+            <span>需要注意的是内容是默认不居中的</span>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="centerDialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+            </span>
+        </el-dialog>
+    </div>
+</body>
 
-<!--Vue模块-->
-咕噜星
-<div id="app">
-
-    v-if 是管理员 显示10个图标 不是就显示7个这样子
-
-    this.data
-</div>
-
-<!--导入vue/axios/饿了么UI的Vue相关-->
-<script src="plugins/vue.js"></script>
+<!-- import Vue before Element -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.8"></script>
+<!--import ajax-axios -->
 <script src="plugins/axios-0.18.0.js"></script>
+<!-- import Element JavaScript -->
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-
 <script>
     new Vue({
-        el: "#app",
+        el: '#app',
         mounted() {
-            this.init();
         },
         methods: {
-            //8.10 木木
-            // login(){},
-
-            //8.10 wo
-            //registe(){}
-            init(){
+            /*
+                登录方法，post方式以JSON形式发送账号密码给控制层
+                根据返回值是否为空判断是否登录成功，如果成功就重新加载主页
+             */
+            login(){
                 axios({
-                    method: "",
-                    url: "http://",
-                    data: this
-                }).then(resp =>{
-                    resp.后端传回来的
-                    this.data = 传回来的
-                })
-            },
+                    method: "post",
+                    url: "http://localhost:8080/user/login",
+                    data: this.loginInfo
+                }).then(resp => {
+                    if (resp.data != null){
+                        this.loginDialogVisible = false;
+                        this.$message({
+                            message: '登陆成功',
+                            type: 'success'
+                        })
+                    }else {
+                        this.$message({
+                            message: '用户名或密码错误',
+                            type: 'warning'
+                        })
+                    }
+                });
+            }
         },
-        data(){
-
+        data() {
+            return{
+                loginDialogVisible: false,     //用来控制显示登录窗口
+                loginInfo:{                    //登录信息 包括账号和密码
+                    account: '',
+                    password: ''
+                }
+            }
         }
     })
 </script>
 
-</body>
 </html>
