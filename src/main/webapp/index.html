@@ -9,8 +9,8 @@
 
 <body>
     <div id="app">
-        <el-button @click="visible = true">Button</el-button>
-        <el-dialog :visible.sync="visible" title="Hello world">
+        <el-button @click="loginDialogVisible = true">登录</el-button>
+        <el-dialog :visible.sync="loginDialogVisible" title="Hello world">
             <p>Try Element</p>
         </el-dialog>
     </div>
@@ -25,9 +25,17 @@
 <script>
     new Vue({
         el: '#app',
-        data(){
+        methods: {
+            login(){
+                axios({
+                    method: "post",
+                    url: "http://localhost:8080/user/login"
+                })
+            }
+        },
+        data() {
             return{
-                visible: false
+                loginDialogVisible: false
             }
         }
     })
