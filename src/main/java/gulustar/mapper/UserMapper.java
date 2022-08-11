@@ -10,12 +10,12 @@ public interface UserMapper {
     /**
      * 查询用户是否存在
      * @param account
-     * @param password
      * @return
      */
     @Select("select * from user where account = #{account}")
     @ResultMap("userResultMap")
-    User selectByAccount(@Param("account") String account, @Param("password") String password);
+    User selectByAccount(@Param("account") String account);
+
 
 
     /**

@@ -5,6 +5,6 @@
 <mapper namespace="gulustar.mapper.UserMapper">
 
     <resultMap id="userResultMap" type="gulustar.pojo.User">
-        <result property="isAdmin" column="is_admin"/>
+        <result column="is_admin" property="isAdmin"/>
     </resultMap>
 </mapper>

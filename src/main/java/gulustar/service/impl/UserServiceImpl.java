@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService {
     public User login(String username,String password) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-        User user = userMapper.selectByAccount(username,password);
+        User user = userMapper.login(username,password);
         return user;
     }
 
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
         //如果不存在 就添加到数据库
         //封装为User对象穿给持久层
 //        userMapper.添加用户的方法
-        User isExsits = userMapper.selectByAccount(account, password);
+        User isExsits = userMapper.selectByAccount(account);
         User nikename = userMapper.selectByUsername(username);
 
         if (isExsits == null){
