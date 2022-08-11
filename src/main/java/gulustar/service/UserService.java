@@ -10,9 +10,11 @@ public interface UserService {
      * login
      * @return
      */
-    User login();
+    User login(String account,String password);
 
     //8.10 棒棒糖
 
-    boolean registe();
+    boolean registe(String account,String password);
+
+    boolean selectByAccout(String account);
 }
