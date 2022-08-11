@@ -36,6 +36,9 @@
         mounted() {
         },
         methods: {
+            init(){
+
+            },
             /*
                 登录方法，post方式以JSON形式发送账号密码给控制层
                 根据返回值是否为空判断是否登录成功，如果成功就重新加载主页
@@ -48,6 +51,7 @@
                 }).then(resp => {
                     if (resp.data != null){
                         this.loginDialogVisible = false;
+                        this.init();
                         this.$message({
                             message: '登陆成功',
                             type: 'success'

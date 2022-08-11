@@ -1,5 +1,6 @@
 package gulustar.servlets;
 
+import com.alibaba.fastjson.JSON;
 import gulustar.pojo.User;
 import gulustar.service.UserService;
 import gulustar.service.impl.UserServiceImpl;
@@ -9,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.BufferedReader;
 import java.io.IOException;
 
 @WebServlet("/user/*")
@@ -23,13 +25,18 @@ public class UserServlet extends BaseServlet {
      */
     public void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //获取账号和密码
-        String account = req.getParameter("account");
-        String password = req.getParameter("password");
-        //登录
+        BufferedReader reader = req.getReader();
+        String params = reader.readLine();
+        String[] loginInfos = JSON.parseObject(params, String[].class);
+        String account = loginInfos[0];
+        String password = loginInfos[1];
+
+        //登录业务处理
         User user = userService.login(account, password);
+
         //判断用户是否存在
         if (user != null) {
-            //存在就登录成功
+            //存在说明登录成功
             resp.getWriter().write("登录成功！");
             //将用户存到session中
             HttpSession session = req.getSession();
