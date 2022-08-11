@@ -15,10 +15,10 @@
                 :visible.sync="loginDialogVisible"
                 width="30%"
                 center>
-            <span>需要注意的是内容是默认不居中的</span>
+            <el-input v-model="accInput" placeholder="请输入账号"></el-input>
+            <el-input placeholder="请输入密码" v-model="pwdInput" show-password></el-input>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="centerDialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+                <el-button type="primary" @click="login()">登 录</el-button>
             </span>
         </el-dialog>
     </div>
@@ -63,11 +63,13 @@
         },
         data() {
             return{
-                loginDialogVisible: false,     //用来控制显示登录窗口
-                loginInfo:{                    //登录信息 包括账号和密码
+                loginDialogVisible: false,      //用来控制显示登录窗口
+                loginInfo:{                     //登录信息 包括账号和密码
                     account: '',
                     password: ''
-                }
+                },
+                accInput: '',                      //登录时：账号输入框内容
+                pwdInput: ''                       //登录时：密码输入框内容
             }
         }
     })
