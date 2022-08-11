@@ -13,6 +13,11 @@ public class User {
     private List<Integer> history;          //历史浏览记录
     private Integer status;                 //用户状态(正常/已注销)
 
+    public User() {
+        this.isAdmin = 0;
+        this.status = 1;
+    }
+
     public Integer getId() {
         return id;
     }
