@@ -47,8 +47,8 @@ public interface UserMapper {
      * @return
      */
     @Insert("insert into user values " +
-            "(#{null},#{username}, #{account},#{password},#{is_admin},#{status})")
-    void register(User user);
+            "(null, #{username}, #{account}, #{password}, #{isAdmin}, #{status})")
+    boolean addUser(User user);
 
     /**
      * 更新用户数据

@@ -23,6 +23,7 @@ public class UserServiceImpl implements UserService {
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
 
         User user = userMapper.selectByAccAndPwd(account, password);
+        sqlSession.close();
         return user;
     }
 
@@ -47,15 +48,20 @@ public class UserServiceImpl implements UserService {
             if (isExsitsNikename == null){
                 //如果不存在同名同账号用户、将user对象存到数据库
                 user.init();
-                userMapper.register(user);
-                return true;
+                boolean insertRes = userMapper.addUser(user);
+                sqlSession.commit();
+                sqlSession.close();
+
+                return insertRes;
             }
             else {
                 //如果昵称存在，则注册失败
+                sqlSession.close();
                 return false;
             }
         }else{
             //如果账户存在，则注册失败
+            sqlSession.close();
             return false;
         }
     }

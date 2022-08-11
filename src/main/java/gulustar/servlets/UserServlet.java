@@ -24,7 +24,7 @@ public class UserServlet extends BaseServlet {
     /**
      * 登录 用获取到的账号密码信息查询、返回查询结果 结果不为null说明登录成功
      */
-    public void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void login(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         //获取账号和密码
         BufferedReader reader = req.getReader();
         String params = reader.readLine();
@@ -48,9 +48,9 @@ public class UserServlet extends BaseServlet {
     }
 
     /**
-     * 注册
+     * 注册方法：把封装的user对象发给业务层处理,给前端返回布尔值结果
      */
-    public void registe(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void registe(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         //获取账号和密码
         BufferedReader reader = req.getReader();
         String params = reader.readLine();
@@ -59,7 +59,7 @@ public class UserServlet extends BaseServlet {
         //注册业务处理
         boolean registe = userService.registe(user);
         if (registe){
-            resp.getWriter().write("注册成功");
+            resp.getWriter().write("OK");
         }else {
             resp.getWriter().write("注册失败");
         }
