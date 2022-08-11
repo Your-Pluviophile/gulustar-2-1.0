@@ -7,13 +7,18 @@ public interface UserService {
     //8.10 得进
 
     /**
-     * login
+     * 登录
      * @return
      */
     User login(String account,String password);
 
     //8.10 棒棒糖
 
-    boolean registe(String account, String username, String password);
+    /**
+     * 注册
+     * @param user
+     * @return
+     */
+    boolean registe(User user);
 
 }

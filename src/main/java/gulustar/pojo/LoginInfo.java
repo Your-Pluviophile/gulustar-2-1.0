@@ -3,7 +3,7 @@ package gulustar.pojo;
 /**
  *  封装登录信息 包括账号密码
  */
-public class LoginInfos {
+public class LoginInfo {
     private String account;
     private String password;
 

@@ -89,4 +89,12 @@ public class User {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+    /**
+     *  初始化用户信息
+     */
+    public void init(){
+        this.status = 1;
+        this.isAdmin = 0;
+    }
 }
