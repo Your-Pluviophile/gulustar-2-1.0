@@ -19,6 +19,14 @@ public interface UserMapper {
 
 
     /**
+     * 查询昵称是否存在
+     * @param username
+     * @return 0:不存在 其他:昵称已存在
+     */
+    @Select("select count(*) from user where username = #{username}")
+    User selectByUsername(@Param("username") String username);
+
+    /**
      * 尝试登录
      * @param account
      * @param password
