@@ -46,19 +46,13 @@ public class UserServlet extends BaseServlet {
         //获取账号和密码
         String account = req.getParameter("account");
         String password = req.getParameter("password");
-        //先查询账号是否存在
-        boolean flag = userService.selectByAccout(account);
-        if (flag) {
-            //用户名存在
-            resp.getWriter().write("用户名已存在！");
-        } else {
-            //不存在就注册
-            boolean registe = userService.registe(account, password);
-            if (registe) {
-                resp.getWriter().write("注册成功！");
-            } else {
-                resp.getWriter().write("注册失败！");
-            }
+        String username = req.getParameter("username");
+        boolean registe = userService.registe(account, username, password);
+        if (registe){
+            //注册成功
+            resp.getWriter().write("注册成功！");
+        }else {
+            resp.getWriter().write("注册失败！");
         }
 
     }
