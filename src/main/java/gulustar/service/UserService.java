@@ -10,7 +10,7 @@ public interface UserService {
      * login
      * @return
      */
-    User login();
+    User login(String username,String password);
 
     //8.10 棒棒糖
 

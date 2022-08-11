@@ -12,8 +12,11 @@ public class UserServiceImpl implements UserService {
     SqlSessionFactory sqlSessionFactory = SqlSessionFactoryUtils.getSqlSessionFactory();
 
     @Override
-    public User login() {
-        return null;
+    public User login(String username,String password) {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        User user = userMapper.selectByAccount(username,password);
+        return user;
     }
 
     /**
