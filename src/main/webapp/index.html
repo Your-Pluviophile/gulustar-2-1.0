@@ -3,58 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>咕噜星</title>
-
-    <!-- 引入样式 -->
+    <!-- 引入饿了么ui样式 -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-
-    <style>
-
-    </style>
 </head>
+
 <body>
+    <div id="app">
+        <el-button @click="visible = true">Button</el-button>
+        <el-dialog :visible.sync="visible" title="Hello world">
+            <p>Try Element</p>
+        </el-dialog>
+    </div>
+</body>
 
-<!--Vue模块-->
-咕噜星
-<div id="app">
-
-    v-if 是管理员 显示10个图标 不是就显示7个这样子
-
-    this.data
-</div>
-
-<!--导入vue/axios/饿了么UI的Vue相关-->
-<script src="plugins/vue.js"></script>
+<!-- import Vue before Element -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.8"></script>
+<!--import ajax-axios -->
 <script src="plugins/axios-0.18.0.js"></script>
+<!-- import Element JavaScript -->
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-
 <script>
     new Vue({
-        el: "#app",
-        mounted() {
-            this.init();
-        },
-        methods: {
-            //8.10 木木
-            // login(){},
-
-            //8.10 wo
-            //registe(){}
-            init(){
-                axios({
-                    method: "",
-                    url: "http://",
-                    data: this
-                }).then(resp =>{
-                    resp.后端传回来的
-                    this.data = 传回来的
-                })
-            },
-        },
+        el: '#app',
         data(){
-
+            return{
+                visible: false
+            }
         }
     })
 </script>
 
-</body>
 </html>
