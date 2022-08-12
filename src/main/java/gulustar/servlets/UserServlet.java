@@ -13,13 +13,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/user/*")
 public class UserServlet extends BaseServlet {
 
+
     // 8.10 清风
 
     private UserService userService = new UserServiceImpl();
+
+
 
     /**
      * 登录 用获取到的账号密码信息查询、返回查询结果 结果不为null说明登录成功
@@ -45,6 +49,17 @@ public class UserServlet extends BaseServlet {
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
         }
+    }
+
+    /**
+     * 退出登录，清除session的属性
+     */
+    public void logout(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        HttpSession session = req.getSession(false);
+        User user = (User) session.getAttribute("user");
+        //清除session的属性
+        session.removeAttribute("user");
+        resp.getWriter().write("退出成功");
     }
 
     /**
