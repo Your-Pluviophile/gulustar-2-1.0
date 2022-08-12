@@ -5,29 +5,68 @@
     <title>咕噜星</title>
     <!-- 引入饿了么ui样式 -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 按顺序引入: 外链式样式表后写的生效 -->
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/index.css">
 </head>
 
 <body>
-    <div id="app">
-        <el-button @click="loginDialogVisible = true">登录</el-button>
-        <el-dialog
-                title="提示"
-                :visible.sync="loginDialogVisible"
-                width="30%"
-                center>
-            <span>需要注意的是内容是默认不居中的</span>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="centerDialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
-            </span>
-        </el-dialog>
+<div id="app">
+    <!-- 快捷导航 -->
+    <div class="shortcut">
+        <div class="wrapper">
+            <ul>
+                <li v-for="(item, i) in naviList"><a :href="item.url">{{item.name}}</a></li>
+            </ul>
+            <el-button @click="loginDialogVisible = true" class="loginButton">登录/注册</el-button>
+        </div>
     </div>
+
+    <!-- 背景图 -->
+    <div class="banner">
+
+    </div>
+
+    <!-- 登录窗口 -->
+    <el-dialog
+            title="咕噜星"
+            :visible.sync="loginDialogVisible"
+            width="30%"
+            center
+            :close-on-click-modal="false"
+            custom-class="customLoginDialog">
+        <el-button @click="registeDialogVisible = true, loginDialogVisible = false">注册</el-button>
+        <el-input v-model="loginInfo.account" placeholder="请输入账号" prefix-icon="el-icon-user"></el-input>
+        <el-input placeholder="请输入密码" v-model="loginInfo.password" show-password></el-input>
+        <span slot="footer" class="dialog-footer">
+                <el-button type="primary" @click="login()">登 录</el-button>
+            </span>
+    </el-dialog>
+
+    <!-- 注册窗口 -->
+    <el-dialog
+            title="咕噜星"
+            :visible.sync="registeDialogVisible"
+            width="30%"
+            center
+            :close-on-click-modal="false"
+            custom-class="customLoginDialog">
+        <el-button @click="loginDialogVisible = true, registeDialogVisible = false">登录</el-button>
+        <el-input v-model="registeInfo.username" placeholder="请输入昵称"></el-input>
+        <el-input v-model="registeInfo.account" placeholder="请输入账号" prefix-icon="el-icon-user"></el-input>
+        <el-input placeholder="请输入密码" v-model="registeInfo.password" show-password></el-input>
+        <span slot="footer" class="dialog-footer">
+                <el-button type="primary" @click="registe()">注 册</el-button>
+            </span>
+    </el-dialog>
+</div>
 </body>
 
 <!-- import Vue before Element -->
 <script src="https://cdn.jsdelivr.net/npm/vue@2.7.8"></script>
 <!--import ajax-axios -->
-<script src="plugins/axios-0.18.0.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <!-- import Element JavaScript -->
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script>
@@ -36,6 +75,12 @@
         mounted() {
         },
         methods: {
+            handleSelect(key, keyPath) {
+                console.log(key, keyPath);
+            },
+            init(){
+
+            },
             /*
                 登录方法，post方式以JSON形式发送账号密码给控制层
                 根据返回值是否为空判断是否登录成功，如果成功就重新加载主页
@@ -43,31 +88,71 @@
             login(){
                 axios({
                     method: "post",
-                    url: "http://localhost:8080/user/login",
+                    url: "http://localhost:8080/gulustar/user/login",
                     data: this.loginInfo
                 }).then(resp => {
                     if (resp.data != null){
                         this.loginDialogVisible = false;
+                        this.init();
                         this.$message({
                             message: '登陆成功',
                             type: 'success'
-                        })
+                        });
                     }else {
                         this.$message({
                             message: '用户名或密码错误',
                             type: 'warning'
-                        })
+                        });
+                    }
+                });
+            },
+            /*
+                注册方法：把表单的信息封装为JSON对象发给后端
+                根据返回值提示用户是否注册成功
+             */
+            registe(){
+                axios({
+                    method: "put",
+                    url: "http://localhost:8080/gulustar/user/registe",
+                    data: this.registeInfo
+                }).then(resp => {
+                    if (resp.data == "OK"){
+                        this.$message({
+                            message: '注册成功,赶快登录吧!',
+                            type: 'success'
+                        });
+                        this.loginInfo.account = this.registeInfo.account;
+                        this.loginInfo.password = this.registeInfo.password;
+                        for (let i in this.registeInfo) {
+                            this.registeInfo[i] = '';
+                        }
+                    }else {
+                        this.$message({
+                            message: '注册失败',
+                            type: 'warning'
+                        });
                     }
                 });
             }
         },
         data() {
             return{
-                loginDialogVisible: false,     //用来控制显示登录窗口
-                loginInfo:{                    //登录信息 包括账号和密码
+                loginDialogVisible: false,          //用来控制显示登录窗口
+                loginInfo: {                        //登录信息 包括账号、密码
                     account: '',
                     password: ''
-                }
+                },
+                registeDialogVisible: false,        //控制显示注册窗口
+                registeInfo: {                      //注册信息 包括账号、昵称、密码
+                    username: '',
+                    account: '',
+                    password: ''
+                },
+                naviList: [                         //菜单项目
+                    {name: '首页', url: 'aaa.com'},
+                    {name: '关注', url: 'www.baidu.com'}
+                ],
+                activeIndex2: '1',
             }
         }
     })
