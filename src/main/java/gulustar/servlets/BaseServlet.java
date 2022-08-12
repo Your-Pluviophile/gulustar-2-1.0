@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-public class BaseServlet extends HttpServlet {//zhushi
+public class BaseServlet extends HttpServlet {//注释
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String requestURI = req.getRequestURI();
@@ -19,6 +19,7 @@ public class BaseServlet extends HttpServlet {//zhushi
             Method method = cls.getMethod(methodName,HttpServletRequest.class,HttpServletResponse.class);
             method.invoke(this,req,resp);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+
             e.printStackTrace();
         }
     }
