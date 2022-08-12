@@ -4,7 +4,6 @@ import gulustar.mapper.BlogMapper;
 import gulustar.pojo.Blog;
 import gulustar.service.BolgService;
 
-import javax.jnlp.BasicService;
 import java.net.URL;
 
 import gulustar.util.SqlSessionFactoryUtils;
