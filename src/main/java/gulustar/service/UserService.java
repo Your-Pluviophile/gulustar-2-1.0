@@ -3,22 +3,15 @@ package gulustar.service;
 import gulustar.pojo.User;
 
 public interface UserService {
-
-    //8.10 得进
-
     /**
-     * 登录
+     * 登录功能
      * @return
      */
-    User login(String account,String password);
-
-    //8.10 棒棒糖
+    User login();
 
     /**
-     * 注册
-     * @param user
+     * 注册功能
      * @return
      */
-    boolean registe(User user);
-
+    boolean registe();
 }
