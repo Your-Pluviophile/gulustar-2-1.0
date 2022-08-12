@@ -4,6 +4,8 @@ import gulustar.pojo.Blog;
 import gulustar.pojo.User;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 public interface BlogMapper {
 
     /**
@@ -39,4 +41,7 @@ public interface BlogMapper {
      */
     @Delete("delete from blog where id=#{id}")
     boolean deleteBlog(Blog blog);
+
+
+    List<Blog> selectCondition(Blog blog);
 }
