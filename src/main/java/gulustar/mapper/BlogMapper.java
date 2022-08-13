@@ -47,4 +47,6 @@ public interface BlogMapper {
     @Select("select b.* from user_collection uc,  blog b where uc.blog_id = b.id  and uc.user_id = #{id};")
     @ResultMap("blogResultMap")
     List<Blog> selectCollect(Integer id);
+
+    List<Blog> selectByKeyword(@Param("keyword") String keyword);
 }

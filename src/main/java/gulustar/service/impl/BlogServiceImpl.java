@@ -42,6 +42,20 @@ public class BlogServiceImpl implements BlogService{
     }
 
     /**
+     * 根据关键词查询
+     * @param keyword
+     * @return
+     */
+    @Override
+    public List<Blog> queryByKeyword(String keyword) {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        BlogMapper mapper = sqlSession.getMapper(BlogMapper.class);
+
+        List<Blog> blogs = mapper.selectByKeyword(keyword);
+        return blogs;
+    }
+
+    /**
      * 根据用户id查询收藏的博客
      * @param id
      * @return

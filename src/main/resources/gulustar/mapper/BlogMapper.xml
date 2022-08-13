@@ -8,4 +8,15 @@
         <result column="release_date" property="releaseDate"/>
         <result column="modify_date" property="modifyDate"/>
     </resultMap>
+    
+    <select id="selectByKeyword" resultMap="blogResultMap">
+        select *
+        from blog
+        <where>
+            <bind name="bindKeyword" value="'%' + keyword + '%'"></bind>
+            title like #{bindKeyword}
+            or description like #{bindKeyword}
+            or content like #{bindKeyword}
+        </where>
+    </select>
 </mapper>

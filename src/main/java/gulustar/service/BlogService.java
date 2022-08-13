@@ -24,6 +24,13 @@ public interface BlogService {
     List<Blog> queryByCategory(String categoryIdStr);
 
     /**
+     * 根据关键词查询
+     * @param keyword
+     * @return
+     */
+    List<Blog> queryByKeyword(String keyword);
+
+    /**
      * 根据用户id查询收藏的博客
      * @param id
      */
