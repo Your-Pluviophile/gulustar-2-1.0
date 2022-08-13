@@ -1,8 +1,8 @@
 package gulustar.servlets;
 
 import com.alibaba.fastjson.JSON;
-import gulustar.pojo.Blog;
-import gulustar.pojo.User;
+import gulustar.dao.pojo.Blog;
+import gulustar.dao.pojo.User;
 import gulustar.service.BlogService;
 import gulustar.service.impl.BlogServiceImpl;
 
@@ -10,7 +10,6 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 

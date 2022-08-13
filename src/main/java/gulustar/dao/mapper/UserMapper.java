@@ -1,6 +1,6 @@
-package gulustar.mapper;
+package gulustar.dao.mapper;
 
-import gulustar.pojo.User;
+import gulustar.dao.pojo.User;
 import org.apache.ibatis.annotations.*;
 
 public interface UserMapper {

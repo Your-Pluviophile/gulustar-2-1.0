@@ -1,4 +1,4 @@
-package gulustar.pojo;
+package gulustar.dao.pojo;
 
 /**
  *  封装登录信息 包括账号密码
