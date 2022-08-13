@@ -429,10 +429,10 @@
 						<!-- 作者信息 -->
 						<div class="text">
 							<h4>
-								<a href="javascript:;">咕噜星</a>
+								<a href="javascript:;">{{user.username}}</a>
 								<div class="medal"></div>
 							</h4>
-							<p>也许，将会是最好用的博客管理系统</p>
+							<p>{{user.username}},欢迎来到咕噜星</p>
 						</div>
 
 						<!-- 功能 -->
@@ -600,6 +600,7 @@
 						data: this.loginInfo
 					}).then(resp => {
 						if (resp.data != null){
+							this.user = resp.data;
 							this.loginDialogVisible = false;
 							this.init();
 							this.$message({
@@ -645,6 +646,13 @@
 			},
 			data() {
 				return{
+					user: {								//当前用户：包括ID、昵称、账号、状态、管理员身份
+						id: 0,
+						username: '咕噜星用户',
+						account: '',
+						status: 1,
+						isAdmin: 0
+					},
 					loginDialogVisible: false,          //用来控制显示登录窗口
 					loginInfo: {                        //登录信息 包括账号、密码
 						account: '',

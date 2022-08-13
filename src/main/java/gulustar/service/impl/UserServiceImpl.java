@@ -1,19 +1,19 @@
 package gulustar.service.impl;
 
+import gulustar.mapper.BlogMapper;
 import gulustar.mapper.UserMapper;
+import gulustar.pojo.Blog;
 import gulustar.pojo.User;
 import gulustar.service.UserService;
 import gulustar.util.SqlSessionFactoryUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-
+import gulustar.pojo.History;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
     SqlSessionFactory sqlSessionFactory = SqlSessionFactoryUtils.getSqlSessionFactory();
-    SqlSession sqlSession = sqlSessionFactory.openSession();
-    UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
 
     /**
      * 登录方法：根据账号密码查询用户，并封装成对象返回
@@ -23,6 +23,9 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User login(String account, String password) {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+
         User user = userMapper.selectByAccAndPwd(account, password);
         sqlSession.close();
         return user;
@@ -34,6 +37,9 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public boolean registe(User user) {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+
         //获取用户信息
         String account = user.getAccount();
         String username = user.getUsername();
@@ -67,6 +73,9 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public List<User> selectAllFollowByAccount(User user) {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+
         //根据用户id，查询当前用户关注的人id
         List<Integer> follow_ids = userMapper.selectAllFollowsByAccount(user.getId());
         List<User> users = null;
@@ -77,20 +86,36 @@ public class UserServiceImpl implements UserService {
         sqlSession.close();
         return users;
     }
-    /*
-取消收藏
-     */
-    boolean deleteCollection(Integer userId,Integer blogId){
-        boolean b = userMapper.deleteCollection(userId, blogId);
-        return b;
+
+    @Override
+    public void addUserHistory(History history) {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+        BlogMapper blogmapper = sqlSession.getMapper(BlogMapper.class);
+        History sameHistory = blogmapper.selectSameHistory(history);
+        //如果有同样的历史记录则不写入
+        if (sameHistory!=null){
+            sqlSession.close();
+            return ;
+        }else {
+            mapper.addUserHistory(history);
+            sqlSession.close();
+        }
     }
-/*
 
- */
-boolean collectionBlog(Integer userId,Integer blogId){
-    boolean b = userMapper.collectionBlog(userId, blogId);
-    return b;
-}
 
+    /**
+     * 根据用户id查询历史记录
+     * @param id
+     * @return
+     */
+    @Override
+    public List<Blog> selectHistory(Integer id) {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+        List<Blog> blogs = mapper.selectAllHistoryByAccount(id);
+        sqlSession.close();
+        return blogs;
+    }
 }
 

@@ -11,4 +11,9 @@
     <resultMap id="followResultMap" type="gulustar.pojo.Follow">
         <result column="follow_id" property="followId"/>
     </resultMap>
+
+    <resultMap id="historyResultMap" type="gulustar.pojo.History">
+        <result column="user_id" property="userid"/>
+        <result column="blog_id" property="blogid"/>
+    </resultMap>
 </mapper>

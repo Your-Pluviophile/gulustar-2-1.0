@@ -42,9 +42,9 @@ public class BlogServlet extends BaseServlet {
      * @throws IOException
      */
     public void queryByCategory(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String categoryId = req.getParameter("categoryId");
+        String category = req.getParameter("category");
         //查询
-        List<Blog> blogs = blogService.queryByCategory(categoryId);
+        List<Blog> blogs = blogService.queryByCategory(category);
 
         //将结果转为JSON返回
         String jsonString = JSON.toJSONString(blogs);
