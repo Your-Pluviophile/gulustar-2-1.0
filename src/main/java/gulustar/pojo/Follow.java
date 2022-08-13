@@ -1,15 +1,15 @@
 package gulustar.pojo;
 
 public class Follow {
-    Integer userIdd;
+    Integer userId;
     Integer followId;
 
     public Integer getUserIdd() {
-        return userIdd;
+        return userId;
     }
 
-    public void setUserIdd(Integer userIdd) {
-        this.userIdd = userIdd;
+    public void setUserIdd(Integer userId) {
+        this.userId = userId;
     }
 
     public Integer getFollowId() {

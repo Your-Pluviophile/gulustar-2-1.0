@@ -1,7 +1,6 @@
 package gulustar.servlets;
 
 import com.alibaba.fastjson.JSON;
-import gulustar.pojo.LoginInfo;
 import gulustar.pojo.User;
 import gulustar.service.UserService;
 import gulustar.service.impl.UserServiceImpl;
@@ -30,7 +29,7 @@ public class UserServlet extends BaseServlet {
         //获取账号和密码
         BufferedReader reader = req.getReader();
         String params = reader.readLine();
-        LoginInfo loginInfos = JSON.parseObject(params, LoginInfo.class);
+        User loginInfos = JSON.parseObject(params, User.class);
         String account = loginInfos.getAccount();
         String password = loginInfos.getPassword();
 
