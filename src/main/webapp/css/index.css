@@ -1,14 +1,8 @@
-.customLoginDialog{
-    border-radius: 30px;
-    /*background-color: darkblue;*/
+.pagination{
+  display: block;
 }
 
-.loginButton{
-    float: right;
-}
-
-.banner{
-    height: 500px;
-    background-image: url(../images/logo.jpg);
-    /* background-color: black; */
+.loadList{
+  display: none;
+  margin: 30px auto !important;
 }
