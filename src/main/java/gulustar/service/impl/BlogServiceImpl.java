@@ -28,17 +28,17 @@ public class BlogServiceImpl implements BlogService{
 
     /**
      * 根据分类ID查询：返回博客对象数组
-     * @param categoryIdStr
+     * @param category
      * @return
      */
     @Override
-    public List<Blog> queryByCategory(String categoryIdStr) {
+    public List<Blog> queryByCategory(String category) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         BlogMapper mapper = sqlSession.getMapper(BlogMapper.class);
 
-        //将ID转换为数字
-        int categoryId = Integer.parseInt(categoryIdStr);
-        return mapper.selectByCategory(categoryId);
+        List<Blog> blogs = mapper.selectByCategory(category);
+        sqlSession.close();
+        return blogs;
     }
 
     /**
@@ -52,6 +52,7 @@ public class BlogServiceImpl implements BlogService{
         BlogMapper mapper = sqlSession.getMapper(BlogMapper.class);
 
         List<Blog> blogs = mapper.selectByKeyword(keyword);
+        sqlSession.close();
         return blogs;
     }
 
@@ -64,6 +65,7 @@ public class BlogServiceImpl implements BlogService{
     public List<Blog> selectCollect(Integer id) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         BlogMapper mapper = sqlSession.getMapper(BlogMapper.class);
+
         List<Blog> blogs = mapper.selectCollect(id);
         sqlSession.close();
         return blogs;

@@ -12,8 +12,6 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     SqlSessionFactory sqlSessionFactory = SqlSessionFactoryUtils.getSqlSessionFactory();
-    SqlSession sqlSession = sqlSessionFactory.openSession();
-    UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
 
     /**
      * 登录方法：根据账号密码查询用户，并封装成对象返回
@@ -23,6 +21,9 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User login(String account, String password) {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+
         User user = userMapper.selectByAccAndPwd(account, password);
         sqlSession.close();
         return user;
@@ -34,6 +35,9 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public boolean registe(User user) {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+
         //获取用户信息
         String account = user.getAccount();
         String username = user.getUsername();
@@ -67,6 +71,9 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public List<User> selectAllFollowByAccount(User user) {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+
         //根据用户id，查询当前用户关注的人id
         List<Integer> follow_ids = userMapper.selectAllFollowsByAccount(user.getId());
         List<User> users = null;

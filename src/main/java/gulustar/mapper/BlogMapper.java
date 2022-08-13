@@ -54,11 +54,11 @@ public interface BlogMapper {
 
     /**
      * 根据分类查询博客
-     * @param categoryId
+     * @param category
      * @return
      */
-    @Select("select * from blog where category = #{categoryId}")
-    List<Blog> selectByCategory(@Param("categoryId")Integer categoryId);
+    @Select("select * from blog where category = #{category}")
+    List<Blog> selectByCategory(@Param("category")String category);
 
     /**
      * 查询用户收藏的博客
