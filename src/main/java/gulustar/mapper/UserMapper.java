@@ -89,4 +89,15 @@ public interface UserMapper {
     @Select("select b.* from user_history as uh , blog b where uh.blog_id = b.id  and uh.user_id = #{id};")
     @ResultMap("historyResultMap")
     List<Blog> selectAllHistoryByAccount(@Param("id") Integer id);
+    /*
+收藏博客
+ */
+    @Insert("insert into user_collection values(#{id}, #{id})  ")
+    boolean collectionBlog(Integer userId,Integer blogId);
+    /*
+    取消收藏
+     */
+    @Delete("delete from user_collection where user_id=#{id} and blog_id= #{id}")
+    boolean deleteCollection(Integer userId,Integer blogId);
+
 }
