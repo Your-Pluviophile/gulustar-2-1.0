@@ -12,9 +12,9 @@ public interface BlogService {
     Blog[] selectAll();
 
     /**
-     * 根据条件查询
-     * @param blog
+     * 根据分类查询博客
+     * @param
      * @return
      */
-    List<Blog> selectCondition(Blog blog);
+    List<Blog> QueryByCategory(String categoryIdStr);
 }

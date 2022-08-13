@@ -42,5 +42,6 @@ public interface BlogMapper {
     @Delete("delete from blog where id=#{id}")
     boolean deleteBlog(Blog blog);
 
-    List<Blog> selectByCondition(String condition);
+    @Select("select * from blog where category = #{categoryId}}")
+    List<Blog> selectByCategory(@Param("categoryId")Integer categoryId);
 }

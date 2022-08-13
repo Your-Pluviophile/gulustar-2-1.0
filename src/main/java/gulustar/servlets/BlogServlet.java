@@ -22,22 +22,18 @@ public class BlogServlet extends BaseServlet {
     private BlogService blogService = new BlogServiceImpl();
 
     /**
-     * 根据条件查询
+     * 根据分类查询博客
      * @param req
      * @param resp
      * @throws ServletException
      * @throws IOException
      */
-    public void query(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //获取输入流
-        BufferedReader reader = req.getReader();
-        //获取查询条件
-        String condition = reader.readLine();
-        //获取查询条件转对象
-        Blog blog = JSON.parseObject(condition, Blog.class);
+    public void queryByClass(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String categoryId = req.getParameter("categoryId");
         //查询
-        List<Blog> blogs = blogService.selectCondition(blog);
-        //将结果转为JSON
+        List<Blog> blogs = blogService.QueryByCategory(categoryId);
+
+        //将结果转为JSON返回
         String jsonString = JSON.toJSONString(blogs);
         resp.setContentType("text/json;charset=utf-8");
         resp.getWriter().write(jsonString);

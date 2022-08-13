@@ -4,24 +4,4 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="gulustar.mapper.BlogMapper">
 
-
-
-    <select id="selectCondition" resultType="blog">
-        select * from blog
-    <where>
-        <if test="userId !=null">
-            and  userId = #{userId}
-        </if>
-        <if test="category !=null">
-            and category = #{category}
-        </if>
-        <if test="title !=null">
-            and title like #{title}
-        </if>
-        <if test="description !=null">
-            and description like #{description}
-        </if>
-    </where>
-    </select>
-
 </mapper>

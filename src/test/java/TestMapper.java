@@ -27,13 +27,4 @@ public class TestMapper {
         System.out.println(b);
     }
 
-    @Test
-    public void testSelectByCondition(){
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-        BlogMapper bolgMapper = sqlSession.getMapper(BlogMapper.class);
-        List<Blog> blogs = bolgMapper.selectByCondition("");
-        System.out.println(blogs);
-        sqlSession.commit();
-        sqlSession.close();
-    }
 }

@@ -25,16 +25,12 @@ public class BlogServiceImpl implements BlogService{
     }
 
     @Override
-    public List<Blog> selectCondition(Blog blog) {
+    public List<Blog> QueryByCategory(String categoryIdStr) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         BlogMapper mapper = sqlSession.getMapper(BlogMapper.class);
-        //构造模糊查询条件
-        if (blog.getDescription() != null && blog.getDescription().length() > 0) {
-            blog.setDescription("%" + blog.getDescription() + "%");
-        }
-        if (blog.getTitle()!= null && blog.getTitle().length() > 0) {
-            blog.setTitle("%" + blog.getTitle()+ "%");
-        }
-        return mapper.selectCondition(blog);
+
+        //将ID转换为数字
+        int categoryId = Integer.parseInt(categoryIdStr);
+        return mapper.selectByCategory(categoryId);
     }
 }
