@@ -1,4 +1,4 @@
-package gulustar.pojo;
+package gulustar.dao.pojo;
 
 /**
  * 分类

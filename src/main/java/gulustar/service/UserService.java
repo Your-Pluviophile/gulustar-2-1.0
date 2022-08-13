@@ -1,6 +1,8 @@
 package gulustar.service;
 
-import gulustar.pojo.User;
+import gulustar.dao.pojo.User;
+
+import java.util.List;
 
 public interface UserService {
 
@@ -20,5 +22,10 @@ public interface UserService {
      * @return
      */
     boolean registe(User user);
+
+    /**
+     * 用户关注的人
+     */
+    List<User> selectAllFollowByAccount(User user);
 
 }
