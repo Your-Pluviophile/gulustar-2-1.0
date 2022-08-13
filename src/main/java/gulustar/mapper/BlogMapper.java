@@ -39,7 +39,7 @@ public interface BlogMapper {
     删除博客
      */
     @Delete("delete from blog where id=#{id}")
-    boolean deleteBlog(Blog blog);
+    boolean deleteBlog(Integer blogId);
 
     @Select("select * from blog where category = #{categoryId}")
     List<Blog> selectByCategory(@Param("categoryId")Integer categoryId);

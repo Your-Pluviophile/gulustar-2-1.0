@@ -34,7 +34,7 @@ public class TestUserMapper {
         LinkedList<Integer> users = new LinkedList<>();
         users.add(user.getId());
         user.setFollow(users);
-        List<User> users1 = userMapper.selectAllFollowsByAccount(user.getId());
+        List<Integer> users1 = userMapper.selectAllFollowsByAccount(user.getId());
         sqlSession.commit();
         sqlSession.close();
         System.out.println(users1);

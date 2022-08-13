@@ -1,5 +1,6 @@
 package gulustar.mapper;
 
+import gulustar.pojo.Blog;
 import gulustar.pojo.User;
 import org.apache.ibatis.annotations.*;
 
@@ -68,7 +69,7 @@ public interface UserMapper {
      * @param id
      * @return
      */
-    @Select("select follow_id from user_follow where id =#{id}")
+    @Select("select follow_id from user_follow where user_id =#{id}")
     @ResultMap("followResultMap")
     List<Integer> selectAllFollowsByAccount(@Param("id") Integer id);
 
@@ -80,4 +81,14 @@ public interface UserMapper {
     @Select("select * from user where id =#{id}")
     @ResultMap("userResultMap")
     User selectById(@Param("id") Integer id);
+    /*
+    收藏博客
+     */
+    @Insert("insert into user_collection values(#{id}, #{id})  ")
+    boolean collectionBlog(Integer userId,Integer blogId);
+    /*
+    取消收藏
+     */
+    @Delete("delete from user_collection where user_id=#{id} and blog_id= #{id}")
+    boolean deleteCollection(Integer userId,Integer blogId);
 }

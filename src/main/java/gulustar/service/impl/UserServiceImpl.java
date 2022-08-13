@@ -77,5 +77,20 @@ public class UserServiceImpl implements UserService {
         sqlSession.close();
         return users;
     }
+    /*
+取消收藏
+     */
+    boolean deleteCollection(Integer userId,Integer blogId){
+        boolean b = userMapper.deleteCollection(userId, blogId);
+        return b;
+    }
+/*
+
+ */
+boolean collectionBlog(Integer userId,Integer blogId){
+    boolean b = userMapper.collectionBlog(userId, blogId);
+    return b;
+}
+
 }
 
