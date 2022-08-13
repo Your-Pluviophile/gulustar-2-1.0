@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * 博客管理
+ *  拦截并处理博客相关操作请求
  */
 @WebServlet("/blog/*")
 public class BlogServlet extends BaseServlet {
