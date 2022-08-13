@@ -17,4 +17,10 @@ public interface BlogService {
      * @return
      */
     List<Blog> QueryByCategory(String categoryIdStr);
+
+    /**
+     * 根据用户id查询收藏的博客
+     * @param id
+     */
+    List<Blog> selectCollect(Integer id);
 }

@@ -2,6 +2,7 @@ package gulustar.servlets;
 
 import com.alibaba.fastjson.JSON;
 import gulustar.pojo.Blog;
+import gulustar.pojo.User;
 import gulustar.service.BlogService;
 import gulustar.service.impl.BlogServiceImpl;
 
@@ -33,6 +34,28 @@ public class BlogServlet extends BaseServlet {
         //查询
         List<Blog> blogs = blogService.QueryByCategory(categoryId);
 
+        //将结果转为JSON返回
+        String jsonString = JSON.toJSONString(blogs);
+        resp.setContentType("text/json;charset=utf-8");
+        resp.getWriter().write(jsonString);
+    }
+
+    /**
+     * 查询根据用户id收藏的博客
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+
+    public void queryCollect(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        //获取session中用户id
+        User user = (User) req.getSession().getAttribute("user");
+        if (user == null){
+            resp.getWriter().write("请先登录！");
+            return;
+        }
+        List<Blog> blogs = blogService.selectCollect(user.getId());
         //将结果转为JSON返回
         String jsonString = JSON.toJSONString(blogs);
         resp.setContentType("text/json;charset=utf-8");

@@ -42,6 +42,10 @@ public interface BlogMapper {
     @Delete("delete from blog where id=#{id}")
     boolean deleteBlog(Blog blog);
 
-    @Select("select * from blog where category = #{categoryId}}")
+    @Select("select * from blog where category = #{categoryId}")
     List<Blog> selectByCategory(@Param("categoryId")Integer categoryId);
+
+    @Select("select b.* from user_collection uc,  blog b where uc.blog_id = b.id  and uc.user_id = #{id};")
+    @ResultMap("blogResultMap")
+    List<Blog> selectCollect(Integer id);
 }

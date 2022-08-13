@@ -33,4 +33,18 @@ public class BlogServiceImpl implements BlogService{
         int categoryId = Integer.parseInt(categoryIdStr);
         return mapper.selectByCategory(categoryId);
     }
+
+    /**
+     * 根据用户id查询收藏的博客
+     * @param id
+     * @return
+     */
+    @Override
+    public List<Blog> selectCollect(Integer id) {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        BlogMapper mapper = sqlSession.getMapper(BlogMapper.class);
+        List<Blog> blogs = mapper.selectCollect(id);
+        sqlSession.close();
+        return blogs;
+    }
 }
