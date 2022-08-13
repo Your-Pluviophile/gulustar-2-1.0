@@ -1,4 +1,4 @@
-package gulustar.dao.pojo;
+package gulustar.pojo;
 
 public class Follow {
     Integer userIdd;

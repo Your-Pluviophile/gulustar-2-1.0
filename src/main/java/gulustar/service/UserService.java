@@ -1,6 +1,6 @@
 package gulustar.service;
 
-import gulustar.dao.pojo.User;
+import gulustar.pojo.User;
 
 import java.util.List;
 
