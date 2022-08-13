@@ -11,6 +11,8 @@
 	<link rel="shortcut icon" href="favicon.ico" />
 	<!-- 引入字体图标 -->
 	<link rel="stylesheet" href="./lib/font/iconfont.css">
+	<!-- 后来引入的字体图标 -->
+	<link rel="stylesheet" href="./lib/font2/iconfont_two.css">
 	<!-- 引入页面 CSS文件 -->
 	<link rel="stylesheet" href="./css/index.css">
 	<!-- 引入页面 初始化样式 -->
@@ -21,7 +23,7 @@
 	<link rel="stylesheet" href="./css/Responsive.css">
 	<!-- 引入轮播图 -->
 	<link rel="stylesheet" href="./lib/swiper/swiper-bundle.min.css" />
-	<title>Yuexing - 不断改善，成为最佳🎉</title>
+	<title>GuluStar - 不断改善，成为最佳🎉</title>
 </head>
 
 <body>
@@ -315,12 +317,12 @@
 
 				<!-- 列表 -->
 				<ul>
-					<li>
+					<li v-for="blog in allBlog">
 						<!-- 文章缩略图 -->
 						<div class="left">
 							<a href="./article.html">
-								<img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5e7d37251bc04bf48caafe62eae2991e~tplv-k3u1fbpfcp-zoom-crop-mark:1304:1304:1304:734.awebp?"
-									alt="">
+							<!-- <a href="javascript:;" @click=""> -->
+								<img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5e7d37251bc04bf48caafe62eae2991e~tplv-k3u1fbpfcp-zoom-crop-mark:1304:1304:1304:734.awebp?" alt="">
 							</a>
 
 							<span class="tags_blue">开发记录</span>
@@ -333,29 +335,29 @@
 								<a href="./article.html">
 									<span class="tags_purple">精品</span> <span class="tags_red">置顶</span> <span
 										class="tags_yellow">推荐</span>
-									大厂裁员下，程序员如何做“副业”？
+									{{blog.title}}
 								</a>
 							</h2>
 
 							<!-- 文章摘要 -->
 							<p class="list-length">
-								最近大厂裁员不断，好多人思考要不要搞个副业抵御风险。那你知道程序员的副业怎么做吗？来和我一探究竟吧～</p>
+								{{blog.description}}
 
 							<!-- 文章信息 -->
 							<div class="meta">
 								<!-- 作者头像 -->
 								<a href="javascript:;">
 									<img src="./image/user.png" alt="">
-									<span>Admin</span>
+									<span>{{blog.author}}</span>
 								</a>
 
 								<div>
 									<!-- 文章点赞数 -->
-									<a href="javascript:;"><i class="iconfont icon-dianzan"></i>264</a>
+									<a href="javascript:;"><i class="iconfont icon-dianzan"></i>{{blog.likes}}</a>
 									<!-- 文章浏览量 -->
-									<a href="javascript:;"><i class="iconfont icon-huo"></i>39537</a>
+									<a href="javascript:;"><i class="iconfont icon-shoucang"></i>{{blog.colleted}}</a>
 									<!-- 文章发布时间 -->
-									<a href="javascript:;"><i class="iconfont icon-shijian"></i>2022-4-23 </a>
+									<a href="javascript:;"><i class="iconfont icon-shijian"></i>{{blog.releaseDate}}</a>
 								</div>
 							</div>
 						</div>
@@ -464,7 +466,7 @@
 					<div class="containerA">
 						<!-- 标题 -->
 						<div class="title">
-							<h3><i class="iconfont icon-tuya_huabanfuben"></i> 分类</h3>
+							<h3><i class="iconfont icon-tuya_huabanfuben"></i> 分类标签</h3>
 							<!-- 小圆点 -->
 							<div class="dots">
 								<ol>
@@ -574,27 +576,33 @@
 
 	</div>
 
-	<!-- 引入公共 JavaScript文件 -->
-	<script src="./js/public.js"></script>
-	<!-- 引入页面JavaScript文件 -->
-	<script src="./js/index.js"></script>
 	<!-- import Vue before Element -->
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.7.8"></script>
 	<!--import ajax-axios -->
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<!-- import Element JavaScript -->
 	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	
 	<script>
 		new Vue({
 			el: '#app',
 			mounted() {
+				this.init();
 			},
 			methods: {
-				handleSelect(key, keyPath) {
-					console.log(key, keyPath);
-				},
 				init(){
-	
+					this.getAllBlogs();
+				},
+				/*
+					获取所有博客：把结果赋值给data.allBlog
+				 */
+				getAllBlogs(){
+					axios({
+						method: "get",
+						url: "http://localhost:8080/gulustar/blog/getAllBlogs",
+					}).then(resp => {
+						this.allBlog = resp.data;
+					});
 				},
 				/*
 					登录方法，post方式以JSON形式发送账号密码给控制层
@@ -663,11 +671,35 @@
 						account: '',
 						password: ''
 					},
-					activeIndex2: '1',
+					allBlog: [							//展示在主页的所有博客对象
+						{								//包括id、标题、简介、点赞数、收藏数、发布日期、作者
+							id: 0,
+							title: 'testtitle',
+							description: 'testdes',
+							likes: 0,
+							colleted: 0,
+							releaseDate: '2022-08-14',
+							author: 'aaa'
+						},
+						{
+							id: 1,
+							title: 'test1title',
+							description: 'test1des',
+							likes: 1,
+							colleted: 1,
+							releaseDate: '2022-08-13',
+							author: 'bbb'
+						}
+					]
 				}
 			}
 		})
 	</script>
+
+	<!-- 引入公共 JavaScript文件 -->
+	<script src="./js/public.js"></script>
+	<!-- 引入页面JavaScript文件 -->
+	<script src="./js/index.js"></script>
 </body>
 
 </html>

@@ -20,6 +20,6 @@
         </environment>
     </environments>
     <mappers>
-        <package name="gulustar.dao.mapper"/>
+        <package name="gulustar.mapper"/>
     </mappers>
 </configuration>
