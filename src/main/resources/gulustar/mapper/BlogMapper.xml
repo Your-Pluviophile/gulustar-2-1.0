@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="gulustar.dao.mapper.BlogMapper">
+<mapper namespace="gulustar.mapper.BlogMapper">
     <resultMap id="blogResultMap" type="gulustar.pojo.Blog">
         <result column="user_id" property="userId"/>
         <result column="release_date" property="releaseDate"/>

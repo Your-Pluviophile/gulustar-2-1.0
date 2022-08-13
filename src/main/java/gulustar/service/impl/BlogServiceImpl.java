@@ -1,6 +1,6 @@
 package gulustar.service.impl;
 
-import gulustar.dao.mapper.BlogMapper;
+import gulustar.mapper.BlogMapper;
 import gulustar.pojo.Blog;
 import gulustar.service.BlogService;
 
@@ -16,16 +16,23 @@ import java.util.List;
  */
 public class BlogServiceImpl implements BlogService{
     SqlSessionFactory sqlSessionFactory = SqlSessionFactoryUtils.getSqlSessionFactory();
+
     @Override
-    public Blog[] selectAll() {
+    public List<Blog> getAllBlogs() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         BlogMapper mapper = sqlSession.getMapper(BlogMapper.class);
-        Blog[] blogs = mapper.selectAll();
+
+        List<Blog> blogs = mapper.selectAll();
         return blogs;
     }
 
+    /**
+     * 根据分类ID查询：返回博客对象数组
+     * @param categoryIdStr
+     * @return
+     */
     @Override
-    public List<Blog> QueryByCategory(String categoryIdStr) {
+    public List<Blog> queryByCategory(String categoryIdStr) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         BlogMapper mapper = sqlSession.getMapper(BlogMapper.class);
 

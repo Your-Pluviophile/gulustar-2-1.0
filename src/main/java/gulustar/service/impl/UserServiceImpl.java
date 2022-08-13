@@ -1,6 +1,6 @@
 package gulustar.service.impl;
 
-import gulustar.dao.mapper.UserMapper;
+import gulustar.mapper.UserMapper;
 import gulustar.pojo.User;
 import gulustar.service.UserService;
 import gulustar.util.SqlSessionFactoryUtils;

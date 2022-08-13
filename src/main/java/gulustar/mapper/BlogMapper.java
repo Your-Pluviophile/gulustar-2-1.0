@@ -1,4 +1,4 @@
-package gulustar.dao.mapper;
+package gulustar.mapper;
 
 import gulustar.pojo.Blog;
 import org.apache.ibatis.annotations.*;
@@ -16,7 +16,7 @@ public interface BlogMapper {
      */
     @Select("select * from blog")
     @ResultMap("blogResultMap")
-    Blog[] selectAll();
+    List<Blog> selectAll();
 /*
 更新博客
  */
