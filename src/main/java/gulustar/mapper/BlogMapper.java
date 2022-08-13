@@ -13,10 +13,6 @@ public interface BlogMapper {
 
     /**
      * 查询所有博客
-     * @return: gulustar.pojo.Blog[]
-     * @Author: elia
-     * @Condition: finished
-     * @date: 2022/8/11
      */
     @Select("select * from blog")
     @ResultMap("blogResultMap")
@@ -27,12 +23,12 @@ public interface BlogMapper {
      * @param blog
      */
     @Update("UPDATE blog SET " +
-            "user_id = #{user_id},category= #{category}," +
+            "user_id = #{userId},category= #{category}," +
             "title = #{title},description= #{description} ," +
-            "content= #{content},likes= #{likes}," +
-            "release_date= #{releaseDate},modify_date= now()," +
+            "content = #{content},likes= #{likes}," +
+            "release_date= #{releaseDate},modify_date = now()," +
             "collected = #{colleted},STATUS = #{status} " +
-            "where id=#{id}")
+            "where id = #{id}")
     void updateBlog(Blog blog);
 
     /**
@@ -50,7 +46,7 @@ public interface BlogMapper {
      * @param blog
      * @return
      */
-    @Delete("delete from blog where id=#{id}")
+    @Delete("delete from blog where id = #{id}")
     boolean deleteBlog(Blog blog);
 
     /**
@@ -66,7 +62,7 @@ public interface BlogMapper {
      * @param id
      * @return
      */
-    @Select("select b.* from user_collection uc,  blog b where uc.blog_id = b.id  and uc.user_id = #{id};")
+    @Select("select b.* from user_collection uc, blog b where uc.blog_id = b.id  and uc.user_id = #{id};")
     @ResultMap("blogResultMap")
     List<Blog> selectCollect(Integer id);
 
@@ -82,7 +78,7 @@ public interface BlogMapper {
      * @param history
      * @return
      */
-    @Select("select * from user_histroy where user_id =#{userid} and blog_id=#{blogid}")
-    @ResultMap("historyResultMap")
+    @Select("select * from user_history where user_id = #{userid} and blog_id= #{blogid}")
+//    @ResultMap("historyResultMap")
     History selectSameHistory(History history);
 }

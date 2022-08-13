@@ -26,7 +26,7 @@ public interface UserMapper {
      * @param username
      * @return
      */
-    @Select("select count(*) from user where username = #{username}")
+    @Select("select * from user where username = #{username}")
     User selectByUsername(@Param("username") String username);
 
     /**
@@ -64,7 +64,8 @@ public interface UserMapper {
      * @param id
      * @return
      */
-    @Select("select follow_id from user_follow where id = #{id}")
+    //select * from user where id in(select follow_id from user_follow where user_id = #{id})
+    @Select("select follow_id from user_follow where user_id = #{id}")
     @ResultMap("followResultMap")
     List<Integer> selectAllFollowsByAccount(@Param("id") Integer id);
 
@@ -77,6 +78,11 @@ public interface UserMapper {
     @ResultMap("userResultMap")
     User selectById(@Param("id") Integer id);
 
+    /**
+     * 添加用户浏览记录
+     * @param history
+     * @return
+     */
     @Insert("insert into user_history values "+
             "(#{userid},#{blogid})")
     boolean addUserHistory(History history);

@@ -4,11 +4,11 @@ public class Follow {
     Integer userId;
     Integer followId;
 
-    public Integer getUserIdd() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserIdd(Integer userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 

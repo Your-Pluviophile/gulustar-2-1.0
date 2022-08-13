@@ -10,6 +10,7 @@
 
     <resultMap id="followResultMap" type="gulustar.pojo.Follow">
         <result column="follow_id" property="followId"/>
+        <result column="user_id" property="userId"/>
     </resultMap>
 
     <resultMap id="historyResultMap" type="gulustar.pojo.History">

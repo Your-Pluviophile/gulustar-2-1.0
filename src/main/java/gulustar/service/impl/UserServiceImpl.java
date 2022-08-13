@@ -68,6 +68,7 @@ public class UserServiceImpl implements UserService {
             return false;
         }
     }
+
     /**
      * 通过用户id 查询用户关注的人
      */
@@ -87,6 +88,10 @@ public class UserServiceImpl implements UserService {
         return users;
     }
 
+    /**
+     * 记录用户浏览历史
+     * @param history
+     */
     @Override
     public void addUserHistory(History history) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -102,7 +107,6 @@ public class UserServiceImpl implements UserService {
             sqlSession.close();
         }
     }
-
 
     /**
      * 根据用户id查询历史记录

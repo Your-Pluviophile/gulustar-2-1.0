@@ -26,7 +26,6 @@ public class UserServlet extends BaseServlet {
 
     private UserService userService = new UserServiceImpl();
 
-
     /**
      * 登录 用获取到的账号密码信息查询、返回查询结果 结果不为null说明登录成功
      */
@@ -83,13 +82,21 @@ public class UserServlet extends BaseServlet {
         }
     }
 
+    /**
+     * 查询关注的人，把user传给业务层
+     * @param req
+     * @param resp
+     * @throws IOException
+     */
     public void myFollows(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         //获取当前用户信息
         BufferedReader reader = req.getReader();
         String params = reader.readLine();
         User user = JSON.parseObject(params, User.class);
+
         //调用service层，查询关注的人
         List<User> users = userService.selectAllFollowByAccount(user);
+
         //将结果转为JSON返回
         String json = JSON.toJSONString(users);
         resp.setContentType("text/json;charset=utf-8");
