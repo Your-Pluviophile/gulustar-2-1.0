@@ -1,6 +1,7 @@
 package gulustar.mapper;
 
 import gulustar.pojo.Blog;
+import gulustar.pojo.History;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -75,4 +76,13 @@ public interface BlogMapper {
      * @return
      */
     List<Blog> selectByKeyword(@Param("keyword") String keyword);
+
+    /**
+     * 查看是否有一样的浏览记录
+     * @param history
+     * @return
+     */
+    @Select("select * from user_histroy where user_id =#{userid} and blog_id=#{blogid}")
+    @ResultMap("historyResultMap")
+    History selectSameHistory(History history);
 }
