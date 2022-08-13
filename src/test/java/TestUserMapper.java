@@ -1,4 +1,6 @@
+import gulustar.mapper.BlogMapper;
 import gulustar.mapper.UserMapper;
+import gulustar.pojo.Blog;
 import gulustar.pojo.User;
 import gulustar.util.SqlSessionFactoryUtils;
 import org.apache.ibatis.session.SqlSession;
@@ -34,10 +36,19 @@ public class TestUserMapper {
         LinkedList<Integer> users = new LinkedList<>();
         users.add(user.getId());
         user.setFollow(users);
-        List<User> users1 = userMapper.selectAllFollowsByAccount(user.getId());
+//        List<User> users1 = userMapper.selectAllFollowsByAccount(user.getId());
         sqlSession.commit();
         sqlSession.close();
-        System.out.println(users1);
+//        System.out.println(users1);
+    }
+
+    @Test
+    public void testSelectByKeyword(){
+        BlogMapper mapper = sqlSession.getMapper(BlogMapper.class);
+        for (Blog test : mapper.selectByKeyword("test")) {
+            System.out.println(test.getTitle());
+        }
+
     }
 
 }
