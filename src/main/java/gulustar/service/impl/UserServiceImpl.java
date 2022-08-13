@@ -1,12 +1,14 @@
 package gulustar.service.impl;
 
+import gulustar.mapper.BlogMapper;
 import gulustar.mapper.UserMapper;
+import gulustar.pojo.Blog;
 import gulustar.pojo.User;
 import gulustar.service.UserService;
 import gulustar.util.SqlSessionFactoryUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-
+import gulustar.pojo.History;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
@@ -83,6 +85,37 @@ public class UserServiceImpl implements UserService {
         }
         sqlSession.close();
         return users;
+    }
+
+    @Override
+    public void addUserHistory(History history) {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+        BlogMapper blogmapper = sqlSession.getMapper(BlogMapper.class);
+        History sameHistory = blogmapper.selectSameHistory(history);
+        //如果有同样的历史记录则不写入
+        if (sameHistory!=null){
+            sqlSession.close();
+            return ;
+        }else {
+            mapper.addUserHistory(history);
+            sqlSession.close();
+        }
+    }
+
+
+    /**
+     * 根据用户id查询历史记录
+     * @param id
+     * @return
+     */
+    @Override
+    public List<Blog> selectHistory(Integer id) {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+        List<Blog> blogs = mapper.selectAllHistoryByAccount(id);
+        sqlSession.close();
+        return blogs;
     }
 }
 

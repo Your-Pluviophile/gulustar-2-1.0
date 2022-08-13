@@ -1,9 +1,11 @@
 package gulustar.servlets;
 
 import com.alibaba.fastjson.JSON;
+import gulustar.pojo.Blog;
 import gulustar.pojo.User;
 import gulustar.service.UserService;
 import gulustar.service.impl.UserServiceImpl;
+import gulustar.pojo.History;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -92,5 +94,39 @@ public class UserServlet extends BaseServlet {
         String json = JSON.toJSONString(users);
         resp.setContentType("text/json;charset=utf-8");
         resp.getWriter().write(json);
+    }
+
+    /**
+     * 查询所有用户历史记录
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    public void selectHistory(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //获取当前用户信息
+        BufferedReader reader = request.getReader();
+        String params = reader.readLine();
+        User user = JSON.parseObject(params, User.class);
+        //调用service层，查询历史记录
+        List<Blog> blogs = userService.selectHistory(user.getId());
+        //将结果转为JSON返回
+        String json = JSON.toJSONString(blogs);
+        response.setContentType("text/json;charset=utf-8");
+        response.getWriter().write(json);
+    }
+
+    /**
+     * 写入用户历史记录
+     * @param request
+     * @param response
+     */
+    public void addUserHistory(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //获取当前用户信息
+        BufferedReader reader = request.getReader();
+        String params = reader.readLine();
+        User user = JSON.parseObject(params, User.class);
+        Blog blog = JSON.parseObject(params, Blog.class);
+        History history = new History(user.getId(),blog.getId());
+        userService.addUserHistory(history);
     }
 }
