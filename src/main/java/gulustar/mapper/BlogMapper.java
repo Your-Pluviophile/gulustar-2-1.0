@@ -5,6 +5,9 @@ import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
+/**
+ *  博客的增删改查
+ */
 public interface BlogMapper {
 
     /**
