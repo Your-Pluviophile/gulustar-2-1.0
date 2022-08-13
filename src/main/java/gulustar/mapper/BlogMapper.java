@@ -83,6 +83,6 @@ public interface BlogMapper {
      * @return
      */
     @Select("select * from user_histroy where user_id =#{userid} and blog_id=#{blogid}")
-    @ResultMap("historyResultMap")
+//    @ResultMap("historyResultMap")
     History selectSameHistory(History history);
 }

@@ -187,7 +187,8 @@
                 nav.style.backgroundColor = '#fff';
 
                 // 修改logo
-                logo.src = './image/logo.png';
+                // logo.src = './image/logo.png';
+                logo.src = './images/03.png';
 
                 // 导航栏左侧菜单按钮
                 menu.style.color = '#333';
@@ -227,7 +228,8 @@
                             }
                         }
 
-                        logo.src = './image/logo2.png';
+                        // logo.src = './image/logo2.png';
+                        logo.src = './images/02.png';
                     } else {
                         nav.style.backgroundColor = '#fff';
                     }
@@ -235,7 +237,8 @@
             } else {
                 nav.style.backgroundColor = 'transparent';
 
-                logo.src = './image/logo2.png';
+                // logo.src = './image/logo2.png';
+                logo.src = './images/02.png';
 
                 menu.style.color = '#fff';
 
@@ -343,9 +346,11 @@
             let banner = !document.querySelector('.banner');
             if (banner) {
                 if (info.flag) {
-                    logo.src = './image/logo.png';
+                    // logo.src = './image/logo.png';
+                    logo.src = './images/03.png';
                 } else {
-                    logo.src = './image/logo2.png';
+                    // logo.src = './image/logo2.png';
+                    logo.src = './images/02.png';
                 }
             }
         }
@@ -424,12 +429,14 @@
                         }
                     }
 
-                    logo.src = './image/logo2.png';
+                    // logo.src = './image/logo2.png';
+                    logo.src = './images/02.png';
                 }
                 // 没有轮播图的页面样式 
                 else {
                     nav.style.backgroundColor = '#1d1f20';
-                    logo.src = './image/logo2.png';
+                    // logo.src = './image/logo2.png';
+                    logo.src = './images/02.png';
                     menu.style.color = '#fff';
 
                     // 批量修改
@@ -508,7 +515,8 @@
                             }
                         }
 
-                        logo.src = './image/logo.png';
+                        // logo.src = './image/logo.png';
+                        logo.src = './images/03.png';
                     } else {
                         nav.style.backgroundColor = 'transparent';
                         menu.style.color = '#fff';
@@ -521,13 +529,15 @@
                             }
                         }
 
-                        logo.src = './image/logo2.png';
+                        // logo.src = './image/logo2.png';
+                        logo.src = './images/02.png';
                     }
                 }
                 // 没有轮播图的页面样式 
                 else {
                     nav.style.backgroundColor = '#fff';
-                    logo.src = './image/logo.png';
+                    // logo.src = './image/logo.png';
+                    logo.src = './images/02.png';
                     menu.style.color = '#333';
 
                     // 批量修改
