@@ -13,6 +13,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ *  拦截并处理用户相关操作请求
+ */
 @WebServlet("/user/*")
 public class UserServlet extends BaseServlet {
 
@@ -54,6 +57,7 @@ public class UserServlet extends BaseServlet {
     public void logout(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession(false);
         User user = (User) session.getAttribute("user");
+
         //清除session的属性
         session.removeAttribute("user");
         resp.getWriter().write("退出成功");

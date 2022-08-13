@@ -268,21 +268,6 @@
 			<div class="swiper-pagination"></div>
 		</div>
 
-		<!-- 引入swiper轮播图插件 -->
-		<script src="./lib/swiper/swiper-bundle.min.js"></script>
-		<script>
-			var swiper = new Swiper(".mySwiper", {
-				pagination: {
-					el: ".swiper-pagination",
-					dynamicBullets: true
-				},
-				autoplay: {
-					delay: 5000
-				},
-				loop: true,
-			});
-		</script>
-
 		<!-- 波纹 -->
 		<div class="ripple">
 			<svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -700,6 +685,20 @@
 	<script src="./js/public.js"></script>
 	<!-- 引入页面JavaScript文件 -->
 	<script src="./js/index.js"></script>
+	<!-- 引入swiper轮播图插件 -->
+	<script src="./lib/swiper/swiper-bundle.min.js"></script>
+	<script>
+		var swiper = new Swiper(".mySwiper", {
+			pagination: {
+				el: ".swiper-pagination",
+				dynamicBullets: true
+			},
+			autoplay: {
+				delay: 5000
+			},
+			loop: true,
+		});
+	</script>
 </body>
 
 </html>

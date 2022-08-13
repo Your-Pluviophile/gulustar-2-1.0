@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * 博客管理
+ *  拦截并处理博客相关操作请求
  */
 @WebServlet("/blog/*")
 public class BlogServlet extends BaseServlet {
@@ -53,13 +53,30 @@ public class BlogServlet extends BaseServlet {
     }
 
     /**
+     * 根据关键词查询：获取用户输入，业务层处理后返回符合条件的博客集合
+     * @param req
+     * @param resp
+     * @throws IOException
+     */
+    public void queryByKeyword(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String queryKeyword = req.getParameter("queryKeyword");
+        //查询
+        List<Blog> blogs = blogService.queryByKeyword(queryKeyword);
+
+        //将结果转为JSON返回
+        String jsonString = JSON.toJSONString(blogs);
+        resp.setContentType("text/json;charset=utf-8");
+        resp.getWriter().write(jsonString);
+    }
+
+    /**
      * 查询根据用户id收藏的博客
      * @param req
      * @param resp
      * @throws ServletException
      * @throws IOException
      */
-    public void queryCollect(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+    public void queryCollectByUserId(HttpServletRequest req, HttpServletResponse resp) throws IOException{
         //获取session中用户id
         User user = (User) req.getSession().getAttribute("user");
         if (user == null){
