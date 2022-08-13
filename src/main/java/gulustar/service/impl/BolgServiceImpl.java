@@ -1,10 +1,8 @@
 package gulustar.service.impl;
 
-import gulustar.mapper.BlogMapper;
-import gulustar.pojo.Blog;
+import gulustar.dao.mapper.BlogMapper;
+import gulustar.dao.pojo.Blog;
 import gulustar.service.BolgService;
-
-import java.net.URL;
 
 import gulustar.util.SqlSessionFactoryUtils;
 import org.apache.ibatis.session.SqlSession;

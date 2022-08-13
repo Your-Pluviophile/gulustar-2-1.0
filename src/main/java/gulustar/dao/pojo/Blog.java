@@ -1,4 +1,4 @@
-package gulustar.pojo;
+package gulustar.dao.pojo;
 
 import java.sql.Date;
 import java.util.List;

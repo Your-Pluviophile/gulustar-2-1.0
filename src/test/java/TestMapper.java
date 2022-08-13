@@ -1,5 +1,5 @@
-import gulustar.mapper.UserMapper;
-import gulustar.pojo.User;
+import gulustar.dao.mapper.UserMapper;
+import gulustar.dao.pojo.User;
 import gulustar.util.SqlSessionFactoryUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;

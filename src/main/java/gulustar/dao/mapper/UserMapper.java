@@ -1,4 +1,4 @@
-package gulustar.mapper;
+package gulustar.dao.mapper;
 
 public class UserMapper {
 }

@@ -1,6 +1,6 @@
 package gulustar.service;
 
-import gulustar.pojo.User;
+import gulustar.dao.pojo.User;
 
 public interface UserService {
     /**

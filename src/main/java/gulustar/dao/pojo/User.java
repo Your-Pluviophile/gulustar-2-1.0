@@ -1,4 +1,4 @@
-package gulustar.pojo;
+package gulustar.dao.pojo;
 
 import java.util.List;
 
@@ -13,14 +13,12 @@ public class User {
     private List<Integer> history;          //历史浏览记录
     private Integer status;                 //用户状态(正常/已注销)
 
-<<<<<<< HEAD
     public User() {
         this.isAdmin = 0;
         this.status = 1;
     }
 
-=======
->>>>>>> github/master
+
     public Integer getId() {
         return id;
     }
@@ -92,15 +90,12 @@ public class User {
     public void setStatus(Integer status) {
         this.status = status;
     }
-<<<<<<< HEAD
 
     /**
-     *  初始化用户信息
+     * 初始化用户信息
      */
-    public void init(){
+    public void init() {
         this.status = 1;
         this.isAdmin = 0;
     }
-=======
->>>>>>> github/master
 }

@@ -1,6 +1,6 @@
 package gulustar.service;
 
-import gulustar.pojo.Blog;
+import gulustar.dao.pojo.Blog;
 
 /**
  * @author spp
