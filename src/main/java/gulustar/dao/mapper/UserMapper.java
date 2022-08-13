@@ -1,7 +1,9 @@
-package gulustar.mapper;
+package gulustar.dao.mapper;
 
-import gulustar.pojo.User;
+import gulustar.dao.pojo.User;
 import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 public interface UserMapper {
 
@@ -61,5 +63,21 @@ public interface UserMapper {
             "where account=#{account}")
     void updateByAccount(User user);
 
+    /**
+     * 根据当前用户id查询关注的人id
+     * @param id
+     * @return
+     */
+    @Select("select follow_id from user_follow where id =#{id}")
+    @ResultMap("followResultMap")
+    List<Integer> selectAllFollowsByAccount(@Param("id") Integer id);
 
+    /**
+     * 根据ID查询用户信息
+     * @param id
+     * @return
+     */
+    @Select("select * from user where id =#{id}")
+    @ResultMap("userResultMap")
+    User selectById(@Param("id") Integer id);
 }

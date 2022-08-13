@@ -1,8 +1,8 @@
 package gulustar.servlets;
 
 import com.alibaba.fastjson.JSON;
-import gulustar.pojo.LoginInfo;
-import gulustar.pojo.User;
+import gulustar.dao.pojo.LoginInfo;
+import gulustar.dao.pojo.User;
 import gulustar.service.UserService;
 import gulustar.service.impl.UserServiceImpl;
 
@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/user/*")
 public class UserServlet extends BaseServlet {
@@ -20,7 +21,6 @@ public class UserServlet extends BaseServlet {
     // 8.10 清风
 
     private UserService userService = new UserServiceImpl();
-
 
 
     /**
@@ -43,7 +43,7 @@ public class UserServlet extends BaseServlet {
         resp.getWriter().write(jsonString);
 
         //如果用户存在,将用户存到session中,避免重复登录
-        if (user != null){
+        if (user != null) {
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
         }
@@ -71,10 +71,23 @@ public class UserServlet extends BaseServlet {
 
         //注册业务处理
         boolean registe = userService.registe(user);
-        if (registe){
+        if (registe) {
             resp.getWriter().write("OK");
-        }else {
+        } else {
             resp.getWriter().write("注册失败");
         }
+    }
+
+    public void myFollows(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        //获取当前用户信息
+        BufferedReader reader = req.getReader();
+        String params = reader.readLine();
+        User user = JSON.parseObject(params, User.class);
+        //调用service层，查询关注的人
+        List<User> users = userService.selectAllFollowByAccount(user);
+        //将结果转为JSON返回
+        String json = JSON.toJSONString(users);
+        resp.setContentType("text/json;charset=utf-8");
+        resp.getWriter().write(json);
     }
 }

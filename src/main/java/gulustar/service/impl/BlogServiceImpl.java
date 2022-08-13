@@ -1,7 +1,7 @@
 package gulustar.service.impl;
 
-import gulustar.mapper.BlogMapper;
-import gulustar.pojo.Blog;
+import gulustar.dao.mapper.BlogMapper;
+import gulustar.dao.pojo.Blog;
 import gulustar.service.BlogService;
 
 import gulustar.util.SqlSessionFactoryUtils;
