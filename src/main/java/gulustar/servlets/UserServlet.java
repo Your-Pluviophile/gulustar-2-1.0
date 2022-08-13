@@ -1,8 +1,8 @@
 package gulustar.servlets;
 
 import com.alibaba.fastjson.JSON;
-import gulustar.dao.pojo.LoginInfo;
-import gulustar.dao.pojo.User;
+import gulustar.pojo.LoginInfo;
+import gulustar.pojo.User;
 import gulustar.service.UserService;
 import gulustar.service.impl.UserServiceImpl;
 

@@ -1,7 +1,7 @@
 package gulustar.service.impl;
 
 import gulustar.dao.mapper.UserMapper;
-import gulustar.dao.pojo.User;
+import gulustar.pojo.User;
 import gulustar.service.UserService;
 import gulustar.util.SqlSessionFactoryUtils;
 import org.apache.ibatis.session.SqlSession;
