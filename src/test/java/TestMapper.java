@@ -1,9 +1,13 @@
+import gulustar.mapper.BlogMapper;
 import gulustar.mapper.UserMapper;
+import gulustar.pojo.Blog;
 import gulustar.pojo.User;
 import gulustar.util.SqlSessionFactoryUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
+import java.util.List;
 
 public class TestMapper {
 
@@ -21,5 +25,15 @@ public class TestMapper {
         sqlSession.commit();
         sqlSession.close();
         System.out.println(b);
+    }
+
+    @Test
+    public void testSelectByCondition(){
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        BlogMapper bolgMapper = sqlSession.getMapper(BlogMapper.class);
+        List<Blog> blogs = bolgMapper.selectByCondition("");
+        System.out.println(blogs);
+        sqlSession.commit();
+        sqlSession.close();
     }
 }
