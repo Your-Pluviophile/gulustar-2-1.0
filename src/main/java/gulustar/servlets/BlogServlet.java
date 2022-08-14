@@ -25,6 +25,23 @@ public class BlogServlet extends BaseServlet {
     private BlogService blogService = new BlogServiceImpl();
 
     /**
+     * 获取文章的评论
+     */
+    public void getContendAndCommentList(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+        //获取查询条件
+        String blogId = req.getParameter("blogId");
+        Integer id = Integer.valueOf(blogId);
+
+        //业务层处理 获取博客对象 包含了评论
+        Blog blog = blogService.getOneBlog(id);
+
+        //将结果转为JSON返回
+        String json = JSON.toJSONString(blog);
+        resp.setContentType("text/json;charset=utf-8");
+        resp.getWriter().write(json);
+    }
+
+    /**
      * 根据查询条件和页数获取博客集合
      * @param req
      * @param resp

@@ -1,7 +1,7 @@
 package gulustar.mapper;
 
 import gulustar.pojo.Blog;
-import gulustar.pojo.BlogPageBean;
+import gulustar.pojo.Comment;
 import gulustar.pojo.Conditions;
 import gulustar.pojo.History;
 import org.apache.ibatis.annotations.*;
@@ -12,6 +12,31 @@ import java.util.List;
  *  博客的增删改查
  */
 public interface BlogMapper {
+
+    /**
+     * 查询所有符合id的评论
+     * @param ids
+     * @return
+     */
+    List<Comment> selectCommentsByIds(@Param("ids") List<Integer> ids);
+
+    /**
+     * 根据ID查询对应博客的评论ID集合
+     * @param id
+     * @return
+     */
+    @Select("select comment_id from blog_comment where blog_id = #{id}")
+    List<Integer> selectCommentIdList(Integer id);
+
+    /**
+     * 根据ID查询博客
+     *
+     * @return
+     */
+    @Select("select * from blog where id = #{id}")
+    @ResultMap("blogResultMap")
+    Blog selectOneBlog(Integer id);
+
     /**
      * 根据页数(查第多少条到多少条)、分类、关键词查询博客
      * @return
@@ -20,6 +45,11 @@ public interface BlogMapper {
                                           @Param("start") Integer start,
                                           @Param("size") Integer size);
 
+    /**
+     * 根据条件查询总条数
+     * @param conditions
+     * @return
+     */
     Integer selectCountByCondition(@Param("conditions") Conditions conditions);
 
     /**
@@ -93,7 +123,7 @@ public interface BlogMapper {
      * @param history
      * @return
      */
-    @Select("select * from user_histroy where user_id =#{userid} and blog_id=#{blogid}")
+    @Select("select * from user_history where user_id =#{userid} and blog_id= #{blogid}")
 //    @ResultMap("historyResultMap")
     History selectSameHistory(History history);
 }

@@ -306,8 +306,7 @@
 					<li v-for="blog in blogs">
 						<!-- 文章缩略图 -->
 						<div class="left">
-							<a href="./article.html">
-							<!-- <a href="javascript:;" @click=""> -->
+							<a href="javascript:;" @click="openBlog(blog.id)">
 								<img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5e7d37251bc04bf48caafe62eae2991e~tplv-k3u1fbpfcp-zoom-crop-mark:1304:1304:1304:734.awebp?" alt="">
 							</a>
 
@@ -318,7 +317,7 @@
 						<div class="right">
 							<!-- 文章标题 -->
 							<h2>
-								<a href="./article.html">
+								<a href="javascript:;" @click="openBlog(blog.id)">
 									<span class="tags_purple">精品</span> <span class="tags_red">置顶</span> <span
 										class="tags_yellow">推荐</span>
 									{{blog.title}}
@@ -567,6 +566,14 @@
 					this.getBlogsByPageAndCondition();
 				},
 				/*
+					打开指定博客：把博客ID传给下个页面
+				 */
+				openBlog(id){
+					sessionStorage.setItem('currBlogId', id);
+					// window.location.href='/gulustar/src/main/webapp/article.html';
+					window.location.href='/gulustar/article.html';
+				},
+				/*
 					根据分类查询: 根据分类查询，回到第一页开始显示
 				 */
 				getBlogsByCategory(category){
@@ -696,7 +703,7 @@
 					},
 					blogs: [							//展示在主页的所有博客对象
 						{								//包括id、标题、简介、点赞数、收藏数、发布日期、作者
-							id: 0,
+							id: 5,
 							title: 'testtitle',
 							description: 'testdes',
 							likes: 0,

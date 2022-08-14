@@ -3,6 +3,7 @@ package gulustar.service.impl;
 import gulustar.mapper.BlogMapper;
 import gulustar.pojo.Blog;
 import gulustar.pojo.BlogPageBean;
+import gulustar.pojo.Comment;
 import gulustar.pojo.Conditions;
 import gulustar.service.BlogService;
 
@@ -18,6 +19,26 @@ import java.util.List;
  */
 public class BlogServiceImpl implements BlogService{
     SqlSessionFactory sqlSessionFactory = SqlSessionFactoryUtils.getSqlSessionFactory();
+
+    /**
+     * 获取指定ID博客
+     * @param id
+     * @return
+     */
+    @Override
+    public Blog getOneBlog(Integer id) {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        BlogMapper mapper = sqlSession.getMapper(BlogMapper.class);
+
+        //查询博客内容和评论集合,把评论集合封装到博客对象里
+        Blog blog = mapper.selectOneBlog(id);
+        List<Integer> commentIds = mapper.selectCommentIdList(id);
+        List<Comment> comments = mapper.selectCommentsByIds(commentIds);
+        blog.setComment(comments);
+
+        sqlSession.close();
+        return blog;
+    }
 
     /**
      * 根据条件查询博客
@@ -45,6 +66,7 @@ public class BlogServiceImpl implements BlogService{
         pageBean.setBlogs(blogs);
         pageBean.setTotal(totalPage);
 
+        sqlSession.close();
         return pageBean;
     }
 

@@ -13,6 +13,12 @@ import java.util.List;
 public interface BlogService {
 
     /**
+     * 获取指定ID博客
+     * @return
+     */
+    Blog getOneBlog(Integer id);
+
+    /**
      * 根据条件查询博客
      * @return
      */

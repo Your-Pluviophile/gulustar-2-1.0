@@ -15,7 +15,7 @@ public class Blog {
     String content;         //内容 存html的地址
     Integer likes;          //这篇博客的点赞数
     Integer collected;      //收藏的人数
-    List<String> comment;   //博客的评论
+    List<Comment> comment;  //博客的评论
     Integer status;         //状态(是否已被删除)
     Date releaseDate;       //发布时间
     Date modifyDate;        //修改时间
@@ -84,11 +84,11 @@ public class Blog {
         this.collected = collected;
     }
 
-    public List<String> getComment() {
+    public List<Comment> getComment() {
         return comment;
     }
 
-    public void setComment(List<String> comment) {
+    public void setComment(List<Comment> comment) {
         this.comment = comment;
     }
 

@@ -3,11 +3,26 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="gulustar.mapper.BlogMapper">
+
     <resultMap id="blogResultMap" type="gulustar.pojo.Blog">
         <result column="user_id" property="userId"/>
         <result column="release_date" property="releaseDate"/>
         <result column="modify_date" property="modifyDate"/>
     </resultMap>
+
+    <resultMap id="commentResultMap" type="gulustar.pojo.Comment">
+        <result column="user_id" property="userId"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <select id="selectCommentsByIds" resultMap="commentResultMap">
+        select *
+        from comment
+        where id in 
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
 
     <select id="selectCountByCondition" resultType="java.lang.Integer">
         select count(*)
