@@ -1,5 +1,5 @@
 # 咕噜星
-![logo](src/main/webapp/images/02.png)
+![logo](src/main/webapp/images/03.png)
 
 ## 介绍
 咕噜星主页-博客系统
