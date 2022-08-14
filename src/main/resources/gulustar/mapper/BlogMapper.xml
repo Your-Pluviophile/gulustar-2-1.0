@@ -9,6 +9,22 @@
         <result column="modify_date" property="modifyDate"/>
     </resultMap>
 
+    <select id="selectCountByCondition" resultType="java.lang.Integer">
+        select count(*)
+        from blog
+        <where>
+            <if test="conditions.keyword != null and conditions.keyword != ''">
+                <bind name="bindKeyword" value="'%' + conditions.keyword + '%'"></bind>
+                (title like #{bindKeyword}
+                or description like #{bindKeyword}
+                or content like #{bindKeyword})
+            </if>
+            <if test="conditions.category != null and conditions.category != ''">
+                and category = #{conditions.category}
+            </if>
+        </where>
+    </select>
+
     <select id="selectByPageAndCondition" resultMap="blogResultMap">
         select *
         from blog

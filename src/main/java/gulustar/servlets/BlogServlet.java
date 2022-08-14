@@ -32,6 +32,7 @@ public class BlogServlet extends BaseServlet {
      */
     public void getBlogsByPageAndCondition(HttpServletRequest req, HttpServletResponse resp) throws IOException{
         //获取查询条件
+        req.setCharacterEncoding("utf-8");
         BufferedReader reader = req.getReader();
         String params = reader.readLine();
         Conditions conditions = JSON.parseObject(params, Conditions.class);

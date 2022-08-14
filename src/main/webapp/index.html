@@ -463,20 +463,9 @@
 
 						<!-- 标签 -->
 						<div class="containerA_Tags">
-							<a href="javascript:;">HTML</a>
-							<a href="javascript:;">CSS</a>
-							<a href="javascript:;">Vue</a>
-							<a href="javascript:;">jQuery</a>
-							<a href="javascript:;">Vue</a>
-							<a href="javascript:;">React</a>
-							<a href="javascript:;">Angular</a>
-							<a href="javascript:;">less</a>
-							<a href="javascript:;">Node.js</a>
-							<a href="javascript:;">Bootstrap</a>
-							<a href="javascript:;">Element</a>
-							<a href="javascript:;">scss</a>
-							<a href="javascript:;">uni-app</a>
-							<a href="javascript:;">Foundation</a>
+							<a href="javascript:;"
+							   v-for="item in categories"
+							   @click="getBlogsByCategory(item)">{{item}}</a>
 						</div>
 					</div>
 				</div>
@@ -575,6 +564,16 @@
 			},
 			methods: {
 				init(){
+					this.getBlogsByPageAndCondition();
+				},
+				/*
+					根据分类查询: 根据分类查询，回到第一页开始显示
+				 */
+				getBlogsByCategory(category){
+					this.conditions.category = category;
+					this.conditions.currentPage = 1;
+					this.conditions.category.setf
+
 					this.getBlogsByPageAndCondition();
 				},
 				/*
@@ -721,7 +720,8 @@
 						total: 8,
 						currentPage: 1,
 						size: 7
-					}
+					},
+					categories: ['分类1', '分类2'],		//分类标签
 				}
 			}
 		})

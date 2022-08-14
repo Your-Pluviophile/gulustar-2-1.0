@@ -36,7 +36,7 @@ public class BlogServiceImpl implements BlogService{
         //获取符合条件博客集合
         List<Blog> blogs = mapper.selectByPageAndCondition(conditions, start, size);
         //计算总页数
-        Integer count = mapper.selectCount();
+        Integer count = mapper.selectCountByCondition(conditions);
         Integer totalPage = count / size;
         totalPage = (totalPage * size < count)? totalPage + 1: totalPage;
 

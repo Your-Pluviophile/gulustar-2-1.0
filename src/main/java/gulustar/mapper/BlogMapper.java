@@ -20,8 +20,7 @@ public interface BlogMapper {
                                           @Param("start") Integer start,
                                           @Param("size") Integer size);
 
-    @Select("select count(*) from blog")
-    Integer selectCount();
+    Integer selectCountByCondition(@Param("conditions") Conditions conditions);
 
     /**
      * 查询所有博客
