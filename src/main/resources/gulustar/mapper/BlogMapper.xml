@@ -8,6 +8,23 @@
         <result column="release_date" property="releaseDate"/>
         <result column="modify_date" property="modifyDate"/>
     </resultMap>
+
+    <select id="selectByPageAndCondition" resultMap="blogResultMap">
+        select *
+        from blog
+        <where>
+            <if test="Conditions.keyword != null and Conditions.keyword != ''">
+                <bind name="bindKeyword" value="'%' + Conditions.keyword + '%'"></bind>
+                (title like #{bindKeyword}
+                or description like #{bindKeyword}
+                or content like #{bindKeyword})
+            </if>
+            <if test="Conditions.category != null and Conditions.category != ''">
+                and category = #{Conditions.category}
+            </if>
+        </where>
+        limit #{start},#{size};
+    </select>
     
     <select id="selectByKeyword" resultMap="blogResultMap">
         select *

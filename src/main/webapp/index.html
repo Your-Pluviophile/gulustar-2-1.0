@@ -303,7 +303,7 @@
 
 				<!-- 列表 -->
 				<ul>
-					<li v-for="blog in allBlog">
+					<li v-for="blog in blogs">
 						<!-- 文章缩略图 -->
 						<div class="left">
 							<a href="./article.html">
@@ -396,15 +396,13 @@
 
 				<!-- 分页 -->
 				<div class="pagination">
-					<a href="javascript:;">‹‹</a>
-					<a href="javascript:;">‹</a>
-					<a href="javascript:;" class="paginationAction">1</a>
-					<a href="javascript:;">2</a>
-					<a href="javascript:;">3</a>
-					<a href="javascript:;">4</a>
-					<a href="javascript:;">5</a>
-					<a href="javascript:;">6</a>
-					<a href="javascript:;">››</a>
+					<a href="javascript:;" @click="prevPage()">‹</a>
+					<a href="javascript:;"
+					   v-for="i of conditions.total"
+					   :class="i == conditions.currentPage? 'paginationAction':''"
+					   @click="goToPage(i)"
+					>{{i}}</a>
+					<a href="javascript:;" @click="nextPage()">›</a>
 				</div>
 
 				<!-- 加载列表 -->
@@ -577,17 +575,49 @@
 			},
 			methods: {
 				init(){
-					this.getAllBlogs();
+					this.getBlogsByPageAndCondition();
 				},
 				/*
-					获取所有博客：把结果赋值给data.allBlog
+					前往指定页数
+				 */
+				goToPage(i){
+					this.conditions.currentPage = i;
+					this.getBlogsByPageAndCondition();
+				},
+				/*
+					上一页
+				 */
+				prevPage(){
+
+				},
+				/*
+					下一页
+				 */
+				nextPage(){
+
+				},
+				/*
+					获取指定页数博客集合: 发送当前页数和尺寸给后端，取得博客集合和总页数数据
+				 */
+				getBlogsByPageAndCondition(){
+					axios({
+						method: "post",
+						url: "http://localhost:8080/gulustar/blog/getBlogsByPageAndCondition",
+						data: this.conditions
+					}).then(resp => {
+						this.blogs = resp.data.blogs;
+						this.conditions.total = resp.data.total;
+					});
+				},
+				/*
+					获取所有博客：把结果赋值给data.blogs
 				 */
 				getAllBlogs(){
 					axios({
 						method: "get",
 						url: "http://localhost:8080/gulustar/blog/getAllBlogs",
 					}).then(resp => {
-						this.allBlog = resp.data;
+						this.blogs = resp.data;
 					});
 				},
 				/*
@@ -665,7 +695,7 @@
 						account: '',
 						password: ''
 					},
-					allBlog: [							//展示在主页的所有博客对象
+					blogs: [							//展示在主页的所有博客对象
 						{								//包括id、标题、简介、点赞数、收藏数、发布日期、作者
 							id: 0,
 							title: 'testtitle',
@@ -684,7 +714,14 @@
 							releaseDate: '2022-08-13',
 							author: 'bbb'
 						}
-					]
+					],
+					conditions: {						//查询条件： 关键词、分类、总页数、页数、条数
+						keyword: '',
+						category: '',
+						total: 8,
+						currentPage: 1,
+						size: 7
+					}
 				}
 			}
 		})

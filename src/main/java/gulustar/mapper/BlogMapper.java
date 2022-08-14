@@ -1,6 +1,8 @@
 package gulustar.mapper;
 
 import gulustar.pojo.Blog;
+import gulustar.pojo.BlogPageBean;
+import gulustar.pojo.Conditions;
 import gulustar.pojo.History;
 import org.apache.ibatis.annotations.*;
 
@@ -10,6 +12,16 @@ import java.util.List;
  *  博客的增删改查
  */
 public interface BlogMapper {
+    /**
+     * 根据页数(查第多少条到多少条)、分类、关键词查询博客
+     * @return
+     */
+    List<Blog> selectByPageAndCondition(@Param("Conditions") Conditions conditions,
+                                          @Param("start") Integer start,
+                                          @Param("size") Integer size);
+
+    @Select("select count(*) from blog")
+    Integer selectCount();
 
     /**
      * 查询所有博客

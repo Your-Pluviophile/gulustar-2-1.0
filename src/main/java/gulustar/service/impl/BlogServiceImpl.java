@@ -2,6 +2,8 @@ package gulustar.service.impl;
 
 import gulustar.mapper.BlogMapper;
 import gulustar.pojo.Blog;
+import gulustar.pojo.BlogPageBean;
+import gulustar.pojo.Conditions;
 import gulustar.service.BlogService;
 
 import gulustar.util.SqlSessionFactoryUtils;
@@ -16,6 +18,35 @@ import java.util.List;
  */
 public class BlogServiceImpl implements BlogService{
     SqlSessionFactory sqlSessionFactory = SqlSessionFactoryUtils.getSqlSessionFactory();
+
+    /**
+     * 根据条件查询博客
+     * @return
+     */
+    @Override
+    public BlogPageBean getBlogsByPageAndCondition(Conditions conditions) {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        BlogMapper mapper = sqlSession.getMapper(BlogMapper.class);
+
+        //计算limit的开始位置
+        Integer currentPage = conditions.getCurrentPage();
+        Integer size = conditions.getSize();
+        int start = (currentPage - 1) * size;
+
+        //获取符合条件博客集合
+        List<Blog> blogs = mapper.selectByPageAndCondition(conditions, start, size);
+        //计算总页数
+        Integer count = mapper.selectCount();
+        Integer totalPage = count / size;
+        totalPage = (totalPage * size < count)? totalPage + 1: totalPage;
+
+        //封装为pageBean对象
+        BlogPageBean pageBean = new BlogPageBean();
+        pageBean.setBlogs(blogs);
+        pageBean.setTotal(totalPage);
+
+        return pageBean;
+    }
 
     @Override
     public List<Blog> getAllBlogs() {

@@ -1,6 +1,8 @@
 package gulustar.service;
 
 import gulustar.pojo.Blog;
+import gulustar.pojo.BlogPageBean;
+import gulustar.pojo.Conditions;
 
 import java.util.List;
 
@@ -9,6 +11,12 @@ import java.util.List;
  * @create 2022-08-12 16:12
  */
 public interface BlogService {
+
+    /**
+     * 根据条件查询博客
+     * @return
+     */
+    BlogPageBean getBlogsByPageAndCondition(Conditions conditions);
 
     /**
      * 获取所有博客
