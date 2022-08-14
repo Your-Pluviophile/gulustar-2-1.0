@@ -21,6 +21,29 @@ public class BlogServiceImpl implements BlogService{
     SqlSessionFactory sqlSessionFactory = SqlSessionFactoryUtils.getSqlSessionFactory();
 
     /**
+     * 添加一条评论 对象里包含博客，用户ID 和 评论内容
+     * @param comment
+     * @return
+     */
+    @Override
+    public boolean addComment(Comment comment) {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        BlogMapper blogMapper = sqlSession.getMapper(BlogMapper.class);
+
+        //添加评论到评论表
+        boolean addComment = blogMapper.addComment(comment);
+        //获取自增值 = 新增博客的ID
+        Integer commentId = blogMapper.selectLastInsertId();
+        //添加2个ID到blog_comment表，建立对应关系
+        Integer blogId = comment.getBlogId();
+        boolean addCommentRelation = blogMapper.addCommentRelation(blogId, commentId);
+
+        sqlSession.commit();
+        sqlSession.close();
+        return addComment && addCommentRelation;
+    }
+
+    /**
      * 获取指定ID博客 包含博客内容和评论
      * @param id
      * @return

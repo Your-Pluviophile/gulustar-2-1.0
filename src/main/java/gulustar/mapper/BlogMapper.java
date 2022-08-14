@@ -14,6 +14,28 @@ import java.util.List;
 public interface BlogMapper {
 
     /**
+     * 获取上次插入数据的行的ID auto_increment
+     * @return
+     */
+    @Select("SELECT LAST_INSERT_ID()")
+    Integer selectLastInsertId();
+
+    /**
+     * 添加一条记录到博客-评论对应关系表
+     * @return
+     */
+    @Insert("insert into blog_comment values(#{blogId}, #{commentId})")
+    boolean addCommentRelation(@Param("blogId") Integer blogId, @Param("commentId") Integer commentId);
+
+    /**
+     * 添加一条记录到评论表
+     * @param comment
+     * @return
+     */
+    @Insert("insert into comment values(null, #{content}, #{userId}, now())")
+    boolean addComment(Comment comment);
+
+    /**
      * 查询所有符合id的评论
      * @param ids
      * @return

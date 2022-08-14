@@ -15,13 +15,14 @@
     </resultMap>
 
     <select id="selectCommentsByIds" resultMap="commentResultMap">
-        select c.content,c.create_time,u.username
-        from comment c,user u
-        where c.id in
+        SELECT c.content,c.create_time,u.username
+        FROM comment c,user u
+        WHERE c.id IN
         <foreach item="id" collection="ids" open="(" separator="," close=")">
             #{id}
         </foreach>
-        and u.id = c.user_id;
+        AND u.id = c.user_id
+        ORDER BY create_time DESC;
     </select>
 
     <select id="selectCountByCondition" resultType="java.lang.Integer">

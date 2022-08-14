@@ -1,10 +1,7 @@
 package gulustar.servlets;
 
 import com.alibaba.fastjson.JSON;
-import gulustar.pojo.Blog;
-import gulustar.pojo.BlogPageBean;
-import gulustar.pojo.Conditions;
-import gulustar.pojo.User;
+import gulustar.pojo.*;
 import gulustar.service.BlogService;
 import gulustar.service.impl.BlogServiceImpl;
 
@@ -23,6 +20,30 @@ import java.util.List;
 public class BlogServlet extends BaseServlet {
 
     private BlogService blogService = new BlogServiceImpl();
+
+    /**
+     * 添加一条评论
+     * @param req
+     * @param resp
+     * @throws IOException
+     */
+    public void addComment(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+        //获取封装了评论内容和博客ID 用户ID的JSON 转为comment对象
+        req.setCharacterEncoding("utf-8");
+        BufferedReader reader = req.getReader();
+        String params = reader.readLine();
+        Comment comment = JSON.parseObject(params, Comment.class);
+
+        //业务层处理 添加记录
+        boolean addComment = blogService.addComment(comment);
+
+        //返回结果
+        if (addComment){
+            resp.getWriter().write("OK");
+        }else {
+            resp.getWriter().write("寄了");
+        }
+    }
 
     /**
      * 获取文章的评论

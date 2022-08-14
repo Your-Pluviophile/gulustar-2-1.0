@@ -69,6 +69,7 @@ public class UserServlet extends BaseServlet {
      */
     public void registe(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         //获取账号和密码
+        req.setCharacterEncoding("utf-8");
         BufferedReader reader = req.getReader();
         String params = reader.readLine();
         User user = JSON.parseObject(params, User.class);

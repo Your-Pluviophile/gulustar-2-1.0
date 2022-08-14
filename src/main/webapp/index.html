@@ -570,6 +570,7 @@
 				 */
 				openBlog(id){
 					sessionStorage.setItem('currBlogId', id);
+					sessionStorage.setItem('currUserId', this.user.id);
 					// window.location.href='/gulustar/src/main/webapp/article.html';
 					window.location.href='/gulustar/article.html';
 				},

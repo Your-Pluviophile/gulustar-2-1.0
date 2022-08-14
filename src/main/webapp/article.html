@@ -5,6 +5,8 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- 引入饿了么ui样式 -->
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 	<!-- 引入icon页面图标 -->
 	<link rel="shortcut icon" href="favicon.ico" />
 	<!-- 引入字体图标 -->
@@ -302,7 +304,7 @@
 
 						<!-- 评论区 -->
 						<div class="comment_box">
-							<textarea name="comment_box" placeholder="来发一针见血的评论吧!"></textarea>
+							<textarea v-model="newComment.content" name="comment_box" placeholder="来发一针见血的评论吧!"></textarea>
 						</div>
 
 						<!-- 评论者信息 -->
@@ -311,7 +313,7 @@
 							<input type="text" placeholder="QQ号可获取头像和昵称">
 							<input type="text" placeholder="昵称*" disabled>
 							<input type="text" placeholder="昵称*" disabled>
-							<a href="javascript:;">提交评论</a>
+							<a href="javascript:;" @click="addComment()">提交评论</a>
 						</div>
 
 						<!-- 华丽的分割线 -->
@@ -437,6 +439,8 @@
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.7.8"></script>
 	<!--import ajax-axios -->
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<!-- import Element JavaScript -->
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
 	<script>
 		new Vue({
 			el: '#app',
@@ -445,10 +449,40 @@
 			 */
 			mounted() {
 				this.blog.id = parseInt(sessionStorage.getItem('currBlogId'));
-				this.getCommentList();
+				this.user.id = parseInt(sessionStorage.getItem('currUserId'));
+				this.getContentAndCommentList();
 			},
 			methods: {
-				getCommentList(){
+				/*
+					把评论绑定博客ID和用户ID发送给后端 进行添加到数据库操作
+				 */
+				addComment(){
+					this.newComment.blogId = this.blog.id;
+					this.newComment.userId = this.user.id;
+					axios({
+						method: "put",
+						url: "http://localhost:8080/gulustar/blog/addComment",
+						data: this.newComment
+					}).then(resp => {
+						if (resp.data == 'OK'){
+							this.getContentAndCommentList();
+							this.newComment.content = '';
+							this.$message({
+								message: '发表评论成功',
+								type: 'success'
+							});
+						}else {
+							this.$message({
+								message: '系统异常,发送评论失败',
+								type: 'warning'
+							});
+						}
+					});
+				},
+				/*
+					获取博客内容和评论 发送当前博客ID给后端查询用 取得博客对象 包含内容和评论集合
+				 */
+				getContentAndCommentList(){
 					axios({
 						method: "get",
 						url: "http://localhost:8080/gulustar/blog/getContendAndCommentList?blogId=" + this.blog.id,
@@ -473,6 +507,14 @@
 					blog: {									//博客内容: id，内容
 						id: 1,
 						content: 'hello world'
+					},
+					user: {									//当前用户
+						id: 0
+					},
+					newComment: {							//添加新评论用：包含内容，博客ID，用户ID
+						content: '',
+						blogId: 0,
+						userId: 0
 					}
 				}
 			}

@@ -2,6 +2,7 @@ package gulustar.service;
 
 import gulustar.pojo.Blog;
 import gulustar.pojo.BlogPageBean;
+import gulustar.pojo.Comment;
 import gulustar.pojo.Conditions;
 
 import java.util.List;
@@ -11,6 +12,12 @@ import java.util.List;
  * @create 2022-08-12 16:12
  */
 public interface BlogService {
+
+    /**
+     * 用户发表一条评论
+     * @return
+     */
+    boolean addComment(Comment comment);
 
     /**
      * 获取指定ID博客
