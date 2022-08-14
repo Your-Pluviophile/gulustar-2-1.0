@@ -21,19 +21,19 @@ public class BlogServiceImpl implements BlogService{
     SqlSessionFactory sqlSessionFactory = SqlSessionFactoryUtils.getSqlSessionFactory();
 
     /**
-     * 获取指定ID博客
+     * 获取指定ID博客 包含博客内容和评论
      * @param id
      * @return
      */
     @Override
     public Blog getOneBlog(Integer id) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        BlogMapper mapper = sqlSession.getMapper(BlogMapper.class);
+        BlogMapper blogMapper = sqlSession.getMapper(BlogMapper.class);
 
         //查询博客内容和评论集合,把评论集合封装到博客对象里
-        Blog blog = mapper.selectOneBlog(id);
-        List<Integer> commentIds = mapper.selectCommentIdList(id);
-        List<Comment> comments = mapper.selectCommentsByIds(commentIds);
+        Blog blog = blogMapper.selectOneBlog(id);
+        List<Integer> commentIds = blogMapper.selectCommentIdList(id);
+        List<Comment> comments = blogMapper.selectCommentsByIds(commentIds);
         blog.setComment(comments);
 
         sqlSession.close();

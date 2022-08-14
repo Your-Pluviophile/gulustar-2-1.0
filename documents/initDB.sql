@@ -70,7 +70,7 @@ CREATE TABLE `comment`(
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	content VARCHAR(1000),
 	user_id INT,
-	createTime TIMESTAMP
+	create_time TIMESTAMP
 )
 
 #-----------------------------以上博客---------------------------------------------

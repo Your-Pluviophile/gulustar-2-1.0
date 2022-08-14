@@ -11,17 +11,17 @@
     </resultMap>
 
     <resultMap id="commentResultMap" type="gulustar.pojo.Comment">
-        <result column="user_id" property="userId"/>
         <result column="create_time" property="createTime"/>
     </resultMap>
 
     <select id="selectCommentsByIds" resultMap="commentResultMap">
-        select *
-        from comment
-        where id in 
+        select c.content,c.create_time,u.username
+        from comment c,user u
+        where c.id in
         <foreach item="id" collection="ids" open="(" separator="," close=")">
             #{id}
         </foreach>
+        and u.id = c.user_id;
     </select>
 
     <select id="selectCountByCondition" resultType="java.lang.Integer">
