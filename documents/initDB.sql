@@ -1,6 +1,14 @@
 CREATE DATABASE gulustar_DB;
 USE gulustar_DB;
 
+drop table if exists user;
+drop table if exists user_collection;
+drop table if exists user_follow;
+drop table if exists user_history;
+drop table if exists blog;
+drop table if exists category;
+drop table if exists blog_comment;
+drop table if exists comment;
 
 #------------------以下为用户相关-------------------------------------
 

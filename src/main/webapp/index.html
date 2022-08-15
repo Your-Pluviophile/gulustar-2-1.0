@@ -414,13 +414,13 @@
 			<!-- 功能模块 -->
 			<div class="function">
 				<div class="sticky">
-					<!-- 作者详情 -->
+					<!-- 用户详情 -->
 					<div class="author">
 						<!-- 背景图片 -->
 						<div class="author-bg">
 							<!-- 头像 -->
 							<div class="avatar">
-								<img src="./image/user.png" alt="">
+								<img src="./image/user1.png" alt="">
 							</div>
 						</div>
 
@@ -436,12 +436,20 @@
 						<!-- 功能 -->
 						<div class="fun">
 							<!-- 登录 -->
-							<div class="login"><a href="javascript:;" @click="loginDialogVisible=true">登录</a></div>
+							<div class="login" v-if="user.id == 0"><a href="javascript:;" @click="loginDialogVisible=true">登录</a></div>
 
 							<span></span>
 
 							<!-- 注册 -->
-							<div class="register"><a href="javascript:;" @click="registeDialogVisible=true">注册</a></div>
+							<div class="register" v-if="user.id == 0"><a href="javascript:;" @click="registeDialogVisible=true">注册</a></div>
+
+							<!-- 更换 -->
+							<div class="login" v-if="user.id > 0"><a href="javascript:;" @click="loginDialogVisible=true">切换用户</a></div>
+
+							<span></span>
+
+							<!-- 注销 -->
+							<div class="register" v-if="user.id > 0"><a href="javascript:;" @click="registeDialogVisible=true">退出登录</a></div>
 						</div>
 					</div>
 					
