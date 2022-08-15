@@ -42,14 +42,14 @@
 
 				<!-- logo -->
 				<li class="item1">
-					<a href="./index.html">
+					<a href="./">
 <!--						<img src="./image/logo2.png" alt="" id="logo">-->
 						<img src="./images/02.png" alt="" id="logo">
 					</a>
 				</li>
 
 				<li class="item1">
-					<a href="./index.html">
+					<a href="./">
 						<i class="iconfont icon-shouye"></i>小组介绍
 					</a>
 				</li>
@@ -60,49 +60,49 @@
 					</a>
 				</li>
 
+<!--				<li class="item1">-->
+<!--					<a href="./index.html">-->
+<!--						<i class="iconfont icon-yuandaima"></i>关注的人-->
+<!--					</a>-->
+
+<!--					&lt;!&ndash; 二级导航 &ndash;&gt;	-->
+<!--					<ul class="two" style="display: none;">-->
+<!--						<li>-->
+<!--							<a href="javascript:;">HTML5</a>-->
+<!--						</li>-->
+
+<!--						<li>-->
+<!--							<a href="javascript:;">CSS3</a>-->
+<!--						</li>-->
+
+<!--						<li>-->
+<!--							<a href="javascript:;">JavaScript</a>-->
+<!--						</li>-->
+<!--					</ul>-->
+<!--				</li>-->
+
 				<li class="item1">
-					<a href="./index.html">
-						<i class="iconfont icon-yuandaima"></i>关注的人
-					</a>
-
-					<!-- 二级导航 -->	
-					<ul class="two" style="display: none;">
-						<li>
-							<a href="javascript:;">HTML5</a>
-						</li>
-
-						<li>
-							<a href="javascript:;">CSS3</a>
-						</li>
-
-						<li>
-							<a href="javascript:;">JavaScript</a>
-						</li>
-					</ul>
-				</li>
-
-				<li class="item1">
-					<a href="./index.html">
+					<a href="javascript:;" @click="getHistory()">
 						<i class="iconfont icon-zuzhijiagou1"></i>阅览历史
 					</a>
 
 					<!-- 二级导航 -->
-					<ul class="two" style="display: none;">
-						<li>
-							<a href="javascript:;">Vue</a>
-						</li>
+<!--					<ul class="two" style="display: none;">-->
+<!--						<li>-->
+<!--							<a href="javascript:;">Vue</a>-->
+<!--						</li>-->
 
-						<li>
-							<a href="javascript:;">React</a>
-						</li>
+<!--						<li>-->
+<!--							<a href="javascript:;">React</a>-->
+<!--						</li>-->
 
-						<li>
-							<a href="javascript:;">Angular</a>
-						</li>
-					</ul>
+<!--						<li>-->
+<!--							<a href="javascript:;">Angular</a>-->
+<!--						</li>-->
+<!--					</ul>-->
 				</li>
 
-				<li class="item1">
+				<li class="item1" v-if="user.isAdmin == 1">
 					<a href="javascript:;">
 						<i class="iconfont icon-zhuti1"></i>管理系统
 					</a>
@@ -435,12 +435,12 @@
 
 						<!-- 功能 -->
 						<div class="fun">
-							<!-- 发布文章 -->
+							<!-- 登录 -->
 							<div class="login"><a href="javascript:;" @click="loginDialogVisible=true">登录</a></div>
 
 							<span></span>
 
-							<!-- 登录后台 -->
+							<!-- 注册 -->
 							<div class="register"><a href="javascript:;" @click="registeDialogVisible=true">注册</a></div>
 						</div>
 					</div>
@@ -500,11 +500,11 @@
 
 	<!-- 侧边工具栏 -->
 	<div class="tool">
-		<div class="item">
-			<a href="javascript:;">
-				<i class="iconfont icon-zhuti_yifu_o"></i>
-			</a>
-		</div>
+<!--		<div class="item">-->
+<!--			<a href="javascript:;">-->
+<!--				<i class="iconfont icon-zhuti_yifu_o"></i>-->
+<!--			</a>-->
+<!--		</div>-->
 
 		<div class="item">
 			<a href="javascript:;" id="returnTop">
@@ -565,13 +565,28 @@
 				init(){
 					this.getBlogsByPageAndCondition();
 				},
+				getHistory(){
+					this.conditions.currentPage = 1;
+					sessionStorage.removeItem("collect");
+					sessionStorage.setItem("history", "true");
+
+					axios({
+						method: "get",
+						url: "http://localhost:8080/gulustar/user/getUserHistory?userId=" + this.user.id +
+								"&currentPage=" + this.conditions.currentPage + "&size=" + this.conditions.size +
+								"&keyword=" + this.conditions.keyword + "&category=" + this.conditions.category,
+					}).then(resp => {
+						this.blogs = resp.data.blogs;
+						this.conditions.total = resp.data.total;
+					});
+				},
 				/*
 					获取收藏的博客: 页数改为第一页,发送用户ID去后端查询
 				 */
 				getCollections(){
 					this.conditions.currentPage = 1;
-					this.isCollectionPage = true;
-					sessionStorage.setItem("collect", this.isCollectionPage);
+					sessionStorage.removeItem("history");
+					sessionStorage.setItem("collect", "true");
 
 					axios({
 						method: "get",
@@ -599,8 +614,12 @@
 					this.conditions.category = category;
 					this.conditions.currentPage = 1;
 
-					if (this.isCollectionPage){
+					if (sessionStorage.getItem("collect") == "true"){
 						this.getCollections();
+						return;
+					}
+					if (sessionStorage.getItem("history") == "true"){
+						this.getHistory();
 						return;
 					}
 
@@ -633,6 +652,10 @@
 				getBlogsByPageAndCondition(){
 					if (sessionStorage.getItem("collect") == 'true'){
 						this.getCollections();
+						return;
+					}
+					if (sessionStorage.getItem("history") == "true"){
+						this.getHistory();
 						return;
 					}
 
@@ -759,7 +782,6 @@
 						size: 7
 					},
 					categories: ['分类1', '分类2'],		//分类标签
-					isCollectionPage: false,			//当前是否在我的收藏
 				}
 			}
 		})

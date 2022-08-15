@@ -1,8 +1,6 @@
 package gulustar.service;
 
-import gulustar.pojo.Blog;
-import gulustar.pojo.User;
-import gulustar.pojo.History;
+import gulustar.pojo.*;
 
 import java.util.List;
 
@@ -34,9 +32,9 @@ public interface UserService {
 
     /**
      * 用户获取历史信息
-     * @param id
+     * @param
      * @return
      */
-    public List<Blog> selectHistory(Integer id);
+    BlogPageBean selectHistory(Integer userId, Conditions conditions);
 
 }

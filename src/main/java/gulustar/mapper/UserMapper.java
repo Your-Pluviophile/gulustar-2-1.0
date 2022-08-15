@@ -1,6 +1,7 @@
 package gulustar.mapper;
 
 import gulustar.pojo.Blog;
+import gulustar.pojo.Conditions;
 import gulustar.pojo.History;
 import gulustar.pojo.User;
 import org.apache.ibatis.annotations.*;
@@ -89,12 +90,17 @@ public interface UserMapper {
 
     /**
      * 根据当前用户id所有历史记录
-     * @param id
+     * @param
      * @return
      */
-    @Select("select b.* from user_history as uh , blog b where uh.blog_id = b.id  and uh.user_id = #{id};")
-    @ResultMap("historyResultMap")
-    List<Blog> selectAllHistoryByAccount(@Param("id") Integer id);
+    List<Blog> selectAllHistoryByAccount(@Param("userId") Integer userId, @Param("conditions")Conditions conditions);
+
+    /**
+     * 获取历史记录总数
+     * @return
+     */
+    Integer selectHistoryCount(@Param("userId") Integer userId, @Param("conditions")Conditions conditions);
+
     /*
 收藏博客
  */

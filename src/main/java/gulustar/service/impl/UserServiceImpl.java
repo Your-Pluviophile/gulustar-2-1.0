@@ -2,13 +2,12 @@ package gulustar.service.impl;
 
 import gulustar.mapper.BlogMapper;
 import gulustar.mapper.UserMapper;
-import gulustar.pojo.Blog;
-import gulustar.pojo.User;
+import gulustar.pojo.*;
 import gulustar.service.UserService;
 import gulustar.util.SqlSessionFactoryUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import gulustar.pojo.History;
+
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
@@ -110,16 +109,34 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 根据用户id查询历史记录
-     * @param id
+     * @param
      * @return
      */
     @Override
-    public List<Blog> selectHistory(Integer id) {
+    public BlogPageBean selectHistory(Integer userId, Conditions conditions) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
-        List<Blog> blogs = mapper.selectAllHistoryByAccount(id);
+
+        //设置数据库limit的开始位置
+        Integer size = conditions.getSize();
+        Integer currentPage = conditions.getCurrentPage();
+        currentPage = (currentPage - 1) * size;
+        conditions.setCurrentPage(currentPage);
+
+        //查询数据库
+        List<Blog> blogs = mapper.selectAllHistoryByAccount(userId, conditions);
+        //计算页数
+        Integer count = mapper.selectHistoryCount(userId, conditions);
+        Integer totalPage = count / size;
+        totalPage = (totalPage * size < count)? totalPage + 1: totalPage;
+
+        //封装为pageBean对象
+        BlogPageBean pageBean = new BlogPageBean();
+        pageBean.setBlogs(blogs);
+        pageBean.setTotal(totalPage);
+
         sqlSession.close();
-        return blogs;
+        return pageBean;
     }
     /*
 取消收藏

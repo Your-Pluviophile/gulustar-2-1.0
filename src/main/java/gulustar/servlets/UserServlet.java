@@ -1,11 +1,9 @@
 package gulustar.servlets;
 
 import com.alibaba.fastjson.JSON;
-import gulustar.pojo.Blog;
-import gulustar.pojo.User;
+import gulustar.pojo.*;
 import gulustar.service.UserService;
 import gulustar.service.impl.UserServiceImpl;
-import gulustar.pojo.History;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -103,21 +101,36 @@ public class UserServlet extends BaseServlet {
 
     /**
      * 查询所有用户历史记录
-     * @param request
-     * @param response
+     * @param req
+     * @param resp
      * @throws IOException
      */
-    public void selectHistory(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        //获取当前用户信息
-        BufferedReader reader = request.getReader();
-        String params = reader.readLine();
-        User user = JSON.parseObject(params, User.class);
+    public void getUserHistory(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        //获取session中用户id
+        User user = (User) req.getSession().getAttribute("user");
+        if (user == null){
+            resp.getWriter().write("请先登录！");
+            return;
+        }
+        //获取请求参数 页数
+        int currentPage = Integer.parseInt(req.getParameter("currentPage"));
+        int size = Integer.parseInt(req.getParameter("size"));
+        String keyword = req.getParameter("keyword");
+        String category = req.getParameter("category");
+        //封装为对象
+        Conditions conditions = new Conditions();
+        conditions.setCurrentPage(currentPage);
+        conditions.setSize(size);
+        conditions.setKeyword(keyword);
+        conditions.setCategory(category);
+
         //调用service层，查询历史记录
-        List<Blog> blogs = userService.selectHistory(user.getId());
+        BlogPageBean pageBean = userService.selectHistory(user.getId(), conditions);
+
         //将结果转为JSON返回
-        String json = JSON.toJSONString(blogs);
-        response.setContentType("text/json;charset=utf-8");
-        response.getWriter().write(json);
+        String json = JSON.toJSONString(pageBean);
+        resp.setContentType("text/json;charset=utf-8");
+        resp.getWriter().write(json);
     }
 
     /**

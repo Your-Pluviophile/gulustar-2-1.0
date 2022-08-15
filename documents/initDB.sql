@@ -18,7 +18,7 @@ CREATE TABLE USER(
 CREATE TABLE user_collection(
 	user_id INT,
 	blog_id INT,
-	collect_time timestamp;
+	collect_time TIMESTAMP;
 );
 
 #用户关注
@@ -30,7 +30,8 @@ CREATE TABLE user_follow(
 #历史浏览记录
 CREATE TABLE user_history(
 	user_id INT,
-	blog_id INT
+	blog_id INT,
+    browse_time TIMESTAMP
 )
 
 #------------------以上为用户相关-------------------------------------
