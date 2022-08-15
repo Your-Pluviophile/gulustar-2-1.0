@@ -87,6 +87,8 @@ public class UserServiceImpl implements UserService {
         return users;
     }
 
+
+    //-------------------------------------得进-------------------------------------
     /**
      * 记录用户浏览历史
      * @param history
@@ -98,6 +100,7 @@ public class UserServiceImpl implements UserService {
         BlogMapper blogmapper = sqlSession.getMapper(BlogMapper.class);
         History sameHistory = blogmapper.selectSameHistory(history);
         //如果有同样的历史记录则不写入
+        //则更新时间
         if (sameHistory!=null){
             sqlSession.close();
             return ;
@@ -106,6 +109,8 @@ public class UserServiceImpl implements UserService {
             sqlSession.close();
         }
     }
+    //-------------------------------------得进-------------------------------------
+
 
     /**
      * 根据用户id查询历史记录
@@ -138,17 +143,25 @@ public class UserServiceImpl implements UserService {
         sqlSession.close();
         return pageBean;
     }
-    /*
-取消收藏
- */
+
+    /**
+     * 取消收藏
+     * @param userId
+     * @param blogId
+     * @return
+     */
     boolean deleteCollection(Integer userId,Integer blogId){
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         boolean b = userMapper.deleteCollection(userId, blogId);
         return b;
     }
-    /*
-收藏
+
+    /**
+     * 收藏
+     * @param userId
+     * @param blogId
+     * @return
      */
     boolean collectionBlog(Integer userId,Integer blogId){
         SqlSession sqlSession = sqlSessionFactory.openSession();

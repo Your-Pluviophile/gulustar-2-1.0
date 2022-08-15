@@ -21,6 +21,9 @@ public class UserServlet extends BaseServlet {
 
     private UserService userService = new UserServiceImpl();
 
+    //添加收藏  --------------------------悠悠球-------------------------
+    //业务层方法叫 collectionBlog
+
     /**
      * 登录 用获取到的账号密码信息查询、返回查询结果 结果不为null说明登录成功
      */
