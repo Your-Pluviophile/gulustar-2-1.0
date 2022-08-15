@@ -134,16 +134,33 @@ public class BlogServiceImpl implements BlogService{
 
     /**
      * 根据用户id查询收藏的博客
-     * @param id
+     * @param
      * @return
      */
     @Override
-    public List<Blog> selectCollect(Integer id) {
+    public BlogPageBean selectCollect(Integer userId, Conditions conditions) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         BlogMapper mapper = sqlSession.getMapper(BlogMapper.class);
 
-        List<Blog> blogs = mapper.selectCollect(id);
+        //设置查询条件
+        Integer page = conditions.getCurrentPage();
+        Integer size = conditions.getSize();
+        int start = (page - 1) * size;
+        conditions.setCurrentPage(start);
+
+        //获取收藏的博客集合
+        List<Blog> blogs = mapper.selectCollect(userId, conditions);
+        //获取收藏博客总数 计算页数
+        Integer count = mapper.selectCollectCount(userId, conditions);
+        Integer totalPage = count / size;
+        totalPage = (totalPage * size < count)? totalPage + 1: totalPage;
+
+        //封装为pageBean对象
+        BlogPageBean pageBean = new BlogPageBean();
+        pageBean.setBlogs(blogs);
+        pageBean.setTotal(totalPage);
+
         sqlSession.close();
-        return blogs;
+        return pageBean;
     }
 }

@@ -53,7 +53,7 @@ public interface BlogService {
 
     /**
      * 根据用户id查询收藏的博客
-     * @param id
+     * @param
      */
-    List<Blog> selectCollect(Integer id);
+    BlogPageBean selectCollect(Integer userId, Conditions conditions);
 }

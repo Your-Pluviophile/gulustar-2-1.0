@@ -133,7 +133,7 @@ public class BlogServlet extends BaseServlet {
     }
 
     /**
-     * 查询根据用户id收藏的博客
+     * 根据用户id查询收藏的博客
      * @param req
      * @param resp
      * @throws ServletException
@@ -146,9 +146,23 @@ public class BlogServlet extends BaseServlet {
             resp.getWriter().write("请先登录！");
             return;
         }
-        List<Blog> blogs = blogService.selectCollect(user.getId());
+        //获取请求参数 页数
+        int currentPage = Integer.parseInt(req.getParameter("currentPage"));
+        int size = Integer.parseInt(req.getParameter("size"));
+        String keyword = req.getParameter("keyword");
+        String category = req.getParameter("category");
+        //封装为对象
+        Conditions conditions = new Conditions();
+        conditions.setCurrentPage(currentPage);
+        conditions.setSize(size);
+        conditions.setKeyword(keyword);
+        conditions.setCategory(category);
+
+        //业务层处理
+        BlogPageBean pageBean = blogService.selectCollect(user.getId(), conditions);
+
         //将结果转为JSON返回
-        String jsonString = JSON.toJSONString(blogs);
+        String jsonString = JSON.toJSONString(pageBean);
         resp.setContentType("text/json;charset=utf-8");
         resp.getWriter().write(jsonString);
     }

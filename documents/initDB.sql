@@ -17,7 +17,8 @@ CREATE TABLE USER(
 # 用户收藏
 CREATE TABLE user_collection(
 	user_id INT,
-	blog_id INT
+	blog_id INT,
+	collect_time timestamp;
 );
 
 #用户关注

@@ -55,7 +55,7 @@
 				</li>
 
 				<li class="item1">
-					<a href="./category.html">
+					<a href="javascript:;" @click="getCollections()">
 						<i class="iconfont icon-bijiben1"></i>我的收藏
 					</a>
 				</li>
@@ -566,6 +566,24 @@
 					this.getBlogsByPageAndCondition();
 				},
 				/*
+					获取收藏的博客: 页数改为第一页,发送用户ID去后端查询
+				 */
+				getCollections(){
+					this.conditions.currentPage = 1;
+					this.isCollectionPage = true;
+					sessionStorage.setItem("collect", this.isCollectionPage);
+
+					axios({
+						method: "get",
+						url: "http://localhost:8080/gulustar/blog/queryCollectByUserId?userId=" + this.user.id +
+								"&currentPage=" + this.conditions.currentPage + "&size=" + this.conditions.size +
+								"&keyword=" + this.conditions.keyword + "&category=" + this.conditions.category,
+					}).then(resp => {
+						this.blogs = resp.data.blogs;
+						this.conditions.total = resp.data.total;
+					});
+				},
+				/*
 					打开指定博客：把博客ID传给下个页面
 				 */
 				openBlog(id){
@@ -580,33 +598,44 @@
 				getBlogsByCategory(category){
 					this.conditions.category = category;
 					this.conditions.currentPage = 1;
-					this.conditions.category.setf
+
+					if (this.isCollectionPage){
+						this.getCollections();
+						return;
+					}
 
 					this.getBlogsByPageAndCondition();
 				},
 				/*
-					前往指定页数
+					前往指定页数 指定页数然后查询
 				 */
 				goToPage(i){
 					this.conditions.currentPage = i;
 					this.getBlogsByPageAndCondition();
 				},
 				/*
-					上一页
+					上一页 页数-1然后查询
 				 */
 				prevPage(){
-
+					this.conditions.currentPage -= 1;
+					this.getBlogsByPageAndCondition();
 				},
 				/*
-					下一页
+					下一页 页数+1然后查询
 				 */
 				nextPage(){
-
+					this.conditions.currentPage += 1;
+					this.getBlogsByPageAndCondition();
 				},
 				/*
 					获取指定页数博客集合: 发送当前页数和尺寸给后端，取得博客集合和总页数数据
 				 */
 				getBlogsByPageAndCondition(){
+					if (sessionStorage.getItem("collect") == 'true'){
+						this.getCollections();
+						return;
+					}
+
 					axios({
 						method: "post",
 						url: "http://localhost:8080/gulustar/blog/getBlogsByPageAndCondition",
@@ -730,6 +759,7 @@
 						size: 7
 					},
 					categories: ['分类1', '分类2'],		//分类标签
+					isCollectionPage: false,			//当前是否在我的收藏
 				}
 			}
 		})

@@ -21,9 +21,6 @@ import java.util.List;
 @WebServlet("/user/*")
 public class UserServlet extends BaseServlet {
 
-
-    // 8.10 清风
-
     private UserService userService = new UserServiceImpl();
 
     /**

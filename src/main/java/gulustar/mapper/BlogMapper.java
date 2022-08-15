@@ -126,12 +126,16 @@ public interface BlogMapper {
 
     /**
      * 查询用户收藏的博客
-     * @param id
+     * @param
      * @return
      */
-    @Select("select b.* from user_collection uc,  blog b where uc.blog_id = b.id  and uc.user_id = #{id};")
-    @ResultMap("blogResultMap")
-    List<Blog> selectCollect(Integer id);
+    List<Blog> selectCollect(@Param("userId") Integer userId, @Param("conditions") Conditions conditions);
+
+    /**
+     * 获取收藏博客总数
+     * @return
+     */
+    Integer selectCollectCount(@Param("userId") Integer userId, @Param("conditions") Conditions conditions);
 
     /**
      * 根据关键词查询
