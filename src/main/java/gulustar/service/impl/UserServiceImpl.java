@@ -96,16 +96,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addUserHistory(History history) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         BlogMapper blogmapper = sqlSession.getMapper(BlogMapper.class);
         History sameHistory = blogmapper.selectSameHistory(history);
+
         //如果有同样的历史记录则不写入
         //则更新时间
         if (sameHistory!=null){
+            userMapper.updateHistoryTime(sameHistory);
             sqlSession.close();
-            return ;
         }else {
-            mapper.addUserHistory(history);
+            userMapper.addUserHistory(history);
             sqlSession.close();
         }
     }

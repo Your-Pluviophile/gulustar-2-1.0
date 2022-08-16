@@ -89,9 +89,15 @@ public interface UserMapper {
      * @return
      */
     @Insert("insert into user_history values "+
-            "(#{userid},#{blogid})")
+            "(#{userid},#{blogid},now())")
     boolean addUserHistory(History history);
-
+   /**
+    * 更新用户浏览时间
+    * @param
+    * @return
+    */
+   @Update("update user_history set browse_time =now() where user_id=#{userid} and blog_id=#{blogid}")
+   void updateHistoryTime(History history);
     /**
      * 根据当前用户id所有历史记录
      * @param
@@ -105,13 +111,15 @@ public interface UserMapper {
      */
     Integer selectHistoryCount(@Param("userId") Integer userId, @Param("conditions")Conditions conditions);
 
-    /*
-收藏博客
- */
+    /**
+     * 收藏博客
+     * @return
+     */
     @Insert("insert into user_collection values(#{id}, #{id})  ")
     boolean collectionBlog(Integer userId,Integer blogId);
-    /*
-    取消收藏
+    /**
+     * 取消收藏
+     * @return
      */
     @Delete("delete from user_collection where user_id=#{id} and blog_id= #{id}")
     boolean deleteCollection(Integer userId,Integer blogId);
