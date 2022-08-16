@@ -8,8 +8,26 @@ import java.sql.Date;
 public class Comment {
     Integer id;
     String content;
-    Integer userId;     //谁评论的
+    String username;    //谁评论的 数据库里是用户ID 查询时使用多表查询直接封装用户名
+    Integer userId;     //前端新增评论的时候封装JSON用 用户ID
+    Integer blogId;     //前端新增评论的时候封装JSON用 博客ID
     Date createTime;    //评论时间
+
+    public Integer getBlogId() {
+        return blogId;
+    }
+
+    public void setBlogId(Integer blogId) {
+        this.blogId = blogId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
     public Integer getId() {
         return id;
@@ -27,12 +45,12 @@ public class Comment {
         this.content = content;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Date getCreateTime() {

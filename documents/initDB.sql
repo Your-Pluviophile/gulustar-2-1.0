@@ -1,6 +1,14 @@
 CREATE DATABASE gulustar_DB;
 USE gulustar_DB;
 
+drop table if exists user;
+drop table if exists user_collection;
+drop table if exists user_follow;
+drop table if exists user_history;
+drop table if exists blog;
+drop table if exists category;
+drop table if exists blog_comment;
+drop table if exists comment;
 
 #------------------以下为用户相关-------------------------------------
 
@@ -17,7 +25,8 @@ CREATE TABLE USER(
 # 用户收藏
 CREATE TABLE user_collection(
 	user_id INT,
-	blog_id INT
+	blog_id INT,
+	collect_time TIMESTAMP;
 );
 
 #用户关注
@@ -29,7 +38,8 @@ CREATE TABLE user_follow(
 #历史浏览记录
 CREATE TABLE user_history(
 	user_id INT,
-	blog_id INT
+	blog_id INT,
+    browse_time TIMESTAMP
 )
 
 #------------------以上为用户相关-------------------------------------
@@ -70,7 +80,7 @@ CREATE TABLE `comment`(
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	content VARCHAR(1000),
 	user_id INT,
-	createTime TIMESTAMP
+	create_time TIMESTAMP
 )
 
 #-----------------------------以上博客---------------------------------------------

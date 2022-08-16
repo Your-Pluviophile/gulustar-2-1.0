@@ -1,4 +1,5 @@
-# 咕噜星
+# 咕噜星logo
+![logo](src/main/webapp/images/03.png)
 
 ## 介绍
 咕噜星主页-博客系统

@@ -1,161 +1,946 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>咕噜星</title>
-    <!-- 引入饿了么ui样式 -->
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- 引入饿了么ui样式 -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-    <!-- 按顺序引入: 外链式样式表后写的生效 -->
-    <link rel="stylesheet" href="./css/base.css">
-    <link rel="stylesheet" href="./css/common.css">
-    <link rel="stylesheet" href="./css/index.css">
+	<!-- 引入icon页面图标 -->
+	<link rel="shortcut icon" href="favicon.ico"/>
+	<!-- 引入字体图标 -->
+	<link rel="stylesheet" href="./lib/font/iconfont.css">
+	<!-- 后来引入的字体图标 -->
+	<link rel="stylesheet" href="./lib/font2/iconfont_two.css">
+	<!-- 引入页面 CSS文件 -->
+	<link rel="stylesheet" href="./css/index.css">
+	<!-- 引入页面 初始化样式 -->
+	<link rel="stylesheet" href="./css/init.css">
+	<!-- 引入页面 公共样式 -->
+	<link rel="stylesheet" href="./css/public.css">
+	<!-- 引入页面 响应式样式 -->
+	<link rel="stylesheet" href="./css/Responsive.css">
+	<!-- 引入轮播图 -->
+	<link rel="stylesheet" href="./lib/swiper/swiper-bundle.min.css" />
+	<title>GuluStar - 不断改善，成为最佳🎉</title>
 </head>
 
 <body>
-<div id="app">
-    <!-- 快捷导航 -->
-    <div class="shortcut">
-        <div class="wrapper">
-            <ul>
-                <li v-for="(item, i) in naviList"><a :href="item.url">{{item.name}}</a></li>
-            </ul>
-            <el-button @click="loginDialogVisible = true" class="loginButton">登录/注册</el-button>
-        </div>
-    </div>
+	<div id="app">
+	<!-- 导航栏 -->
+	<div class="nav">
+		<div class="w">
+			<!-- 一级导航 -->
+			<ul class="one">
+				<!-- 菜单 -->
+				<li class="item" id="menu">
+					<a href="javascript:;" style="display: inline-block;">
+						<i class="iconfont icon-caidan1"></i>
+					</a>
+				</li>
 
-    <!-- 背景图 -->
-    <div class="banner">
+				<!-- logo -->
+				<li class="item1">
+					<a href="#" @click="init()">
+<!--						<img src="./image/logo2.png" alt="" id="logo">-->
+						<img src="./images/02.png" alt="" id="logo">
+					</a>
+				</li>
 
-    </div>
+				<li class="item1">
+					<a href="javascript:;">
+						<i class="iconfont icon-shouye"></i>小组介绍
+					</a>
+				</li>
 
-    <!-- 登录窗口 -->
-    <el-dialog
-            title="咕噜星"
-            :visible.sync="loginDialogVisible"
-            width="30%"
-            center
-            :close-on-click-modal="false"
+				<li class="item1">
+					<a href="#" @click="getCollections()">
+						<i class="iconfont icon-bijiben1"></i>我的收藏
+					</a>
+				</li>
+
+<!--				<li class="item1">-->
+<!--					<a href="./index.html">-->
+<!--						<i class="iconfont icon-yuandaima"></i>关注的人-->
+<!--					</a>-->
+
+<!--					&lt;!&ndash; 二级导航 &ndash;&gt;	-->
+<!--					<ul class="two" style="display: none;">-->
+<!--						<li>-->
+<!--							<a href="javascript:;">HTML5</a>-->
+<!--						</li>-->
+
+<!--						<li>-->
+<!--							<a href="javascript:;">CSS3</a>-->
+<!--						</li>-->
+
+<!--						<li>-->
+<!--							<a href="javascript:;">JavaScript</a>-->
+<!--						</li>-->
+<!--					</ul>-->
+<!--				</li>-->
+
+				<li class="item1">
+					<a href="#" @click="getHistory()">
+						<i class="iconfont icon-zuzhijiagou1"></i>阅览历史
+					</a>
+
+					<!-- 二级导航 -->
+<!--					<ul class="two" style="display: none;">-->
+<!--						<li>-->
+<!--							<a href="javascript:;">Vue</a>-->
+<!--						</li>-->
+
+<!--						<li>-->
+<!--							<a href="javascript:;">React</a>-->
+<!--						</li>-->
+
+<!--						<li>-->
+<!--							<a href="javascript:;">Angular</a>-->
+<!--						</li>-->
+<!--					</ul>-->
+				</li>
+
+				<li class="item1" v-if="user.isAdmin == 1">
+					<a href="javascript:;">
+						<i class="iconfont icon-zhuti1"></i>管理系统
+					</a>
+
+					<ul class="two" style="display: none;">
+						<li>
+							<a href="./links.html"><i class="iconfont icon-quanzi1"></i>人脉圈</a>
+						</li>
+
+						<li>
+							<a href="./circle.html"><i class="iconfont icon-pengyouquan1"></i>朋友圈</a>
+						</li>
+
+						<li>
+                            <a href="./bigData.html"><i class="iconfont icon-dashuju2"></i>大数据</a>
+                        </li>
+					</ul>
+				</li>
+
+				<!-- 功能栏 -->
+				<li class="function">
+					<ol>
+						<!-- 白天昼夜切换 -->
+						<li id="HighlightToggle">
+							<img src="./image/taiyang.png" alt="">
+						</li>
+
+						<li>
+							<a href="javascript:;">
+								<i class="iconfont icon-sousuo1"></i>
+							</a>
+						</li>
+					</ol>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<!-- 移动端的侧边导航栏 -->
+	<div class="mNav">
+		<!-- 头像 -->
+		<div class="user">
+			<img src="./image/user.png" alt="">
+			<span>Yuexing</span>
+			<p>不断改善成为最佳!</p>
+		</div>
+
+		<!-- 导航栏 -->
+		<ul>
+			<li class="item">
+				<a href="./index.html">
+					<i class="iconfont icon-shouye"></i>首页
+				</a>
+			</li>
+
+			<li class="item">
+				<a href="./category.html">
+					<i class="iconfont icon-bijiben1"></i>开发记录
+				</a>
+			</li>
+
+			<li class="item">
+				<a href="javascript:;" id="twoNav">
+					<i class="iconfont icon-yuandaima"></i>大前端
+				</a>
+
+				<!-- 二级导航 -->
+				<ul class="two">
+					<li>
+						<a href="javascript:;">HTML5</a>
+					</li>
+
+					<li>
+						<a href="javascript:;">CSS3</a>
+					</li>
+
+					<li>
+						<a href="javascript:;">JavaScript</a>
+					</li>
+				</ul>
+			</li>
+
+			<li class="item">
+				<a href="javascript:;" id="twoNav">
+					<i class="iconfont icon-zuzhijiagou1"></i>框架
+				</a>
+
+				<!-- 二级导航 -->
+				<ul class="two">
+					<li>
+						<a href="javascript:;">Vue</a>
+					</li>
+
+					<li>
+						<a href="javascript:;">React</a>
+					</li>
+
+					<li>
+						<a href="javascript:;">Angular</a>
+					</li>
+				</ul>
+			</li>
+
+			<li class="item">
+				<a href="javascript:;" id="twoNav">
+					<i class="iconfont icon-zhuti1"></i>扩展
+				</a>
+
+				<ul class="two">
+					<li>
+						<a href="./links.html">
+							<i class="iconfont icon-quanzi1"></i>人脉圈
+						</a>
+					</li>
+
+					<li>
+						<a href="./circle.html">
+							<i class="iconfont icon-pengyouquan1"></i>朋友圈
+						</a>
+					</li>
+
+					<li>
+						<a href="./bigData.html"><i class="iconfont icon-dashuju2"></i>大数据</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
+	<!-- 遮罩层 -->
+	<div class="mask"></div>
+
+	<!-- 轮播图 -->
+	<div class="banner">
+		<div class="swiper mySwiper">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide">
+					<div class="text">
+						<h3>不断改善，成为最佳!</h3>
+						<p>Constantly improve and become the best!</p>
+					</div>
+
+					<img src="http://139.196.43.147/gallery/t01d6f5fd3610da0a08.jpg" alt="">
+				</div>
+
+				<div class="swiper-slide">
+					<div class="text">
+						<h3>唯有坚持才能看见曙光!</h3>
+						<p>Only persistence can see the dawn!</p>
+					</div>
+
+					<img src="http://139.196.43.147/gallery/t012cde4a5058c156b7.jpg" alt="">
+				</div>
+
+				<div class="swiper-slide">
+					<div class="text">
+						<h3>永远年轻，永远热泪盈眶!</h3>
+						<p>Forever young, forever tearful!</p>
+					</div>
+
+					<img src="http://139.196.43.147/gallery/t01aaa82ef6d0f1ec87.jpg" alt="">
+				</div>
+			</div>
+			<div class="swiper-pagination"></div>
+		</div>
+
+		<!-- 波纹 -->
+		<div class="ripple">
+			<svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+				viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+				<defs>
+					<path id="gentle-wave"
+						d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+				</defs>
+				<g class="parallax">
+					<use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
+					<use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+					<use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+					<use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+				</g>
+			</svg>
+		</div>
+	</div>
+
+	<!-- 主体内容 -->
+	<div class="main">
+		<div class="w">
+			<!-- 文章列表 -->
+			<div class="list home_list">
+				<!-- 小圆点 -->
+				<div class="dots">
+					<ol>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ol>
+				</div>
+
+				<!-- 列表 -->
+				<ul>
+					<li v-for="blog in blogs">
+						<!-- 文章缩略图 -->
+						<div class="left">
+							<a href="javascript:;" @click="openBlog(blog.id)">
+								<img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5e7d37251bc04bf48caafe62eae2991e~tplv-k3u1fbpfcp-zoom-crop-mark:1304:1304:1304:734.awebp?" alt="">
+							</a>
+
+							<span class="tags_blue">开发记录</span>
+						</div>
+
+						<!-- 文章内容 -->
+						<div class="right">
+							<!-- 文章标题 -->
+							<h2>
+								<a href="javascript:;" @click="openBlog(blog.id)">
+									<span class="tags_purple">精品</span> <span class="tags_red">置顶</span> <span
+										class="tags_yellow">推荐</span>
+									{{blog.title}}
+								</a>
+							</h2>
+
+							<!-- 文章摘要 -->
+							<p class="list-length">
+								{{blog.description}}
+
+							<!-- 文章信息 -->
+							<div class="meta">
+								<!-- 作者头像 -->
+								<a href="javascript:;">
+									<img src="./image/user.png" alt="">
+									<span>{{blog.author}}</span>
+								</a>
+
+								<div>
+									<!-- 文章点赞数 -->
+									<a href="javascript:;"><i class="iconfont icon-dianzan"></i>{{blog.likes}}</a>
+									<!-- 文章浏览量 -->
+									<a href="javascript:;"><i class="iconfont icon-shoucang"></i>{{blog.collected}}</a>
+									<!-- 文章发布时间 -->
+									<a href="javascript:;"><i class="iconfont icon-shijian"></i>{{blog.releaseDate}}</a>
+								</div>
+							</div>
+						</div>
+					</li>
+
+					<li>
+						<!-- 文章缩略图 -->
+						<div class="left">
+							<img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/720d976d5b5947c187b8f7039126c10e~tplv-k3u1fbpfcp-zoom-crop-mark:3024:3024:3024:1702.awebp?"
+								alt="">
+
+							<span class="tags_yellow">大前端</span>
+						</div>
+
+						<!-- 文章内容 -->
+						<div class="right">
+							<!-- 文章标题 -->
+							<h2>
+								<a href="javascript:;">
+									<span class="tags_red">置顶</span>
+									一个96年前端的2022年中总结 (落户,看房,还贷,被裁)
+								</a>
+							</h2>
+
+							<!-- 文章摘要 -->
+							<p class="list-length">「时光不负，创作不停，本文正在参加2022年中总结征文大赛」 落户 关于落户这个事, 就是一个很突然的想法,很突然,
+								得知天津有个"海河英才计划",只要是本科生, 就比较容易落户,所以就想着试一试, </p>
+
+							<!-- 文章信息 -->
+							<div class="meta">
+								<!-- 作者头像 -->
+								<a href="javascript:;">
+									<img src="./image/user.png" alt="">
+									<span>Admin</span>
+								</a>
+
+								<div>
+									<!-- 文章点赞数 -->
+									<a href="javascript:;"><i class="iconfont icon-dianzan"></i>869</a>
+									<!-- 文章浏览量 -->
+									<a href="javascript:;"><i class="iconfont icon-huo"
+											style="color: #ee7273"></i>85971</a>
+									<!-- 文章发布时间 -->
+									<a href="javascript:;"><i class="iconfont icon-shijian"></i>2022-4-21 </a>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+
+				<!-- 分页 -->
+				<div class="pagination">
+					<a href="javascript:;" @click="isPageOne? '':prevPage()">‹</a>
+					<a href="javascript:;"
+					   v-for="i of conditions.total"
+					   :class="i == conditions.currentPage? 'paginationAction':''"
+					   @click="goToPage(i)"
+					>{{i}}</a>
+					<a href="javascript:;" @click="isLastPage?  '':nextPage()">›</a>
+				</div>
+
+				<!-- 加载列表 -->
+				<div class="loadList">
+					<i class="iconfont icon-loadm"></i>
+					<span>加载更多</span>
+				</div>
+			</div>
+
+			<!-- 功能模块 -->
+			<div class="function">
+				<div class="sticky">
+					<!-- 用户详情 -->
+					<div class="author">
+						<!-- 背景图片 -->
+						<div class="author-bg">
+							<!-- 头像 -->
+							<div class="avatar">
+								<img src="./image/user1.png" alt="">
+							</div>
+						</div>
+
+						<!-- 作者信息 -->
+						<div class="text">
+							<h4>
+								<a href="javascript:;">{{user.username}}</a>
+								<div class="medal"></div>
+							</h4>
+							<p>{{user.username}},欢迎来到咕噜星</p>
+						</div>
+
+						<!-- 功能 -->
+						<div class="fun">
+							<!-- 登录 -->
+							<div class="login" v-if="user.id == 0"><a href="javascript:;" @click="loginDialogVisible=true">登录</a></div>
+
+							<span></span>
+
+							<!-- 注册 -->
+							<div class="register" v-if="user.id == 0"><a href="javascript:;" @click="registeDialogVisible=true">注册</a></div>
+
+							<!-- 更换 -->
+							<div class="login" v-if="user.id > 0"><a href="javascript:;" @click="loginDialogVisible=true">切换用户</a></div>
+
+							<span></span>
+
+							<!-- 注销 -->
+							<div class="register" v-if="user.id > 0"><a href="javascript:;" @click="registeDialogVisible=true">退出登录</a></div>
+						</div>
+					</div>
+
+					<!-- 标签栏 -->
+					<div class="containerA">
+						<!-- 标题 -->
+						<div class="title">
+							<h3><i class="iconfont icon-tuya_huabanfuben"></i> 分类标签</h3>
+							<!-- 小圆点 -->
+							<div class="dots">
+								<ol>
+									<li></li>
+									<li></li>
+									<li></li>
+								</ol>
+							</div>
+						</div>
+
+						<!-- 标签 -->
+						<div class="containerA_Tags">
+							<a href="javascript:;"
+							   v-for="item in categories"
+							   @click="getBlogsByCategory(item)">{{item}}</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 底部 -->
+	<div class="footer">
+		<div class="w">
+			<!-- 站点信息 -->
+			<div class="Web_info">
+				<!-- 站点名称 -->
+				<div class="Web_name">
+					<h1><a href="javascript:;">GuluStar</a></h1>
+					<div class="dian"></div>
+				</div>
+
+				<!-- 站点描述 -->
+				<div class="Web_describe">
+					<p>© 2022 <a href="javascript:;">GuluStar</a> - 也许，将会是最好用的博客管理系统！</p>
+					<p>Perhaps, it will be the best blog management system!</p>
+				</div>
+			</div>
+
+			<!-- ICP备案号 -->
+			<div class="ICP">
+				<a href="https://beian.miit.gov.cn/#/Integrated/index"><i
+						class="iconfont icon-icp-license"></i>豫ICP备2020031040号-1</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- 侧边工具栏 -->
+	<div class="tool">
+<!--		<div class="item">-->
+<!--			<a href="javascript:;">-->
+<!--				<i class="iconfont icon-zhuti_yifu_o"></i>-->
+<!--			</a>-->
+<!--		</div>-->
+
+		<div class="item">
+			<a href="javascript:;" id="returnTop">
+				<i class="iconfont icon-fanhuidingbu1"></i>
+			</a>
+		</div>
+	</div>
+
+	<!-- 登录窗口 -->
+		<el-dialog
+			:lock-scroll="false"
+			:visible.sync="loginDialogVisible"
+			width="30%"
+			center
+			:close-on-click-modal="false"
             custom-class="customLoginDialog">
-        <el-button @click="registeDialogVisible = true, loginDialogVisible = false">注册</el-button>
-        <el-input v-model="loginInfo.account" placeholder="请输入账号" prefix-icon="el-icon-user"></el-input>
-        <el-input placeholder="请输入密码" v-model="loginInfo.password" show-password></el-input>
-        <span slot="footer" class="dialog-footer">
-                <el-button type="primary" @click="login()">登 录</el-button>
-            </span>
-    </el-dialog>
+			<h1>LOGIN</h1>
+			<input type="text" placeholder="帐号" v-model="loginInfo.account" @blur="checkAccLen()">
+			<span class="lenCheck" v-if="accTooLong">账号长度不能超过12</span>
+			<input type="password" placeholder="密码" v-model="loginInfo.password" @blur="checkPwdLen()">
+			<span class="lenCheck" v-if="pwdTooLong">密码长度不能超过20</span>
+			<button type="submit" @click="login()">Login</button>
+			<div class="control">
+				<span>没有帐号？<a href="javascript:;"
+							  @click="loginDialogVisible=false, registeDialogVisible=true">Register</a></span>
+			</div>
+	</el-dialog>
 
     <!-- 注册窗口 -->
     <el-dialog
-            title="咕噜星"
-            :visible.sync="registeDialogVisible"
-            width="30%"
-            center
-            :close-on-click-modal="false"
-            custom-class="customLoginDialog">
-        <el-button @click="loginDialogVisible = true, registeDialogVisible = false">登录</el-button>
-        <el-input v-model="registeInfo.username" placeholder="请输入昵称"></el-input>
-        <el-input v-model="registeInfo.account" placeholder="请输入账号" prefix-icon="el-icon-user"></el-input>
-        <el-input placeholder="请输入密码" v-model="registeInfo.password" show-password></el-input>
-        <span slot="footer" class="dialog-footer">
-                <el-button type="primary" @click="registe()">注 册</el-button>
-            </span>
+			:lock-scroll="false"
+			:visible.sync="registeDialogVisible"
+			width="30%"
+			center
+			:close-on-click-modal="false"
+			custom-class="customLoginDialog">
+		<h1 class="register">REGISTER</h1>
+		<input type="text" placeholder="昵称" v-model="registeInfo.username" @blur="checkNewNameLen()">
+		<span class="lenCheck" v-if="usernameTooLong">昵称长度不能超过10</span>
+		<input type="text" placeholder="帐号" v-model="registeInfo.account" @blur="checkNewAccLen()">
+		<span class="lenCheck" v-if="newAccTooLong">账号长度不能超过12</span>
+		<input type="password" placeholder="密码" v-model="registeInfo.password" @blur="checkNewPwdLen()">
+		<span class="lenCheck" v-if="newPwdTooLong">密码长度不能超过20</span>
+		<input type="password" placeholder="确认密码" v-model="registeInfo.confirmPwd" @blur="checkTwiceInputPwd()">
+		<span class="lenCheck" v-if="checkNewPwd">两次输入的密码不一致</span>
+		<button type="submit" @click="registe()">Register</button>
+		<div class="registerText">
+			<span>已有帐号？<a href="javascript:;" class="registerA"
+						  @click="loginDialogVisible=true, registeDialogVisible=false">Login</a></span>
+		</div>
     </el-dialog>
-</div>
+
+	</div>
+
+	<!-- import Vue before Element -->
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.7.8"></script>
+	<!--import ajax-axios -->
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<!-- import Element JavaScript -->
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	
+	<script>
+		new Vue({
+			el: '#app',
+			mounted() {
+				this.init();
+			},
+			methods: {
+				init(){
+					sessionStorage.removeItem("collect");
+					sessionStorage.removeItem("history");
+					this.getBlogsByPageAndCondition();
+				},
+				/*
+					注册时检查2次密码是否一致
+				 */
+				checkTwiceInputPwd(){
+					if (this.registeInfo.password != this.registeInfo.confirmPwd){
+						this.checkNewPwd = true;
+					}else {
+						this.checkNewPwd = false;
+					}
+				},
+				/*
+					注册时检查密码长度
+				 */
+				checkNewPwdLen(){
+					if (this.registeInfo.password != '' && this.registeInfo.password.length > 20){
+						this.newPwdTooLong = true;
+					}else {
+						this.newPwdTooLong = false;
+					}
+				},
+				/*
+					检查注册时账号长度
+				 */
+				checkNewAccLen(){
+					if (this.registeInfo.account != '' && this.registeInfo.account.length > 12){
+						this.newAccTooLong = true;
+					}else {
+						this.newAccTooLong = false;
+					}
+				},
+				/*
+					注册时检查昵称长度
+				 */
+				checkNewNameLen(){
+					if (this.registeInfo.username != '' && this.registeInfo.username.length > 10){
+						this.usernameTooLong = true;
+					}else {
+						this.usernameTooLong = false;
+					}
+				},
+				/*
+					检查账号长度
+				 */
+				checkAccLen(){
+					if (this.loginInfo.account != '' && this.loginInfo.account.length > 12){
+						this.accTooLong = true;
+					}else {
+						this.accTooLong = false;
+					}
+				},
+				/*
+					检查密码长度
+				 */
+				checkPwdLen(){
+					if (this.loginInfo.password != '' && this.loginInfo.password.length > 20){
+						this.pwdTooLong = true;
+					}else {
+						this.pwdTooLong = false;
+					}
+				},
+				getHistory(){
+					if (this.user.id == 0){
+						this.$message({
+							center: true,
+							duration: 1000,
+							showClose: true,
+							message: '请先登录',
+							type: 'info'
+						});
+						return;
+					}
+
+					this.conditions.currentPage = 1;
+					this.isPageOne = true;
+					sessionStorage.removeItem("collect");
+					sessionStorage.setItem("history", "true");
+
+					axios({
+						method: "get",
+						url: "http://localhost:8080/gulustar/user/getUserHistory?userId=" + this.user.id +
+								"&currentPage=" + this.conditions.currentPage + "&size=" + this.conditions.size +
+								"&keyword=" + this.conditions.keyword + "&category=" + this.conditions.category,
+					}).then(resp => {
+						this.blogs = resp.data.blogs;
+						this.conditions.total = resp.data.total;
+					});
+				},
+				/*
+					获取收藏的博客: 页数改为第一页,发送用户ID去后端查询
+				 */
+				getCollections(){
+					if (this.user.id == 0){
+						this.$message({
+							center: true,
+							duration: 1000,
+							showClose: true,
+							message: '请先登录',
+							type: 'info'
+						});
+						return;
+					}
+
+					this.conditions.currentPage = 1;
+					this.isPageOne = true;
+					sessionStorage.removeItem("history");
+					sessionStorage.setItem("collect", "true");
+
+					axios({
+						method: "get",
+						url: "http://localhost:8080/gulustar/blog/queryCollectByUserId?userId=" + this.user.id +
+								"&currentPage=" + this.conditions.currentPage + "&size=" + this.conditions.size +
+								"&keyword=" + this.conditions.keyword + "&category=" + this.conditions.category,
+					}).then(resp => {
+						this.blogs = resp.data.blogs;
+						this.conditions.total = resp.data.total;
+					});
+				},
+				/*
+					打开指定博客：把博客ID传给下个页面
+				 */
+				openBlog(id){
+					sessionStorage.setItem('currBlogId', id);
+					sessionStorage.setItem('currUserId', this.user.id);
+					// window.location.href='/gulustar/src/main/webapp/article.html';
+					window.location.href='/gulustar/article.html';
+				},
+				/*
+					根据分类查询: 根据分类查询，回到第一页开始显示
+				 */
+				getBlogsByCategory(category){
+					this.conditions.category = category;
+					this.conditions.currentPage = 1;
+					this.isPageOne = true;
+
+					if (sessionStorage.getItem("collect") == "true"){
+						this.getCollections();
+						return;
+					}
+					if (sessionStorage.getItem("history") == "true"){
+						this.getHistory();
+						return;
+					}
+
+					this.getBlogsByPageAndCondition();
+				},
+				/*
+					前往指定页数 指定页数然后查询
+				 */
+				goToPage(i){
+					this.conditions.currentPage = i;
+					this.checkPage();
+					this.getBlogsByPageAndCondition();
+				},
+				checkPage(){
+					if (this.conditions.currentPage == this.conditions.total){
+						this.isLastPage = true;
+					}else {
+						this.isLastPage = false;
+					}
+					if (this.conditions.currentPage == 1){
+						this.isPageOne = true;
+					}else {
+						this.isPageOne = false;
+					}
+				},
+				/*
+					上一页 页数-1然后查询
+				 */
+				prevPage(){
+					this.conditions.currentPage -= 1;
+					this.checkPage();
+					this.getBlogsByPageAndCondition();
+				},
+				/*
+					下一页 页数+1然后查询
+				 */
+				nextPage(){
+					this.conditions.currentPage += 1;
+					this.checkPage();
+					this.getBlogsByPageAndCondition();
+				},
+				/*
+					获取指定页数博客集合: 发送当前页数和尺寸给后端，取得博客集合和总页数数据
+				 */
+				getBlogsByPageAndCondition(){
+					if (sessionStorage.getItem("collect") == 'true'){
+						this.getCollections();
+						return;
+					}
+					if (sessionStorage.getItem("history") == "true"){
+						this.getHistory();
+						return;
+					}
+					if (this.conditions.currentPage == 1){
+						this.isPageOne = true;
+					}
+
+					axios({
+						method: "post",
+						url: "http://localhost:8080/gulustar/blog/getBlogsByPageAndCondition",
+						data: this.conditions
+					}).then(resp => {
+						this.blogs = resp.data.blogs;
+						this.conditions.total = resp.data.total;
+					});
+				},
+				/*
+					获取所有博客：把结果赋值给data.blogs
+				 */
+				getAllBlogs(){
+					axios({
+						method: "get",
+						url: "http://localhost:8080/gulustar/blog/getAllBlogs",
+					}).then(resp => {
+						this.blogs = resp.data;
+					});
+				},
+				/*
+					登录方法，post方式以JSON形式发送账号密码给控制层
+					根据返回值是否为空判断是否登录成功，如果成功就重新加载主页
+				 */
+				login(){
+					axios({
+						method: "post",
+						url: "http://localhost:8080/gulustar/user/login",
+						data: this.loginInfo
+					}).then(resp => {
+						if (resp.data != null){
+							this.user = resp.data;
+							this.loginDialogVisible = false;
+							this.init();
+							this.$message({
+								message: '登陆成功',
+								type: 'success'
+							});
+							for (let i in this.loginInfo) {
+								this.loginInfo[i] = '';
+							}
+						}else {
+							this.$message({
+								message: '用户名或密码错误',
+								type: 'warning'
+							});
+						}
+					});
+				},
+				/*
+					注册方法：把表单的信息封装为JSON对象发给后端
+					根据返回值提示用户是否注册成功
+				 */
+				registe(){
+					axios({
+						method: "put",
+						url: "http://localhost:8080/gulustar/user/registe",
+						data: this.registeInfo
+					}).then(resp => {
+						if (resp.data == "OK"){
+							this.$message({
+								message: '注册成功,赶快登录吧!',
+								type: 'success'
+							});
+							this.loginInfo.account = this.registeInfo.account;
+							this.loginInfo.password = this.registeInfo.password;
+							for (let i in this.registeInfo) {
+								this.registeInfo[i] = '';
+							}
+						}else {
+							this.$message({
+								message: '注册失败',
+								type: 'warning'
+							});
+						}
+					});
+				}
+			},
+			data() {
+				return{
+					user: {								//当前用户：包括ID、昵称、账号、状态、管理员身份
+						id: 0,
+						username: '咕噜星用户',
+						account: '',
+						status: 1,
+						isAdmin: 0
+					},
+					loginDialogVisible: false,          //用来控制显示登录窗口
+					loginInfo: {                        //登录信息 包括账号、密码
+						account: '',
+						password: ''
+					},
+					registeDialogVisible: false,        //控制显示注册窗口
+					registeInfo: {                      //注册信息 包括账号、昵称、密码
+						username: '',
+						account: '',
+						password: '',
+						confirmPwd: ''
+					},
+					blogs: [							//展示在主页的所有博客对象
+						{								//包括id、标题、简介、点赞数、收藏数、发布日期、作者
+							id: 5,
+							title: 'testtitle',
+							description: 'testdes',
+							likes: 0,
+							collected: 0,
+							releaseDate: '2022-08-14',
+							author: 'aaa'
+						},
+						{
+							id: 1,
+							title: 'test1title',
+							description: 'test1des',
+							likes: 1,
+							collected: 1,
+							releaseDate: '2022-08-13',
+							author: 'bbb'
+						}
+					],
+					conditions: {						//查询条件： 关键词、分类、总页数、页数、条数
+						keyword: '',
+						category: '',
+						total: 8,
+						currentPage: 1,
+						size: 7
+					},
+					categories: ['分类1', '分类2'],		//分类标签
+					accTooLong: false,					//判断账号长度
+					pwdTooLong: false,					//密码长度
+					usernameTooLong: false,				//昵称长度
+					newAccTooLong: false,				//注册时账号长度
+					newPwdTooLong: false,				//注册时密码长度
+					checkNewPwd: false,					//2次密码是否一样
+					isPageOne: false,					//是第一页
+					isLastPage: false,					//是最后一页
+				}
+			}
+		})
+	</script>
+
+	<!-- 引入公共 JavaScript文件 -->
+	<script src="./js/public.js"></script>
+	<!-- 引入页面JavaScript文件 -->
+	<script src="./js/index.js"></script>
+	<!-- 引入swiper轮播图插件 -->
+	<script src="./lib/swiper/swiper-bundle.min.js"></script>
+	<script>
+		var swiper = new Swiper(".mySwiper", {
+			pagination: {
+				el: ".swiper-pagination",
+				dynamicBullets: true
+			},
+			autoplay: {
+				delay: 5000
+			},
+			loop: true,
+		});
+	</script>
 </body>
-
-<!-- import Vue before Element -->
-<script src="https://cdn.jsdelivr.net/npm/vue@2.7.8"></script>
-<!--import ajax-axios -->
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<!-- import Element JavaScript -->
-<script src="https://unpkg.com/element-ui/lib/index.js"></script>
-<script>
-    new Vue({
-        el: '#app',
-        mounted() {
-        },
-        methods: {
-            handleSelect(key, keyPath) {
-                console.log(key, keyPath);
-            },
-            init(){
-
-            },
-            /*
-                登录方法，post方式以JSON形式发送账号密码给控制层
-                根据返回值是否为空判断是否登录成功，如果成功就重新加载主页
-             */
-            login(){
-                axios({
-                    method: "post",
-                    url: "http://localhost:8080/gulustar/user/login",
-                    data: this.loginInfo
-                }).then(resp => {
-                    if (resp.data != null){
-                        this.loginDialogVisible = false;
-                        this.init();
-                        this.$message({
-                            message: '登陆成功',
-                            type: 'success'
-                        });
-                    }else {
-                        this.$message({
-                            message: '用户名或密码错误',
-                            type: 'warning'
-                        });
-                    }
-                });
-            },
-            /*
-                注册方法：把表单的信息封装为JSON对象发给后端
-                根据返回值提示用户是否注册成功
-             */
-            registe(){
-                axios({
-                    method: "put",
-                    url: "http://localhost:8080/gulustar/user/registe",
-                    data: this.registeInfo
-                }).then(resp => {
-                    if (resp.data == "OK"){
-                        this.$message({
-                            message: '注册成功,赶快登录吧!',
-                            type: 'success'
-                        });
-                        this.loginInfo.account = this.registeInfo.account;
-                        this.loginInfo.password = this.registeInfo.password;
-                        for (let i in this.registeInfo) {
-                            this.registeInfo[i] = '';
-                        }
-                    }else {
-                        this.$message({
-                            message: '注册失败',
-                            type: 'warning'
-                        });
-                    }
-                });
-            }
-        },
-        data() {
-            return{
-                loginDialogVisible: false,          //用来控制显示登录窗口
-                loginInfo: {                        //登录信息 包括账号、密码
-                    account: '',
-                    password: ''
-                },
-                registeDialogVisible: false,        //控制显示注册窗口
-                registeInfo: {                      //注册信息 包括账号、昵称、密码
-                    username: '',
-                    account: '',
-                    password: ''
-                },
-                naviList: [                         //菜单项目
-                    {name: '首页', url: 'aaa.com'},
-                    {name: '关注', url: 'www.baidu.com'}
-                ],
-                activeIndex2: '1',
-            }
-        }
-    })
-</script>
 
 </html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- 引入饿了么ui样式 -->
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<!-- 引入icon页面图标 -->
+	<link rel="shortcut icon" href="favicon.ico" />
+	<!-- 引入字体图标 -->
+	<link rel="stylesheet" href="./lib/font/iconfont.css">
+	<!-- 引入页面 CSS文件 -->
+	<link rel="stylesheet" href="./css/article.css">
+	<!-- 引入页面 初始化样式 -->
+	<link rel="stylesheet" href="./css/init.css">
+	<!-- 引入页码 公共样式 -->
+	<link rel="stylesheet" href="./css/public.css">
+	<!-- 引入页面 响应式样式 -->
+	<link rel="stylesheet" href="./css/Responsive.css">
+	<!-- 引入代码高亮插件 -->
+	<link rel="stylesheet" href="./lib/highlight/styles/vs2015.min.css">
+	<!-- <link rel="stylesheet" href="./lib/highlight/styles/xcode.min.css"> -->
+	<script src="./lib/highlight/highlight.min.js"></script>
+	<title>Yuexing - 文章页面</title>
+</head>
+
+<body>
+<div id="app">
+	<!-- 导航栏 -->
+	<div class="nav">
+		<div class="w">
+			<!-- 一级导航 -->
+			<ul class="one">
+				<!-- 菜单 -->
+				<li class="item" id="menu">
+					<a href="javascript:;" style="display: inline-block;">
+						<i class="iconfont icon-caidan1"></i>
+					</a>
+				</li>
+
+				<!-- logo -->
+				<li class="item1">
+					<a href="./index.html">
+						<!--						<img src="./image/logo2.png" alt="" id="logo">-->
+						<img src="./images/02.png" alt="" id="logo">
+					</a>
+				</li>
+
+				<li class="item1">
+					<a href="./index.html">
+						<i class="iconfont icon-shouye"></i>小组介绍
+					</a>
+				</li>
+
+				<li class="item1">
+					<a href="./category.html">
+						<i class="iconfont icon-bijiben1"></i>我的收藏
+					</a>
+				</li>
+
+				<li class="item1">
+					<a href="./index.html">
+						<i class="iconfont icon-yuandaima"></i>关注的人
+					</a>
+
+					<!-- 二级导航 -->
+					<ul class="two" style="display: none;">
+						<li>
+							<a href="javascript:;">HTML5</a>
+						</li>
+
+						<li>
+							<a href="javascript:;">CSS3</a>
+						</li>
+
+						<li>
+							<a href="javascript:;">JavaScript</a>
+						</li>
+					</ul>
+				</li>
+
+				<li class="item1">
+					<a href="./index.html">
+						<i class="iconfont icon-zuzhijiagou1"></i>阅览历史
+					</a>
+
+					<!-- 二级导航 -->
+					<ul class="two" style="display: none;">
+						<li>
+							<a href="javascript:;">Vue</a>
+						</li>
+
+						<li>
+							<a href="javascript:;">React</a>
+						</li>
+
+						<li>
+							<a href="javascript:;">Angular</a>
+						</li>
+					</ul>
+				</li>
+
+				<li class="item1">
+					<a href="javascript:;">
+						<i class="iconfont icon-zhuti1"></i>管理系统
+					</a>
+
+					<ul class="two" style="display: none;">
+						<li>
+							<a href="./links.html"><i class="iconfont icon-quanzi1"></i>人脉圈</a>
+						</li>
+
+						<li>
+							<a href="./circle.html"><i class="iconfont icon-pengyouquan1"></i>朋友圈</a>
+						</li>
+
+						<li>
+							<a href="./bigData.html"><i class="iconfont icon-dashuju2"></i>大数据</a>
+						</li>
+					</ul>
+				</li>
+
+				<!-- 功能栏 -->
+				<li class="function">
+					<ol>
+						<!-- 白天昼夜切换 -->
+						<li id="HighlightToggle">
+							<img src="./image/taiyang.png" alt="">
+						</li>
+
+						<li>
+							<a href="javascript:;">
+								<i class="iconfont icon-sousuo1"></i>
+							</a>
+						</li>
+					</ol>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<!-- 移动端的侧边导航栏 -->
+	<div class="mNav">
+		<!-- 头像 -->
+		<div class="user">
+			<img src="./image/user.png" alt="">
+			<span>Yuexing</span>
+			<p>不断改善成为最佳!</p>
+		</div>
+
+		<!-- 导航栏 -->
+		<ul>
+			<li class="item">
+				<a href="./index.html">
+					<i class="iconfont icon-shouye"></i>首页
+				</a>
+			</li>
+
+			<li class="item">
+				<a href="./category.html">
+					<i class="iconfont icon-bijiben1"></i>开发记录
+				</a>
+			</li>
+
+			<li class="item">
+				<a href="javascript:;" id="twoNav">
+					<i class="iconfont icon-yuandaima"></i>大前端
+				</a>
+
+				<!-- 二级导航 -->
+				<ul class="two">
+					<li>
+						<a href="javascript:;">HTML5</a>
+					</li>
+
+					<li>
+						<a href="javascript:;">CSS3</a>
+					</li>
+
+					<li>
+						<a href="javascript:;">JavaScript</a>
+					</li>
+				</ul>
+			</li>
+
+			<li class="item">
+				<a href="javascript:;" id="twoNav">
+					<i class="iconfont icon-zuzhijiagou1"></i>框架
+				</a>
+
+				<!-- 二级导航 -->
+				<ul class="two">
+					<li>
+						<a href="javascript:;">Vue</a>
+					</li>
+
+					<li>
+						<a href="javascript:;">React</a>
+					</li>
+
+					<li>
+						<a href="javascript:;">Angular</a>
+					</li>
+				</ul>
+			</li>
+
+			<li class="item">
+				<a href="javascript:;" id="twoNav">
+					<i class="iconfont icon-zhuti1"></i>扩展
+				</a>
+
+				<ul class="two">
+					<li>
+						<a href="./links.html">
+							<i class="iconfont icon-quanzi1"></i>人脉圈
+						</a>
+					</li>
+
+					<li>
+						<a href="./circle.html">
+							<i class="iconfont icon-pengyouquan1"></i>朋友圈
+						</a>
+					</li>
+
+					<li>
+						<a href="./bigData.html"><i class="iconfont icon-dashuju2"></i>大数据</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
+	<!-- 遮罩层 -->
+	<div class="mask"></div>
+
+	<!-- 主体内容 -->
+	<div class="main">
+		<div class="w">
+			<!-- 文章列表 -->
+			<div class="list article_list">
+				<!-- 文章详情 -->
+				<div class="article">
+
+					<!-- 文章内容 -->
+					<div class="article_Info">
+						<h1>大厂裁员下，程序员如何做“副业”？</h1><br><br>
+						<p>大家好，我是杨成功。</p><br>
+						<p>前几天有幸看了<i
+								class="s">尤雨溪</i>尤大的直播，他们谈到一个话题，是说目前前端人，或者是整个程序员群体如何做副业？近年来互联网行情下降，好多人都在思考要不要搞个副业来抵御风险。
+						</p><br>
+						<p>这不又来事了，这两天又爆了互联网大裁员。继阿里“向社会输送人才”之后，京东又搞了个“毕业礼”，整的小伙伴们人心惶惶。副业的关注度又一波升级。<br>
+						</p>
+						<p>那今天我们就来聊聊，程序员做副业这件事。</p><br>
+						<img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5e7d37251bc04bf48caafe62eae2991e~tplv-k3u1fbpfcp-zoom-crop-mark:1304:1304:1304:734.awebp?"
+							 alt="">
+						<h2>代码片段</h2>
+						<div class="pre">
+							<!-- 代码高亮 -->
+							<pre style="margin:0;">
+									<b><code contenteditable="false" class="language-javascript" >
+ function unique(arr) {
+    if (!Array.isArray(arr)) {
+        console.log('type error!')
+        return
+    }
+    var array = [];
+    for (var i = 0; i < arr.length; i++) {
+        if (array .indexOf(arr[i]) === -1) {
+            array .push(arr[i])
+        }
+    }
+    return array;
+ }
+									</code></b>
+    							</pre>
+							<!-- 调用代码高亮 -->
+							<script>
+								hljs.initHighlightingOnLoad();
+							</script>
+						</div>
+					</div>
+
+					<!-- 点赞 / 收藏 -->
+					<div class="post_list">
+						<a href="javascript:;" class="post_list_Fabulous">
+							<i class="iconfont icon-dianzan"> 点赞</i>
+						</a>
+
+						<a href="javascript:;" class="post_list_Collection">
+							<i class="iconfont icon-aixin"> 收藏</i>
+						</a>
+					</div>
+
+					<!-- 评论 -->
+					<div class="comment">
+						<!-- 标题 -->
+						<div class="title">
+							<i class="iconfont icon-pinglun"></i>
+							<span>评论</span>
+						</div>
+						<hr>
+
+						<!-- 评论区 -->
+						<div class="comment_box">
+							<textarea v-model="newComment.content" name="comment_box" placeholder="来发一针见血的评论吧!"></textarea>
+						</div>
+
+						<!-- 评论者信息 -->
+						<div class="comment_info">
+							<img src="./image/user.png" alt="">
+							<input type="text" placeholder="QQ号可获取头像和昵称">
+							<input type="text" placeholder="昵称*" disabled>
+							<input type="text" placeholder="昵称*" disabled>
+							<a href="javascript:;" @click="addComment()">提交评论</a>
+						</div>
+
+						<!-- 华丽的分割线 -->
+						<div class="hr">
+							<div></div>
+							<!-- 评论区标题 -->
+							<div class="title_hr">
+								<i class="iconfont icon-pinglun"></i>
+								<span>评论区</span>
+							</div>
+						</div>
+
+						<!-- 评论内容 -->
+						<div class="comment_content">
+							<ul>
+								<li v-for="item in comment">
+									<!-- 评论者信息 -->
+									<div class="comment_user">
+										<img src="https://q2.qlogo.cn/headimg_dl?dst_uin=3311118881&spec=100" alt="">
+										<div>
+											<span>{{item.username}}</span>
+											<span>{{item.createTime}}</span>
+										</div>
+									</div>
+
+									<!-- 评论内容 -->
+									<div class="comment_main">
+										{{item.content}}
+									</div>
+
+									<!-- 二级评论 -->
+<!--									<div class="comment_user1">-->
+<!--										&lt;!&ndash; 评论者信息 &ndash;&gt;-->
+<!--										<div class="comment_user">-->
+<!--											<img src="https://q2.qlogo.cn/headimg_dl?dst_uin=528609062&spec=100" alt="">-->
+<!--											<div>-->
+<!--												<span>苏小晨</span>-->
+<!--												<span>2022-06-11 15:28</span>-->
+<!--											</div>-->
+<!--										</div>-->
+
+<!--										&lt;!&ndash; 评论内容 &ndash;&gt;-->
+<!--										<div class="comment_main">-->
+<!--											<a href="javascript:;">@方法总比困难多</a>-->
+<!--											<span>加油哦!</span>-->
+<!--										</div>-->
+<!--									</div>-->
+								</li>
+
+							</ul>
+						</div>
+
+						<!-- 分页 -->
+<!--						<div class="pagination">-->
+<!--							<a href="javascript:;">‹‹</a>-->
+<!--							<a href="javascript:;">‹</a>-->
+<!--							<a href="javascript:;" class="paginationAction">1</a>-->
+<!--							<a href="javascript:;">2</a>-->
+<!--							<a href="javascript:;">3</a>-->
+<!--							<a href="javascript:;">4</a>-->
+<!--							<a href="javascript:;">5</a>-->
+<!--							<a href="javascript:;">6</a>-->
+<!--							<a href="javascript:;">››</a>-->
+<!--						</div>-->
+
+						<!-- 加载列表 -->
+						<div class="loadList">
+							<i class="iconfont icon-loadm"></i>
+							<span>加载更多</span>
+						</div>
+					</div>
+
+					<!-- 占位 -->
+					<!-- <div class="occupy"></div> -->
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 底部 -->
+	<div class="footer">
+		<div class="w">
+			<!-- 站点信息 -->
+			<div class="Web_info">
+				<!-- 站点名称 -->
+				<div class="Web_name">
+					<h1><a href="javascript:;">GuluStar</a></h1>
+					<div class="dian"></div>
+				</div>
+
+				<!-- 站点描述 -->
+				<div class="Web_describe">
+					<p>© 2022 <a href="javascript:;">GuluStar</a> - 也许，将会是最好用的博客管理系统！</p>
+					<p>Perhaps, it will be the best blog management system!</p>
+				</div>
+			</div>
+
+			<!-- ICP备案号 -->
+			<div class="ICP">
+				<a href="https://beian.miit.gov.cn/#/Integrated/index"><i
+						class="iconfont icon-icp-license"></i>豫ICP备2020031040号-1</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- 侧边工具栏 -->
+	<div class="tool">
+		<div class="item">
+			<a href="javascript:;">
+				<i class="iconfont icon-zhuti_yifu_o"></i>
+			</a>
+		</div>
+
+		<div class="item">
+			<a href="javascript:;" id="returnTop">
+				<i class="iconfont icon-fanhuidingbu1"></i>
+			</a>
+		</div>
+	</div>
+</div>
+
+	<!-- import Vue -->
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.7.8"></script>
+	<!--import ajax-axios -->
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<!-- import Element JavaScript -->
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<script>
+		new Vue({
+			el: '#app',
+			/*
+				取得当前博客的ID,然后获取博客内容和评论
+			 */
+			mounted() {
+				this.blog.id = parseInt(sessionStorage.getItem('currBlogId'));
+				this.user.id = parseInt(sessionStorage.getItem('currUserId'));
+				this.getContentAndCommentList();
+			},
+			methods: {
+				/*
+					把评论绑定博客ID和用户ID发送给后端 进行添加到数据库操作
+				 */
+				addComment(){
+					this.newComment.blogId = this.blog.id;
+					this.newComment.userId = this.user.id;
+					axios({
+						method: "put",
+						url: "http://localhost:8080/gulustar/blog/addComment",
+						data: this.newComment
+					}).then(resp => {
+						if (resp.data == 'OK'){
+							this.getContentAndCommentList();
+							this.newComment.content = '';
+							this.$message({
+								message: '发表评论成功',
+								type: 'success'
+							});
+						}else {
+							this.$message({
+								message: '系统异常,发送评论失败',
+								type: 'warning'
+							});
+						}
+					});
+				},
+				/*
+					获取博客内容和评论 发送当前博客ID给后端查询用 取得博客对象 包含内容和评论集合
+				 */
+				getContentAndCommentList(){
+					axios({
+						method: "get",
+						url: "http://localhost:8080/gulustar/blog/getContendAndCommentList?blogId=" + this.blog.id,
+					}).then(resp => {
+						this.blog.content = resp.data.content;
+						this.comment = resp.data.comment;
+					});
+				},
+			},
+			data() {
+				return{
+					comment: [{								//评论集合：包括评论人、评论内容、评论时间
+						username: '张哥',
+						content: 'good厉害',
+						createTime: '2019-12-31 15:28'
+					},
+					{
+						username: '张哥2',
+						content: 'good厉害2',
+						createTime: '2019-12-30 15:28'
+					}],
+					blog: {									//博客内容: id，内容
+						id: 1,
+						content: 'hello world'
+					},
+					user: {									//当前用户
+						id: 0
+					},
+					newComment: {							//添加新评论用：包含内容，博客ID，用户ID
+						content: '',
+						blogId: 0,
+						userId: 0
+					}
+				}
+			}
+		})
+	</script>
+	<!-- 引入公共 JavaScript文件 -->
+	<script src="./js/public.js"></script>
+	<!-- 引入页面 JavaScript文件 -->
+	<script src="./js/article.js"></script>
+</body>
+
+</html>

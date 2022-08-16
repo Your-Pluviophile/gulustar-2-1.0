@@ -1,17 +1,40 @@
 package gulustar.service;
 
-import gulustar.dao.pojo.User;
+import gulustar.pojo.*;
+
+import java.util.List;
 
 public interface UserService {
-    /**
-     * 登录功能
-     * @return
-     */
-    User login();
+
+    //8.10 得进
 
     /**
-     * 注册功能
+     * 登录
      * @return
      */
-    boolean registe();
+    User login(String account,String password);
+
+    //8.10 棒棒糖
+
+    /**
+     * 注册
+     * @param user
+     * @return
+     */
+    boolean registe(User user);
+
+    /**
+     * 用户关注的人
+     */
+    List<User> selectAllFollowByAccount(User user);
+
+    void addUserHistory(History history);
+
+    /**
+     * 用户获取历史信息
+     * @param
+     * @return
+     */
+    BlogPageBean selectHistory(Integer userId, Conditions conditions);
+
 }

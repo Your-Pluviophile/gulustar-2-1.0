@@ -9,16 +9,24 @@ import java.util.List;
 public class Blog {
     Integer id;
     Integer userId;         //作者
-    Integer category;       //分类
+    String category;        //分类
     String title;           //标题
     String description;     //简介
     String content;         //内容 存html的地址
     Integer likes;          //这篇博客的点赞数
-    Integer colleted;       //收藏的人数
-    List<String> comment;   //博客的评论
+    Integer collected;      //收藏的人数
+    List<Comment> comment;  //博客的评论
     Integer status;         //状态(是否已被删除)
     Date releaseDate;       //发布时间
     Date modifyDate;        //修改时间
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
     public Integer getId() {
         return id;
@@ -34,14 +42,6 @@ public class Blog {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
-    }
-
-    public Integer getCategory() {
-        return category;
-    }
-
-    public void setCategory(Integer category) {
-        this.category = category;
     }
 
     public String getTitle() {
@@ -76,19 +76,19 @@ public class Blog {
         this.likes = likes;
     }
 
-    public Integer getColleted() {
-        return colleted;
+    public Integer getCollected() {
+        return collected;
     }
 
-    public void setColleted(Integer colleted) {
-        this.colleted = colleted;
+    public void setCollected(Integer collected) {
+        this.collected = collected;
     }
 
-    public List<String> getComment() {
+    public List<Comment> getComment() {
         return comment;
     }
 
-    public void setComment(List<String> comment) {
+    public void setComment(List<Comment> comment) {
         this.comment = comment;
     }
 
