@@ -15,6 +15,19 @@ public class UserServiceImpl implements UserService {
     SqlSessionFactory sqlSessionFactory = SqlSessionFactoryUtils.getSqlSessionFactory();
 
     /**
+     * 获取指定ID用户信息
+     * @return
+     */
+    public User getUserById(Integer id){
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+
+        User user = userMapper.selectById(id);
+        sqlSession.close();
+        return user;
+    }
+
+    /**
      * 登录方法：根据账号密码查询用户，并封装成对象返回
      * @param account
      * @param password
@@ -106,6 +119,7 @@ public class UserServiceImpl implements UserService {
             return ;
         }else {
             mapper.addUserHistory(history);
+            sqlSession.commit();
             sqlSession.close();
         }
     }

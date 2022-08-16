@@ -89,7 +89,7 @@ public interface UserMapper {
      * @return
      */
     @Insert("insert into user_history values "+
-            "(#{userid},#{blogid})")
+            "(#{userId}, #{blogId}, now())")
     boolean addUserHistory(History history);
 
     /**

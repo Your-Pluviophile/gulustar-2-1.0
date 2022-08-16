@@ -25,6 +25,25 @@ public class UserServlet extends BaseServlet {
     //业务层方法叫 collectionBlog
 
     /**
+     * 获取指定用户
+     * @param req
+     * @param resp
+     * @throws IOException
+     */
+    public void getUserById(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        //获取用户ID
+        int id = Integer.parseInt(req.getParameter("id"));
+
+        //业务层处理
+        User user = userService.getUserById(id);
+
+        //将结果转为JSON返回
+        String json = JSON.toJSONString(user);
+        resp.setContentType("text/json;charset=utf-8");
+        resp.getWriter().write(json);
+    }
+
+    /**
      * 登录 用获取到的账号密码信息查询、返回查询结果 结果不为null说明登录成功
      */
     public void login(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -145,9 +164,7 @@ public class UserServlet extends BaseServlet {
         //获取当前用户信息
         BufferedReader reader = request.getReader();
         String params = reader.readLine();
-        User user = JSON.parseObject(params, User.class);
-        Blog blog = JSON.parseObject(params, Blog.class);
-        History history = new History(user.getId(),blog.getId());
+        History history = JSON.parseObject(params, History.class);
         userService.addUserHistory(history);
     }
 }

@@ -14,6 +14,11 @@
         <result column="create_time" property="createTime"/>
     </resultMap>
 
+    <resultMap id="historyResultMap" type="gulustar.pojo.History">
+        <result column="user_id" property="userId"/>
+        <result column="blog_id" property="blogId"/>
+    </resultMap>
+
     <select id="selectCollectCount" resultType="java.lang.Integer">
         select count(*)
         from user_collection uc, blog b
@@ -30,13 +35,16 @@
     </select>
 
     <select id="selectCommentsByIds" resultMap="commentResultMap">
-        SELECT c.content,c.create_time,u.username
+        SELECT c.content, c.create_time, u.username
         FROM comment c,user u
-        WHERE c.id IN
+        WHERE c.id in
+        <if test="ids.size() == 0">
+            (-1)
+        </if>
         <foreach item="id" collection="ids" open="(" separator="," close=")">
             #{id}
         </foreach>
-        AND u.id = c.user_id
+         AND u.id = c.user_id
         ORDER BY create_time DESC;
     </select>
 

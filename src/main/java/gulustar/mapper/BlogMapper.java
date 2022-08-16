@@ -149,7 +149,7 @@ public interface BlogMapper {
      * @param history
      * @return
      */
-    @Select("select * from user_history where user_id =#{userid} and blog_id= #{blogid}")
-//    @ResultMap("historyResultMap")
+    @Select("select * from user_history where user_id =#{userId} and blog_id= #{blogId}")
+    @ResultMap("historyResultMap")
     History selectSameHistory(History history);
 }

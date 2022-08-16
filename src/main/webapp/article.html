@@ -42,7 +42,7 @@
 
 				<!-- logo -->
 				<li class="item1">
-					<a href="./index.html">
+					<a href="./">
 						<!--						<img src="./image/logo2.png" alt="" id="logo">-->
 						<img src="./images/02.png" alt="" id="logo">
 					</a>
@@ -60,26 +60,26 @@
 					</a>
 				</li>
 
-				<li class="item1">
-					<a href="./index.html">
-						<i class="iconfont icon-yuandaima"></i>关注的人
-					</a>
+<!--				<li class="item1">-->
+<!--					<a href="./index.html">-->
+<!--						<i class="iconfont icon-yuandaima"></i>关注的人-->
+<!--					</a>-->
 
-					<!-- 二级导航 -->
-					<ul class="two" style="display: none;">
-						<li>
-							<a href="javascript:;">HTML5</a>
-						</li>
+<!--					&lt;!&ndash; 二级导航 &ndash;&gt;-->
+<!--					<ul class="two" style="display: none;">-->
+<!--						<li>-->
+<!--							<a href="javascript:;">HTML5</a>-->
+<!--						</li>-->
 
-						<li>
-							<a href="javascript:;">CSS3</a>
-						</li>
+<!--						<li>-->
+<!--							<a href="javascript:;">CSS3</a>-->
+<!--						</li>-->
 
-						<li>
-							<a href="javascript:;">JavaScript</a>
-						</li>
-					</ul>
-				</li>
+<!--						<li>-->
+<!--							<a href="javascript:;">JavaScript</a>-->
+<!--						</li>-->
+<!--					</ul>-->
+<!--				</li>-->
 
 				<li class="item1">
 					<a href="./index.html">
@@ -102,7 +102,7 @@
 					</ul>
 				</li>
 
-				<li class="item1">
+				<li class="item1" v-if="user.isAdmin == 1">
 					<a href="javascript:;">
 						<i class="iconfont icon-zhuti1"></i>管理系统
 					</a>
@@ -310,9 +310,7 @@
 						<!-- 评论者信息 -->
 						<div class="comment_info">
 							<img src="./image/user.png" alt="">
-							<input type="text" placeholder="QQ号可获取头像和昵称">
-							<input type="text" placeholder="昵称*" disabled>
-							<input type="text" placeholder="昵称*" disabled>
+							<input type="text" v-model="user.username" disabled>
 							<a href="javascript:;" @click="addComment()">提交评论</a>
 						</div>
 
@@ -390,8 +388,82 @@
 					<!-- <div class="occupy"></div> -->
 				</div>
 			</div>
+
+			<!-- 功能模块 -->
+			<div class="function">
+				<div class="sticky">
+					<!-- 用户详情 -->
+					<div class="author">
+						<!-- 背景图片 -->
+						<div class="author-bg">
+							<!-- 头像 -->
+							<div class="avatar">
+								<img src="./image/user1.png" alt="">
+							</div>
+						</div>
+
+						<!-- 作者信息 -->
+						<div class="text">
+							<h4>
+								<a href="javascript:;">{{user.username}}</a>
+								<div class="medal"></div>
+							</h4>
+							<p>{{user.username}},欢迎来到咕噜星</p>
+						</div>
+
+						<!-- 功能 -->
+						<div class="fun">
+							<!-- 登录 -->
+							<div class="login" v-if="user.id == 0"><a href="javascript:;" @click="loginDialogVisible=true">登录</a></div>
+
+							<span></span>
+
+							<!-- 注册 -->
+							<div class="register" v-if="user.id == 0"><a href="javascript:;" @click="registeDialogVisible=true">注册</a></div>
+
+							<!-- 更换 -->
+							<div class="login" v-if="user.id > 0"><a href="javascript:;" @click="loginDialogVisible=true">切换用户</a></div>
+
+							<span></span>
+
+							<!-- 注销 -->
+							<div class="register" v-if="user.id > 0"><a href="javascript:;" @click="logout()">退出登录</a></div>
+						</div>
+					</div>
+
+					<!-- 随机文章 -->
+					<div class="containerA">
+						<!-- 标题 -->
+						<div class="title">
+							<h3><i class="iconfont icon-suijishushengcheng"></i> 广告位</h3>
+							<!-- 小圆点 -->
+							<div class="dots">
+								<ol>
+									<li></li>
+									<li></li>
+									<li></li>
+								</ol>
+							</div>
+						</div>
+
+						<!-- 随机文章 -->
+						<div class="random_Alist">
+							<ul>
+								<li>
+									<i class="iconfont icon-xiangyoujiantou"></i>
+									<a href="javascript:;">加入01星球月入百亿</a>
+								</li>
+
+							</ul>
+						</div>
+					</div>
+
+				</div>
+			</div>
 		</div>
 	</div>
+
+
 
 	<!-- 底部 -->
 	<div class="footer">
@@ -433,6 +505,50 @@
 			</a>
 		</div>
 	</div>
+
+	<!-- 登录窗口 -->
+	<el-dialog
+			:lock-scroll="false"
+			:visible.sync="loginDialogVisible"
+			width="30%"
+			center
+			:close-on-click-modal="false"
+			custom-class="customLoginDialog">
+		<h1>LOGIN</h1>
+		<input type="text" placeholder="帐号" v-model="loginInfo.account" @blur="checkAccLen()">
+		<span class="lenCheck" v-if="accTooLong">账号长度不能超过12</span>
+		<input type="password" placeholder="密码" v-model="loginInfo.password" @blur="checkPwdLen()">
+		<span class="lenCheck" v-if="pwdTooLong">密码长度不能超过20</span>
+		<button type="submit" @click="login()">Login</button>
+		<div class="control">
+				<span>没有帐号？<a href="javascript:;"
+							  @click="loginDialogVisible=false, registeDialogVisible=true">Register</a></span>
+		</div>
+	</el-dialog>
+
+	<!-- 注册窗口 -->
+	<el-dialog
+			:lock-scroll="false"
+			:visible.sync="registeDialogVisible"
+			width="30%"
+			center
+			:close-on-click-modal="false"
+			custom-class="customLoginDialog">
+		<h1 class="register">REGISTER</h1>
+		<input type="text" placeholder="昵称" v-model="registeInfo.username" @blur="checkNewNameLen()">
+		<span class="lenCheck" v-if="usernameTooLong">昵称长度不能超过10</span>
+		<input type="text" placeholder="帐号" v-model="registeInfo.account" @blur="checkNewAccLen()">
+		<span class="lenCheck" v-if="newAccTooLong">账号长度不能超过12</span>
+		<input type="password" placeholder="密码" v-model="registeInfo.password" @blur="checkNewPwdLen()">
+		<span class="lenCheck" v-if="newPwdTooLong">密码长度不能超过20</span>
+		<input type="password" placeholder="确认密码" v-model="registeInfo.confirmPwd" @blur="checkTwiceInputPwd()">
+		<span class="lenCheck" v-if="checkNewPwd">两次输入的密码不一致</span>
+		<button type="submit" @click="registe()">Register</button>
+		<div class="registerText">
+			<span>已有帐号？<a href="javascript:;" class="registerA"
+						  @click="loginDialogVisible=true, registeDialogVisible=false">Login</a></span>
+		</div>
+	</el-dialog>
 </div>
 
 	<!-- import Vue -->
@@ -449,14 +565,109 @@
 			 */
 			mounted() {
 				this.blog.id = parseInt(sessionStorage.getItem('currBlogId'));
-				this.user.id = parseInt(sessionStorage.getItem('currUserId'));
+				let currUserId = sessionStorage.getItem('currUserId');
+				this.user.id = parseInt(currUserId == null? '0':currUserId);
 				this.getContentAndCommentList();
+				this.getUserInfo();
 			},
 			methods: {
+				/*
+					退出登录：清除session里的用户ID
+				 */
+				logout(){
+					sessionStorage.removeItem("currUserId");
+					this.user.id = 0;
+					this.user.username = '咕噜星用户';
+					this.user.status = 1;
+					this.user.isAdmin = 0;
+				},
+				/*
+					注册时检查2次密码是否一致
+				 */
+				checkTwiceInputPwd(){
+					if (this.registeInfo.password != this.registeInfo.confirmPwd){
+						this.checkNewPwd = true;
+					}else {
+						this.checkNewPwd = false;
+					}
+				},
+				/*
+					注册时检查密码长度
+				 */
+				checkNewPwdLen(){
+					if (this.registeInfo.password != '' && this.registeInfo.password.length > 20){
+						this.newPwdTooLong = true;
+					}else {
+						this.newPwdTooLong = false;
+					}
+				},
+				/*
+					检查注册时账号长度
+				 */
+				checkNewAccLen(){
+					if (this.registeInfo.account != '' && this.registeInfo.account.length > 12){
+						this.newAccTooLong = true;
+					}else {
+						this.newAccTooLong = false;
+					}
+				},
+				/*
+					注册时检查昵称长度
+				 */
+				checkNewNameLen(){
+					if (this.registeInfo.username != '' && this.registeInfo.username.length > 10){
+						this.usernameTooLong = true;
+					}else {
+						this.usernameTooLong = false;
+					}
+				},
+				/*
+					检查账号长度
+				 */
+				checkAccLen(){
+					if (this.loginInfo.account != '' && this.loginInfo.account.length > 12){
+						this.accTooLong = true;
+					}else {
+						this.accTooLong = false;
+					}
+				},
+				/*
+					检查密码长度
+				 */
+				checkPwdLen(){
+					if (this.loginInfo.password != '' && this.loginInfo.password.length > 20){
+						this.pwdTooLong = true;
+					}else {
+						this.pwdTooLong = false;
+					}
+				},
+				/*
+					获取用户信息
+				 */
+				getUserInfo(){
+					axios({
+						method: "get",
+						url: "http://localhost:8080/gulustar/user/getUserById?id=" + this.user.id
+					}).then(resp => {
+						if (resp.data != null){
+							this.user = resp.data;
+						}
+					});
+				},
 				/*
 					把评论绑定博客ID和用户ID发送给后端 进行添加到数据库操作
 				 */
 				addComment(){
+					if (this.user.id == 0){
+						this.$message({
+							center: true,
+							duration: 1000,
+							showClose: true,
+							message: '请先登录',
+							type: 'info'
+						});
+						return;
+					}
 					this.newComment.blogId = this.blog.id;
 					this.newComment.userId = this.user.id;
 					axios({
@@ -491,6 +702,63 @@
 						this.comment = resp.data.comment;
 					});
 				},
+				/*
+					登录方法，post方式以JSON形式发送账号密码给控制层
+					根据返回值是否为空判断是否登录成功，如果成功就重新加载主页
+				 */
+				login(){
+					axios({
+						method: "post",
+						url: "http://localhost:8080/gulustar/user/login",
+						data: this.loginInfo
+					}).then(resp => {
+						if (resp.data != null){
+							this.user = resp.data;
+							this.loginDialogVisible = false;
+							this.$message({
+								message: '登陆成功',
+								type: 'success'
+							});
+							sessionStorage.setItem("currUserId", this.user.id);
+							for (let i in this.loginInfo) {
+								this.loginInfo[i] = '';
+							}
+						}else {
+							this.$message({
+								message: '用户名或密码错误',
+								type: 'warning'
+							});
+						}
+					});
+				},
+				/*
+					注册方法：把表单的信息封装为JSON对象发给后端
+					根据返回值提示用户是否注册成功
+				 */
+				registe(){
+					axios({
+						method: "put",
+						url: "http://localhost:8080/gulustar/user/registe",
+						data: this.registeInfo
+					}).then(resp => {
+						if (resp.data == "OK"){
+							this.$message({
+								message: '注册成功,赶快登录吧!',
+								type: 'success'
+							});
+							this.loginInfo.account = this.registeInfo.account;
+							this.loginInfo.password = this.registeInfo.password;
+							for (let i in this.registeInfo) {
+								this.registeInfo[i] = '';
+							}
+						}else {
+							this.$message({
+								message: '注册失败',
+								type: 'warning'
+							});
+						}
+					});
+				}
 			},
 			data() {
 				return{
@@ -509,13 +777,32 @@
 						content: 'hello world'
 					},
 					user: {									//当前用户
-						id: 0
+						id: 0,
+						username: '咕噜星用户'
 					},
 					newComment: {							//添加新评论用：包含内容，博客ID，用户ID
 						content: '',
 						blogId: 0,
 						userId: 0
-					}
+					},
+					loginInfo: {                        //登录信息 包括账号、密码
+						account: '',
+						password: ''
+					},
+					registeInfo: {                      //注册信息 包括账号、昵称、密码
+						username: '',
+						account: '',
+						password: '',
+						confirmPwd: ''
+					},
+					accTooLong: false,					//判断账号长度
+					pwdTooLong: false,					//密码长度
+					usernameTooLong: false,				//昵称长度
+					newAccTooLong: false,				//注册时账号长度
+					newPwdTooLong: false,				//注册时密码长度
+					checkNewPwd: false,					//2次密码是否一样
+					loginDialogVisible: false,          //用来控制显示登录窗口
+					registeDialogVisible: false,        //控制显示注册窗口
 				}
 			}
 		})

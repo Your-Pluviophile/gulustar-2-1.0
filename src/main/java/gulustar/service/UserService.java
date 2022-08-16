@@ -8,6 +8,8 @@ public interface UserService {
 
     //8.10 得进
 
+    User getUserById(Integer id);
+
     /**
      * 登录
      * @return

@@ -2,35 +2,30 @@ package gulustar.pojo;
 
 public class History {
 
-    private Integer userid;
+    private Integer userId;
 
-    private Integer blogid;
+    private Integer blogId;
 
     public History(Integer id, Integer id1) {
 
     }
 
-    public int getUserid() {
-        return userid;
+    public History() {
     }
 
-    public void setUserid(int userid) {
-        this.userid = userid;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public int getBlogid() {
-        return blogid;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public void setBlogid(int blogid) {
-        this.blogid = blogid;
+    public Integer getBlogId() {
+        return blogId;
     }
 
-    @Override
-    public String toString() {
-        return "History{" +
-                "userid=" + userid +
-                ", blogid=" + blogid +
-                '}';
+    public void setBlogId(Integer blogId) {
+        this.blogId = blogId;
     }
 }

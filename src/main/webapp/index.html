@@ -42,7 +42,7 @@
 
 				<!-- logo -->
 				<li class="item1">
-					<a href="#" @click="init()">
+					<a href="./">
 <!--						<img src="./image/logo2.png" alt="" id="logo">-->
 						<img src="./images/02.png" alt="" id="logo">
 					</a>
@@ -288,7 +288,7 @@
 	</div>
 
 	<!-- 主体内容 -->
-	<div class="main">
+	<div class="main" id="top">
 		<div class="w">
 			<!-- 文章列表 -->
 			<div class="list home_list">
@@ -305,8 +305,8 @@
 				<ul>
 					<li v-for="blog in blogs">
 						<!-- 文章缩略图 -->
-						<div class="left">
-							<a href="javascript:;" @click="openBlog(blog.id)">
+						<div class="left" @click="openBlog(blog.id)">
+							<a href="javascript:;">
 								<img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5e7d37251bc04bf48caafe62eae2991e~tplv-k3u1fbpfcp-zoom-crop-mark:1304:1304:1304:734.awebp?" alt="">
 							</a>
 
@@ -316,8 +316,8 @@
 						<!-- 文章内容 -->
 						<div class="right">
 							<!-- 文章标题 -->
-							<h2>
-								<a href="javascript:;" @click="openBlog(blog.id)">
+							<h2 @click="openBlog(blog.id)">
+								<a href="javascript:;">
 									<span class="tags_purple">精品</span> <span class="tags_red">置顶</span> <span
 										class="tags_yellow">推荐</span>
 									{{blog.title}}
@@ -395,13 +395,13 @@
 
 				<!-- 分页 -->
 				<div class="pagination">
-					<a href="javascript:;" @click="isPageOne? '':prevPage()">‹</a>
-					<a href="javascript:;"
+					<a href="#top" @click="isPageOne? '':prevPage()">‹</a>
+					<a href="#"
 					   v-for="i of conditions.total"
 					   :class="i == conditions.currentPage? 'paginationAction':''"
 					   @click="goToPage(i)"
 					>{{i}}</a>
-					<a href="javascript:;" @click="isLastPage?  '':nextPage()">›</a>
+					<a href="#top" @click="isLastPage? '':nextPage()">›</a>
 				</div>
 
 				<!-- 加载列表 -->
@@ -449,7 +449,7 @@
 							<span></span>
 
 							<!-- 注销 -->
-							<div class="register" v-if="user.id > 0"><a href="javascript:;" @click="registeDialogVisible=true">退出登录</a></div>
+							<div class="register" v-if="user.id > 0"><a href="javascript:;" @click="logout()">退出登录</a></div>
 						</div>
 					</div>
 
@@ -577,7 +577,13 @@
 	<script>
 		new Vue({
 			el: '#app',
+			/*
+				获取用户信息并初始化博客列表
+			 */
 			mounted() {
+				let currUserId = sessionStorage.getItem('currUserId');
+				this.user.id = parseInt(currUserId == null? '0':currUserId);
+				this.getUserInfo();
 				this.init();
 			},
 			methods: {
@@ -585,6 +591,29 @@
 					sessionStorage.removeItem("collect");
 					sessionStorage.removeItem("history");
 					this.getBlogsByPageAndCondition();
+				},
+				/*
+					退出登录：清除session里的用户ID
+				 */
+				logout(){
+					sessionStorage.removeItem("currUserId");
+					this.user.id = 0;
+					this.user.username = '咕噜星用户';
+					this.user.status = 1;
+					this.user.isAdmin = 0;
+				},
+				/*
+					获取用户信息
+				 */
+				getUserInfo(){
+					axios({
+						method: "get",
+						url: "http://localhost:8080/gulustar/user/getUserById?id=" + this.user.id
+					}).then(resp => {
+						if (resp.data != null){
+							this.user = resp.data;
+						}
+					});
 				},
 				/*
 					注册时检查2次密码是否一致
@@ -708,9 +737,19 @@
 				 */
 				openBlog(id){
 					sessionStorage.setItem('currBlogId', id);
-					sessionStorage.setItem('currUserId', this.user.id);
+					this.addHistory(id);
 					// window.location.href='/gulustar/src/main/webapp/article.html';
 					window.location.href='/gulustar/article.html';
+				},
+				/*
+					添加浏览记录
+				 */
+				addHistory(id){
+					axios({
+						method: "put",
+						url: "http://localhost:8080/gulustar/user/addUserHistory",
+						data: {userId: this.user.id, blogId: id}
+					});
 				},
 				/*
 					根据分类查询: 根据分类查询，回到第一页开始显示
@@ -739,6 +778,9 @@
 					this.checkPage();
 					this.getBlogsByPageAndCondition();
 				},
+				/*
+					检查是不是第一页或最后一页，并设置对应bool值
+				 */
 				checkPage(){
 					if (this.conditions.currentPage == this.conditions.total){
 						this.isLastPage = true;
@@ -821,6 +863,7 @@
 								message: '登陆成功',
 								type: 'success'
 							});
+							sessionStorage.setItem("currUserId", this.user.id);
 							for (let i in this.loginInfo) {
 								this.loginInfo[i] = '';
 							}
