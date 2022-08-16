@@ -42,20 +42,20 @@
 
 				<!-- logo -->
 				<li class="item1">
-					<a href="./">
+					<a href="#" @click="init()">
 <!--						<img src="./image/logo2.png" alt="" id="logo">-->
 						<img src="./images/02.png" alt="" id="logo">
 					</a>
 				</li>
 
 				<li class="item1">
-					<a href="./">
+					<a href="javascript:;">
 						<i class="iconfont icon-shouye"></i>小组介绍
 					</a>
 				</li>
 
 				<li class="item1">
-					<a href="javascript:;" @click="getCollections()">
+					<a href="#" @click="getCollections()">
 						<i class="iconfont icon-bijiben1"></i>我的收藏
 					</a>
 				</li>
@@ -82,7 +82,7 @@
 <!--				</li>-->
 
 				<li class="item1">
-					<a href="javascript:;" @click="getHistory()">
+					<a href="#" @click="getHistory()">
 						<i class="iconfont icon-zuzhijiagou1"></i>阅览历史
 					</a>
 
@@ -452,7 +452,7 @@
 							<div class="register" v-if="user.id > 0"><a href="javascript:;" @click="registeDialogVisible=true">退出登录</a></div>
 						</div>
 					</div>
-					
+
 					<!-- 标签栏 -->
 					<div class="containerA">
 						<!-- 标题 -->
@@ -522,36 +522,45 @@
 	</div>
 
 	<!-- 登录窗口 -->
-    <el-dialog
-            title="咕噜星"
-            :visible.sync="loginDialogVisible"
-            width="30%"
+		<el-dialog
+			:visible.sync="loginDialogVisible"
+			width="30%"
             center
-            :close-on-click-modal="false"
+			:close-on-click-modal="false"
             custom-class="customLoginDialog">
-        <el-button @click="registeDialogVisible = true, loginDialogVisible = false">注册</el-button>
-        <el-input v-model="loginInfo.account" placeholder="请输入账号" prefix-icon="el-icon-user"></el-input>
-        <el-input placeholder="请输入密码" v-model="loginInfo.password" show-password></el-input>
-        <span slot="footer" class="dialog-footer">
-                <el-button type="primary" @click="login()">登 录</el-button>
-            </span>
-    </el-dialog>
+			<h1>LOGIN</h1>
+			<input type="text" placeholder="帐号" v-model="loginInfo.account" @blur="checkAccLen()">
+			<span class="lenCheck" v-if="accTooLong">账号长度不能超过12</span>
+			<input type="password" placeholder="密码" v-model="loginInfo.password" @blur="checkPwdLen()">
+			<span class="lenCheck" v-if="pwdTooLong">密码长度不能超过20</span>
+			<button type="submit" @click="login()">Login</button>
+			<div class="control">
+				<span>没有帐号？<a href="javascript:;"
+							  @click="loginDialogVisible=false, registeDialogVisible=true">Register</a></span>
+			</div>
+	</el-dialog>
 
     <!-- 注册窗口 -->
     <el-dialog
-            title="咕噜星"
             :visible.sync="registeDialogVisible"
             width="30%"
             center
             :close-on-click-modal="false"
-            custom-class="customLoginDialog">
-        <el-button @click="loginDialogVisible = true, registeDialogVisible = false">登录</el-button>
-        <el-input v-model="registeInfo.username" placeholder="请输入昵称"></el-input>
-        <el-input v-model="registeInfo.account" placeholder="请输入账号" prefix-icon="el-icon-user"></el-input>
-        <el-input placeholder="请输入密码" v-model="registeInfo.password" show-password></el-input>
-        <span slot="footer" class="dialog-footer">
-                <el-button type="primary" @click="registe()">注 册</el-button>
-            </span>
+			custom-class="customLoginDialog">
+		<h1 class="register">REGISTER</h1>
+		<input type="text" placeholder="昵称" v-model="registeInfo.username" @blur="checkNewNameLen()">
+		<span class="lenCheck" v-if="usernameTooLong">昵称长度不能超过10</span>
+		<input type="text" placeholder="帐号" v-model="registeInfo.account" @blur="checkNewAccLen()">
+		<span class="lenCheck" v-if="newAccTooLong">账号长度不能超过12</span>
+		<input type="password" placeholder="密码" v-model="registeInfo.password" @blur="checkNewPwdLen()">
+		<span class="lenCheck" v-if="newPwdTooLong">密码长度不能超过20</span>
+		<input type="password" placeholder="确认密码" v-model="registeInfo.confirmPwd" @blur="checkTwiceInputPwd()">
+		<span class="lenCheck" v-if="checkNewPwd">两次输入的密码不一致</span>
+		<button type="submit" @click="registe()">Register</button>
+		<div class="registerText">
+			<span>已有帐号？<a href="javascript:;" class="registerA"
+						  @click="loginDialogVisible=true, registeDialogVisible=false">Login</a></span>
+		</div>
     </el-dialog>
 
 	</div>
@@ -571,9 +580,81 @@
 			},
 			methods: {
 				init(){
+					sessionStorage.removeItem("collect");
+					sessionStorage.removeItem("history");
 					this.getBlogsByPageAndCondition();
 				},
+				/*
+					注册时检查2次密码是否一致
+				 */
+				checkTwiceInputPwd(){
+					if (this.registeInfo.password != this.registeInfo.confirmPwd){
+						this.checkNewPwd = true;
+					}else {
+						this.checkNewPwd = false;
+					}
+				},
+				/*
+					注册时检查密码长度
+				 */
+				checkNewPwdLen(){
+					if (this.registeInfo.password != '' && this.registeInfo.password.length > 20){
+						this.newPwdTooLong = true;
+					}else {
+						this.newPwdTooLong = false;
+					}
+				},
+				/*
+					检查注册时账号长度
+				 */
+				checkNewAccLen(){
+					if (this.registeInfo.account != '' && this.registeInfo.account.length > 12){
+						this.newAccTooLong = true;
+					}else {
+						this.newAccTooLong = false;
+					}
+				},
+				/*
+					注册时检查昵称长度
+				 */
+				checkNewNameLen(){
+					if (this.registeInfo.username != '' && this.registeInfo.username.length > 10){
+						this.usernameTooLong = true;
+					}else {
+						this.usernameTooLong = false;
+					}
+				},
+				/*
+					检查账号长度
+				 */
+				checkAccLen(){
+					if (this.loginInfo.account != '' && this.loginInfo.account.length > 12){
+						this.accTooLong = true;
+					}else {
+						this.accTooLong = false;
+					}
+				},
+				/*
+					检查密码长度
+				 */
+				checkPwdLen(){
+					if (this.loginInfo.password != '' && this.loginInfo.password.length > 20){
+						this.pwdTooLong = true;
+					}else {
+						this.pwdTooLong = false;
+					}
+				},
 				getHistory(){
+					if (this.user.id == 0){
+						this.$message({
+							center: true,
+							showClose: true,
+							message: '请先登录',
+							type: 'info'
+						});
+						return;
+					}
+
 					this.conditions.currentPage = 1;
 					sessionStorage.removeItem("collect");
 					sessionStorage.setItem("history", "true");
@@ -592,6 +673,16 @@
 					获取收藏的博客: 页数改为第一页,发送用户ID去后端查询
 				 */
 				getCollections(){
+					if (this.user.id == 0){
+						this.$message({
+							center: true,
+							showClose: true,
+							message: '请先登录',
+							type: 'info'
+						});
+						return;
+					}
+
 					this.conditions.currentPage = 1;
 					sessionStorage.removeItem("history");
 					sessionStorage.setItem("collect", "true");
@@ -705,6 +796,9 @@
 								message: '登陆成功',
 								type: 'success'
 							});
+							for (let i in this.loginInfo) {
+								this.loginInfo[i] = '';
+							}
 						}else {
 							this.$message({
 								message: '用户名或密码错误',
@@ -760,7 +854,8 @@
 					registeInfo: {                      //注册信息 包括账号、昵称、密码
 						username: '',
 						account: '',
-						password: ''
+						password: '',
+						confirmPwd: ''
 					},
 					blogs: [							//展示在主页的所有博客对象
 						{								//包括id、标题、简介、点赞数、收藏数、发布日期、作者
@@ -790,6 +885,12 @@
 						size: 7
 					},
 					categories: ['分类1', '分类2'],		//分类标签
+					accTooLong: false,					//判断账号长度
+					pwdTooLong: false,					//密码长度
+					usernameTooLong: false,				//昵称长度
+					newAccTooLong: false,				//注册时账号长度
+					newPwdTooLong: false,				//注册时密码长度
+					checkNewPwd: false,					//2次密码是否一样
 				}
 			}
 		})
