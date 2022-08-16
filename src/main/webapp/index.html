@@ -395,13 +395,13 @@
 
 				<!-- 分页 -->
 				<div class="pagination">
-					<a href="javascript:;" @click="prevPage()">‹</a>
+					<a href="javascript:;" @click="isPageOne? '':prevPage()">‹</a>
 					<a href="javascript:;"
 					   v-for="i of conditions.total"
 					   :class="i == conditions.currentPage? 'paginationAction':''"
 					   @click="goToPage(i)"
 					>{{i}}</a>
-					<a href="javascript:;" @click="nextPage()">›</a>
+					<a href="javascript:;" @click="isLastPage?  '':nextPage()">›</a>
 				</div>
 
 				<!-- 加载列表 -->
@@ -523,9 +523,10 @@
 
 	<!-- 登录窗口 -->
 		<el-dialog
+			:lock-scroll="false"
 			:visible.sync="loginDialogVisible"
 			width="30%"
-            center
+			center
 			:close-on-click-modal="false"
             custom-class="customLoginDialog">
 			<h1>LOGIN</h1>
@@ -542,10 +543,11 @@
 
     <!-- 注册窗口 -->
     <el-dialog
-            :visible.sync="registeDialogVisible"
-            width="30%"
-            center
-            :close-on-click-modal="false"
+			:lock-scroll="false"
+			:visible.sync="registeDialogVisible"
+			width="30%"
+			center
+			:close-on-click-modal="false"
 			custom-class="customLoginDialog">
 		<h1 class="register">REGISTER</h1>
 		<input type="text" placeholder="昵称" v-model="registeInfo.username" @blur="checkNewNameLen()">
@@ -648,6 +650,7 @@
 					if (this.user.id == 0){
 						this.$message({
 							center: true,
+							duration: 1000,
 							showClose: true,
 							message: '请先登录',
 							type: 'info'
@@ -656,6 +659,7 @@
 					}
 
 					this.conditions.currentPage = 1;
+					this.isPageOne = true;
 					sessionStorage.removeItem("collect");
 					sessionStorage.setItem("history", "true");
 
@@ -676,6 +680,7 @@
 					if (this.user.id == 0){
 						this.$message({
 							center: true,
+							duration: 1000,
 							showClose: true,
 							message: '请先登录',
 							type: 'info'
@@ -684,6 +689,7 @@
 					}
 
 					this.conditions.currentPage = 1;
+					this.isPageOne = true;
 					sessionStorage.removeItem("history");
 					sessionStorage.setItem("collect", "true");
 
@@ -712,6 +718,7 @@
 				getBlogsByCategory(category){
 					this.conditions.category = category;
 					this.conditions.currentPage = 1;
+					this.isPageOne = true;
 
 					if (sessionStorage.getItem("collect") == "true"){
 						this.getCollections();
@@ -729,13 +736,27 @@
 				 */
 				goToPage(i){
 					this.conditions.currentPage = i;
+					this.checkPage();
 					this.getBlogsByPageAndCondition();
+				},
+				checkPage(){
+					if (this.conditions.currentPage == this.conditions.total){
+						this.isLastPage = true;
+					}else {
+						this.isLastPage = false;
+					}
+					if (this.conditions.currentPage == 1){
+						this.isPageOne = true;
+					}else {
+						this.isPageOne = false;
+					}
 				},
 				/*
 					上一页 页数-1然后查询
 				 */
 				prevPage(){
 					this.conditions.currentPage -= 1;
+					this.checkPage();
 					this.getBlogsByPageAndCondition();
 				},
 				/*
@@ -743,6 +764,7 @@
 				 */
 				nextPage(){
 					this.conditions.currentPage += 1;
+					this.checkPage();
 					this.getBlogsByPageAndCondition();
 				},
 				/*
@@ -756,6 +778,9 @@
 					if (sessionStorage.getItem("history") == "true"){
 						this.getHistory();
 						return;
+					}
+					if (this.conditions.currentPage == 1){
+						this.isPageOne = true;
 					}
 
 					axios({
@@ -891,6 +916,8 @@
 					newAccTooLong: false,				//注册时账号长度
 					newPwdTooLong: false,				//注册时密码长度
 					checkNewPwd: false,					//2次密码是否一样
+					isPageOne: false,					//是第一页
+					isLastPage: false,					//是最后一页
 				}
 			}
 		})
