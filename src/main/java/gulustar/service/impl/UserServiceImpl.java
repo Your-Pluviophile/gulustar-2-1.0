@@ -164,7 +164,8 @@ public class UserServiceImpl implements UserService {
      * @param blogId
      * @return
      */
-    boolean deleteCollection(Integer userId,Integer blogId){
+    @Override
+    public boolean deleteCollection(Integer userId, String blogId){
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         boolean b = userMapper.deleteCollection(userId, blogId);
@@ -177,7 +178,8 @@ public class UserServiceImpl implements UserService {
      * @param blogId
      * @return
      */
-    public boolean collectionBlog(Integer userId, Integer blogId){
+    @Override
+     public boolean collectionBlog(Integer userId, String blogId){
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         BlogMapper blogMapper = sqlSession.getMapper(BlogMapper.class);
@@ -197,7 +199,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public List<Integer> getCollectBlogIds(Integer userId) {
+    public List<Integer> selectCollectBlogIds(Integer userId) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
 

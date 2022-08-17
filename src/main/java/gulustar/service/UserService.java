@@ -46,4 +46,10 @@ public interface UserService {
 
     boolean deleteCollection(Integer userId, String blogId);
 
+    /**
+     * 收藏 Id
+     * @param userId
+     * @return
+     */
+    List<Integer> selectCollectBlogIds(Integer userId);
 }
