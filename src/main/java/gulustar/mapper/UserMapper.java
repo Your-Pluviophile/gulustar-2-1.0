@@ -65,7 +65,7 @@ public interface UserMapper {
     void updateById(User user);
 
     /**
-     * 根据当前用户id查询关注的人id
+     * 根据当前用户id查询关注的人id(本次项目不实装此功能、未测试)
      * @param id
      * @return
      */
@@ -105,11 +105,22 @@ public interface UserMapper {
      */
     Integer selectHistoryCount(@Param("userId") Integer userId, @Param("conditions")Conditions conditions);
 
-    /*
-收藏博客
- */
-    @Insert("insert into user_collection values(#{id}, #{id})  ")
-    boolean collectionBlog(Integer userId,Integer blogId);
+    /**
+     * 用户添加收藏
+     * @param userId
+     * @param blogId
+     * @return
+     */
+    @Insert("insert into user_collection values(#{userId}, #{blogId})")
+    boolean collectBlog(@Param("userId") Integer userId, @Param("blogId") Integer blogId);
+
+    /**
+     * 获取用户收藏博客的ID集合
+     * @return
+     */
+    @Select("select blog_id from user_collection where user_id = #{userId}")
+    List<Integer> selectCollectBlogIds(Integer userId);
+
     /*
     取消收藏
      */

@@ -22,6 +22,28 @@ public class BlogServlet extends BaseServlet {
     private BlogService blogService = new BlogServiceImpl();
 
     /**
+     * 点赞
+     * @param req
+     * @param resp
+     * @throws IOException
+     */
+    public void addLikes(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+        //获取博客ID
+        req.setCharacterEncoding("utf-8");
+        BufferedReader reader = req.getReader();
+        String params = reader.readLine();
+        Integer blogId = JSON.parseObject(params, Integer.class);
+
+        //业务层处理
+        boolean addOK = blogService.addLikes(blogId);
+
+        //返回结果
+        String json = JSON.toJSONString(addOK);
+        resp.setContentType("text/json;charset=utf-8");
+        resp.getWriter().write(json);
+    }
+
+    /**
      * 添加一条评论
      * @param req
      * @param resp
@@ -85,49 +107,16 @@ public class BlogServlet extends BaseServlet {
     }
 
     /**
-     * 获取所有博客：拦截请求，返回博客集合
-     */
-    public void getAllBlogs(HttpServletRequest req, HttpServletResponse resp) throws IOException{
-        //获取博客集合
-        List<Blog> blogs = blogService.getAllBlogs();
-
-        //将结果转为JSON返回
-        String jsonString = JSON.toJSONString(blogs);
-        resp.setContentType("text/json;charset=utf-8");
-        resp.getWriter().write(jsonString);
-    }
-
-    /**
-     * 根据分类查询博客: 接收分类ID参数.直接交给业务层处理,最后返回博客对象集合
-     * @param req
-     * @param resp
-     * @throws ServletException
-     * @throws IOException
-     */
-    public void queryByCategory(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String category = req.getParameter("category");
-        //查询
-        List<Blog> blogs = blogService.queryByCategory(category);
-
-        //将结果转为JSON返回
-        String jsonString = JSON.toJSONString(blogs);
-        resp.setContentType("text/json;charset=utf-8");
-        resp.getWriter().write(jsonString);
-    }
-
-    /**
-     * 根据关键词查询：获取用户输入，业务层处理后返回符合条件的博客集合
+     * 获取全部分类
      * @param req
      * @param resp
      * @throws IOException
      */
-    public void queryByKeyword(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String queryKeyword = req.getParameter("queryKeyword");
-        //查询
-        List<Blog> blogs = blogService.queryByKeyword(queryKeyword);
+    public void getCategories(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        List<String> allCategories = blogService.getAllCategories();
 
         //将结果转为JSON返回
-        String jsonString = JSON.toJSONString(blogs);
+        String jsonString = JSON.toJSONString(allCategories);
         resp.setContentType("text/json;charset=utf-8");
         resp.getWriter().write(jsonString);
     }
@@ -149,8 +138,8 @@ public class BlogServlet extends BaseServlet {
         //获取请求参数 页数
         int currentPage = Integer.parseInt(req.getParameter("currentPage"));
         int size = Integer.parseInt(req.getParameter("size"));
-        String keyword = req.getParameter("keyword");
-        String category = req.getParameter("category");
+        String keyword = new String(req.getParameter("keyword").getBytes("iso-8859-1"), "utf-8");
+        String category = new String(req.getParameter("category").getBytes("iso-8859-1"), "utf-8");
         //封装为对象
         Conditions conditions = new Conditions();
         conditions.setCurrentPage(currentPage);

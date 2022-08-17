@@ -14,6 +14,20 @@ import java.util.List;
 public interface BlogMapper {
 
     /**
+     * 添加点赞数
+     * @return
+     */
+    @Update("update blog set likes = likes + 1 where id = #{blogId}")
+    boolean addLikes(Integer blogId);
+
+    /**
+     * 获取全部分类
+     * @return
+     */
+    @Select("select category from blog group by category")
+    List<String> selectAllCategories();
+
+    /**
      * 获取上次插入数据的行的ID auto_increment
      * @return
      */
@@ -99,6 +113,13 @@ public interface BlogMapper {
     void updateBlog(Blog blog);
 
     /**
+     * 更新博客被收藏数
+     * @return
+     */
+    @Update("update blog set collected = collected + 1 where id = #{blogId}")
+    boolean updateBlogCollected(Integer blogId);
+
+    /**
      * 添加博客
      * @param blog
      * @return
@@ -149,7 +170,7 @@ public interface BlogMapper {
      * @param history
      * @return
      */
-    @Select("select * from user_history where user_id =#{userId} and blog_id= #{blogId}")
+    @Select("select * from user_history where user_id = #{userId} and blog_id= #{blogId}")
     @ResultMap("historyResultMap")
     History selectSameHistory(History history);
 }

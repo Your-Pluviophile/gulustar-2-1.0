@@ -8,6 +8,11 @@ public interface UserService {
 
     //8.10 得进
 
+    /**
+     * 根据ID获取用户
+     * @param id
+     * @return
+     */
     User getUserById(Integer id);
 
     /**
@@ -26,10 +31,14 @@ public interface UserService {
     boolean registe(User user);
 
     /**
-     * 用户关注的人
+     * 用户关注的人(本次不实装、未测试)
      */
     List<User> selectAllFollowByAccount(User user);
 
+    /**
+     * 记录用户浏览
+     * @param history
+     */
     void addUserHistory(History history);
 
     /**
@@ -39,4 +48,15 @@ public interface UserService {
      */
     BlogPageBean selectHistory(Integer userId, Conditions conditions);
 
+    /**
+     * 收藏博客
+     * @return
+     */
+    boolean collect(Integer blogId, Integer userId);
+
+    /**
+     * 获取用户收藏的博客ID集合
+     * @return
+     */
+    List<Integer> getCollectBlogIds(Integer userId);
 }

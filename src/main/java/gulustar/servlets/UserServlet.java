@@ -70,18 +70,6 @@ public class UserServlet extends BaseServlet {
     }
 
     /**
-     * 退出登录，清除session的属性
-     */
-    public void logout(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        HttpSession session = req.getSession(false);
-        User user = (User) session.getAttribute("user");
-
-        //清除session的属性
-        session.removeAttribute("user");
-        resp.getWriter().write("退出成功");
-    }
-
-    /**
      * 注册方法：把封装的user对象发给业务层处理,给前端返回布尔值结果
      */
     public void registe(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -101,7 +89,7 @@ public class UserServlet extends BaseServlet {
     }
 
     /**
-     * 查询关注的人，把user传给业务层
+     * 查询关注的人，把user传给业务层 (本次项目删除此功能)
      * @param req
      * @param resp
      * @throws IOException
@@ -137,8 +125,8 @@ public class UserServlet extends BaseServlet {
         //获取请求参数 页数
         int currentPage = Integer.parseInt(req.getParameter("currentPage"));
         int size = Integer.parseInt(req.getParameter("size"));
-        String keyword = req.getParameter("keyword");
-        String category = req.getParameter("category");
+        String keyword = new String(req.getParameter("keyword").getBytes("iso-8859-1"), "utf-8");
+        String category = new String(req.getParameter("category").getBytes("iso-8859-1"), "utf-8");
         //封装为对象
         Conditions conditions = new Conditions();
         conditions.setCurrentPage(currentPage);
@@ -166,5 +154,48 @@ public class UserServlet extends BaseServlet {
         String params = reader.readLine();
         History history = JSON.parseObject(params, History.class);
         userService.addUserHistory(history);
+    }
+
+    /**
+     * 用户收藏博客
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    public void collect(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //获取用户ID和博客ID
+        BufferedReader reader = request.getReader();
+        String params = reader.readLine();
+        //只是用来封装  Blog类的userId指的是作者
+        Blog getParams = JSON.parseObject(params, Blog.class);
+        Integer userId = getParams.getUserId();
+        Integer blogId = getParams.getId();
+
+        //业务层处理
+        boolean collectOK = userService.collect(userId, blogId);
+
+        //将结果转为JSON返回
+        String json = JSON.toJSONString(collectOK);
+        response.setContentType("text/json;charset=utf-8");
+        response.getWriter().write(json);
+    }
+
+    /**
+     * 获取用户收藏的博客的ID集合
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    public void getCollectBlogIds(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //获取用户ID
+        int userId = Integer.parseInt(request.getParameter("userId"));
+
+        //业务层查询
+        List<Integer> ids = userService.getCollectBlogIds(userId);
+
+        //将结果转为JSON返回
+        String json = JSON.toJSONString(ids);
+        response.setContentType("text/json;charset=utf-8");
+        response.getWriter().write(json);
     }
 }

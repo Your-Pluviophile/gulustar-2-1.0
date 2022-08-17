@@ -114,7 +114,7 @@ public class UserServiceImpl implements UserService {
         History sameHistory = blogmapper.selectSameHistory(history);
         //如果有同样的历史记录则不写入
         //则更新时间
-        if (sameHistory!=null){
+        if (sameHistory != null){
             sqlSession.close();
             return ;
         }else {
@@ -172,16 +172,39 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 收藏
+     * 收藏博客
      * @param userId
      * @param blogId
      * @return
      */
-    boolean collectionBlog(Integer userId,Integer blogId){
+    public boolean collect(Integer userId, Integer blogId){
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-        boolean b = userMapper.collectionBlog(userId, blogId);
-        return b;
+        BlogMapper blogMapper = sqlSession.getMapper(BlogMapper.class);
+
+        //添加数据
+        boolean collectOK = userMapper.collectBlog(userId, blogId);
+        boolean updateOK = blogMapper.updateBlogCollected(blogId);
+        sqlSession.commit();
+
+        sqlSession.close();
+        return collectOK && updateOK;
+    }
+
+    /**
+     * 获取用户收藏的博客ID集合
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<Integer> getCollectBlogIds(Integer userId) {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+
+        List<Integer> ids = userMapper.selectCollectBlogIds(userId);
+
+        sqlSession.close();
+        return ids;
     }
 
 }

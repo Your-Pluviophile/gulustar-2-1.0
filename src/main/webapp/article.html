@@ -42,7 +42,7 @@
 
 				<!-- logo -->
 				<li class="item1">
-					<a href="./">
+					<a href="./" @click="goToHomePage()">
 						<!--						<img src="./image/logo2.png" alt="" id="logo">-->
 						<img src="./images/02.png" alt="" id="logo">
 					</a>
@@ -55,7 +55,7 @@
 				</li>
 
 				<li class="item1">
-					<a href="./category.html">
+					<a href="./" @click="setCollectNow()">
 						<i class="iconfont icon-bijiben1"></i>我的收藏
 					</a>
 				</li>
@@ -82,24 +82,24 @@
 <!--				</li>-->
 
 				<li class="item1">
-					<a href="./index.html">
+					<a href="./" @click="setHistoryNow()">
 						<i class="iconfont icon-zuzhijiagou1"></i>阅览历史
 					</a>
 
 					<!-- 二级导航 -->
-					<ul class="two" style="display: none;">
-						<li>
-							<a href="javascript:;">Vue</a>
-						</li>
+<!--					<ul class="two" style="display: none;">-->
+<!--						<li>-->
+<!--							<a href="javascript:;">Vue</a>-->
+<!--						</li>-->
 
-						<li>
-							<a href="javascript:;">React</a>
-						</li>
+<!--						<li>-->
+<!--							<a href="javascript:;">React</a>-->
+<!--						</li>-->
 
-						<li>
-							<a href="javascript:;">Angular</a>
-						</li>
-					</ul>
+<!--						<li>-->
+<!--							<a href="javascript:;">Angular</a>-->
+<!--						</li>-->
+<!--					</ul>-->
 				</li>
 
 				<li class="item1" v-if="user.isAdmin == 1">
@@ -422,12 +422,12 @@
 							<div class="register" v-if="user.id == 0"><a href="javascript:;" @click="registeDialogVisible=true">注册</a></div>
 
 							<!-- 更换 -->
-							<div class="login" v-if="user.id > 0"><a href="javascript:;" @click="loginDialogVisible=true">切换用户</a></div>
+							<div class="login" style="background-color: green;" v-if="user.id > 0"><a href="javascript:;" @click="loginDialogVisible=true">切换用户</a></div>
 
 							<span></span>
 
 							<!-- 注销 -->
-							<div class="register" v-if="user.id > 0"><a href="javascript:;" @click="logout()">退出登录</a></div>
+							<div class="register" style="background-color: darkred;" v-if="user.id > 0"><a href="javascript:;" @click="logout()">退出登录</a></div>
 						</div>
 					</div>
 
@@ -571,6 +571,27 @@
 				this.getUserInfo();
 			},
 			methods: {
+				/*
+					跳转到主页：删除session有关收藏和历史的数据
+				 */
+				goToHomePage(){
+					sessionStorage.removeItem("collect");
+					sessionStorage.removeItem("history");
+				},
+				/*
+					点击收藏 直接跳转到收藏：添加信息到session
+				 */
+				setCollectNow(){
+					sessionStorage.removeItem("history");
+					sessionStorage.setItem("collect", "true");
+				},
+				/*
+					点击历史 直接跳转到历史：添加信息到session
+				 */
+				setHistoryNow(){
+					sessionStorage.removeItem("collect");
+					sessionStorage.setItem("history", "true");
+				},
 				/*
 					退出登录：清除session里的用户ID
 				 */
@@ -736,6 +757,24 @@
 					根据返回值提示用户是否注册成功
 				 */
 				registe(){
+					for (let i in this.registeInfo) {
+						if (this.registeInfo[i] == ''){
+							this.$message({
+								message: '注册信息不能为空，请检查',
+								type: 'warning'
+							});
+							return;
+						}
+					}
+
+					if (this.usernameTooLong || this.newAccTooLong || this.newPwdTooLong || this.checkNewPwd){
+						this.$message({
+							message: '您的注册信息有误，请检查',
+							type: 'warning'
+						});
+						return;
+					}
+
 					axios({
 						method: "put",
 						url: "http://localhost:8080/gulustar/user/registe",

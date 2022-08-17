@@ -65,17 +65,18 @@
     </select>
 
     <select id="selectByPageAndCondition" resultMap="blogResultMap">
-        select *
-        from blog
+        SELECT b.*, u.username author
+        FROM blog b, USER u
         <where>
+            b.user_id = u.id
             <if test="Conditions.keyword != null and Conditions.keyword != ''">
                 <bind name="bindKeyword" value="'%' + Conditions.keyword + '%'"></bind>
-                (title like #{bindKeyword}
-                or description like #{bindKeyword}
-                or content like #{bindKeyword})
+                (b.title like #{bindKeyword}
+                or b.description like #{bindKeyword}
+                or b.content like #{bindKeyword})
             </if>
             <if test="Conditions.category != null and Conditions.category != ''">
-                and category = #{Conditions.category}
+                and b.category = #{Conditions.category}
             </if>
         </where>
         limit #{start}, #{size};
@@ -94,7 +95,7 @@
         <if test="conditions.category != null and conditions.category != ''">
             and b.category = #{conditions.category}
         </if>
-        order by uc.collect_time desc
+        order by b.release_date desc
         limit #{conditions.currentPage}, #{conditions.size}
     </select>
 
