@@ -21,6 +21,7 @@ public class UserServlet extends BaseServlet {
 
     private UserService userService = new UserServiceImpl();
 
+
     //添加收藏  --------------------------悠悠球-------------------------
     //业务层方法叫 collectionBlog
 
@@ -149,5 +150,65 @@ public class UserServlet extends BaseServlet {
         Blog blog = JSON.parseObject(params, Blog.class);
         History history = new History(user.getId(),blog.getId());
         userService.addUserHistory(history);
+    }
+    /**
+     * 用户添加收藏
+     * @param request
+     * @param response
+     *
+     *    UserId  BlogId
+     * collectionBlog  deleteCollection
+     */
+    public void collectionBlog(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //获取当前线路
+        String blogId = request.getParameter ("blogId");
+
+        //获取当前登录用户
+        User user = (User) request.getSession().getAttribute("user");
+        Integer userId;
+        if (user == null){
+            response.getWriter().write("请先登录！");
+            return;
+        }else{
+             userId = user.getId ();
+        }
+
+        //判断是否添加收藏
+        boolean blog = userService.collectionBlog(userId,blogId);
+        //将结果转为JSON返回
+        String json = JSON.toJSONString(blog);
+        response.setContentType("text/json;charset=utf-8");
+        response.getWriter().write(json);
+
+    }
+
+    /**
+     * 用户取消收藏
+     * @param request
+     * @param response
+     *
+     *    UserId  BlogId
+     * collectionBlog  deleteCollection
+     */
+    public void deleteCollection(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //获取当前线路
+        String blogId = request.getParameter ("blogId");
+
+        //获取当前登录用户
+        User user = (User) request.getSession().getAttribute("user");
+        Integer userId;
+        if (user == null){
+            response.getWriter().write("请先登录！");
+            return;
+        }else{
+            userId = user.getId ();
+        }
+
+        //判断是否取消收藏
+        boolean blog = userService.deleteCollection(userId,blogId);
+        //将结果转为JSON返回
+        String json = JSON.toJSONString(blog);
+        response.setContentType("text/json;charset=utf-8");
+        response.getWriter().write(json);
     }
 }

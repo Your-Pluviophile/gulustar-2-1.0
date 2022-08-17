@@ -37,4 +37,9 @@ public interface UserService {
      */
     BlogPageBean selectHistory(Integer userId, Conditions conditions);
 
+
+    boolean collectionBlog(Integer userId, String blogId);
+
+    boolean deleteCollection(Integer userId, String blogId);
+
 }
