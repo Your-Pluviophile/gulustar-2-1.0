@@ -15,6 +15,19 @@ public class UserServiceImpl implements UserService {
     SqlSessionFactory sqlSessionFactory = SqlSessionFactoryUtils.getSqlSessionFactory();
 
     /**
+     * 获取指定ID用户信息
+     * @return
+     */
+    public User getUserById(Integer id){
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+
+        User user = userMapper.selectById(id);
+        sqlSession.close();
+        return user;
+    }
+
+    /**
      * 登录方法：根据账号密码查询用户，并封装成对象返回
      * @param account
      * @param password
@@ -101,11 +114,12 @@ public class UserServiceImpl implements UserService {
         History sameHistory = blogmapper.selectSameHistory(history);
         //如果有同样的历史记录则不写入
         //则更新时间
-        if (sameHistory!=null){
+        if (sameHistory != null){
             sqlSession.close();
             return ;
         }else {
             mapper.addUserHistory(history);
+            sqlSession.commit();
             sqlSession.close();
         }
     }
@@ -150,7 +164,8 @@ public class UserServiceImpl implements UserService {
      * @param blogId
      * @return
      */
-    boolean deleteCollection(Integer userId,Integer blogId){
+    @Override
+    public boolean deleteCollection(Integer userId, String blogId){
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         boolean b = userMapper.deleteCollection(userId, blogId);
@@ -158,16 +173,40 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 收藏
+     * 收藏博客
      * @param userId
      * @param blogId
      * @return
      */
-    boolean collectionBlog(Integer userId,Integer blogId){
+    @Override
+     public boolean collectionBlog(Integer userId, String blogId){
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-        boolean b = userMapper.collectionBlog(userId, blogId);
-        return b;
+        BlogMapper blogMapper = sqlSession.getMapper(BlogMapper.class);
+
+        //添加数据
+        boolean collectOK = userMapper.collectBlog(userId, blogId);
+        boolean updateOK = blogMapper.updateBlogCollected(blogId);
+        sqlSession.commit();
+
+        sqlSession.close();
+        return collectOK && updateOK;
+    }
+
+    /**
+     * 获取用户收藏的博客ID集合
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<Integer> selectCollectBlogIds(Integer userId) {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+
+        List<Integer> ids = userMapper.selectCollectBlogIds(userId);
+
+        sqlSession.close();
+        return ids;
     }
 
 }

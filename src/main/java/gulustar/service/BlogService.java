@@ -56,4 +56,16 @@ public interface BlogService {
      * @param
      */
     BlogPageBean selectCollect(Integer userId, Conditions conditions);
+
+    /**
+     * 获取全部分类
+     * @return
+     */
+    List<String> getAllCategories();
+
+    /**
+     * 增加点赞数
+     * @return
+     */
+    boolean addLikes(Integer blogId);
 }

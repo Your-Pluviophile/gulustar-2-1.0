@@ -163,4 +163,36 @@ public class BlogServiceImpl implements BlogService{
         sqlSession.close();
         return pageBean;
     }
+
+    /**
+     * 获取全部分类
+     * @return
+     */
+    @Override
+    public List<String> getAllCategories() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        BlogMapper mapper = sqlSession.getMapper(BlogMapper.class);
+
+        List<String> categories = mapper.selectAllCategories();
+
+        sqlSession.close();
+        return categories;
+    }
+
+    /**
+     * 增加点赞数
+     * @param blogId
+     * @return
+     */
+    @Override
+    public boolean addLikes(Integer blogId) {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        BlogMapper mapper = sqlSession.getMapper(BlogMapper.class);
+
+        boolean addOK = mapper.addLikes(blogId);
+
+        sqlSession.commit();
+        sqlSession.close();
+        return addOK;
+    }
 }

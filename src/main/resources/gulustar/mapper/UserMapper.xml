@@ -13,12 +13,13 @@
         <result column="user_id" property="userId"/>
     </resultMap>
 
-    <resultMap id="historyResultMap" type="gulustar.pojo.History">
-        <result column="user_id" property="userid"/>
-        <result column="blog_id" property="blogid"/>
+    <resultMap id="blogResultMap" type="gulustar.pojo.Blog">
+        <result column="user_id" property="userId"/>
+        <result column="release_date" property="releaseDate"/>
+        <result column="modify_date" property="modifyDate"/>
     </resultMap>
 
-    <select id="selectAllHistoryByAccount" resultMap="historyResultMap">
+    <select id="selectAllHistoryByAccount" resultMap="blogResultMap">
         select b.*
         from user_history uh, blog b
         where uh.blog_id = b.id and uh.user_id = #{userId}
