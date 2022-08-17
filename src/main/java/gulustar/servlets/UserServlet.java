@@ -155,9 +155,6 @@ public class UserServlet extends BaseServlet {
      * 用户添加收藏
      * @param request
      * @param response
-     *
-     *    UserId  BlogId
-     * collectionBlog  deleteCollection
      */
     public void collectionBlog(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //获取当前线路
@@ -186,9 +183,6 @@ public class UserServlet extends BaseServlet {
      * 用户取消收藏
      * @param request
      * @param response
-     *
-     *    UserId  BlogId
-     * collectionBlog  deleteCollection
      */
     public void deleteCollection(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //获取当前线路

@@ -42,20 +42,20 @@
 
 				<!-- logo -->
 				<li class="item1">
-					<a href="./">
+					<a href="./" @click="init()">
 <!--						<img src="./image/logo2.png" alt="" id="logo">-->
 						<img src="./images/02.png" alt="" id="logo">
 					</a>
 				</li>
 
 				<li class="item1">
-					<a href="./">
+					<a href="javascript:;">
 						<i class="iconfont icon-shouye"></i>小组介绍
 					</a>
 				</li>
 
 				<li class="item1">
-					<a href="javascript:;" @click="getCollections()">
+					<a href="#" @click="getCollections()">
 						<i class="iconfont icon-bijiben1"></i>我的收藏
 					</a>
 				</li>
@@ -82,7 +82,7 @@
 <!--				</li>-->
 
 				<li class="item1">
-					<a href="javascript:;" @click="getHistory()">
+					<a href="#" @click="getHistory()">
 						<i class="iconfont icon-zuzhijiagou1"></i>阅览历史
 					</a>
 
@@ -141,97 +141,6 @@
 		</div>
 	</div>
 
-	<!-- 移动端的侧边导航栏 -->
-	<div class="mNav">
-		<!-- 头像 -->
-		<div class="user">
-			<img src="./image/user.png" alt="">
-			<span>Yuexing</span>
-			<p>不断改善成为最佳!</p>
-		</div>
-
-		<!-- 导航栏 -->
-		<ul>
-			<li class="item">
-				<a href="./index.html">
-					<i class="iconfont icon-shouye"></i>首页
-				</a>
-			</li>
-
-			<li class="item">
-				<a href="./category.html">
-					<i class="iconfont icon-bijiben1"></i>开发记录
-				</a>
-			</li>
-
-			<li class="item">
-				<a href="javascript:;" id="twoNav">
-					<i class="iconfont icon-yuandaima"></i>大前端
-				</a>
-
-				<!-- 二级导航 -->
-				<ul class="two">
-					<li>
-						<a href="javascript:;">HTML5</a>
-					</li>
-
-					<li>
-						<a href="javascript:;">CSS3</a>
-					</li>
-
-					<li>
-						<a href="javascript:;">JavaScript</a>
-					</li>
-				</ul>
-			</li>
-
-			<li class="item">
-				<a href="javascript:;" id="twoNav">
-					<i class="iconfont icon-zuzhijiagou1"></i>框架
-				</a>
-
-				<!-- 二级导航 -->
-				<ul class="two">
-					<li>
-						<a href="javascript:;">Vue</a>
-					</li>
-
-					<li>
-						<a href="javascript:;">React</a>
-					</li>
-
-					<li>
-						<a href="javascript:;">Angular</a>
-					</li>
-				</ul>
-			</li>
-
-			<li class="item">
-				<a href="javascript:;" id="twoNav">
-					<i class="iconfont icon-zhuti1"></i>扩展
-				</a>
-
-				<ul class="two">
-					<li>
-						<a href="./links.html">
-							<i class="iconfont icon-quanzi1"></i>人脉圈
-						</a>
-					</li>
-
-					<li>
-						<a href="./circle.html">
-							<i class="iconfont icon-pengyouquan1"></i>朋友圈
-						</a>
-					</li>
-
-					<li>
-						<a href="./bigData.html"><i class="iconfont icon-dashuju2"></i>大数据</a>
-					</li>
-				</ul>
-			</li>
-		</ul>
-	</div>
-
 	<!-- 遮罩层 -->
 	<div class="mask"></div>
 
@@ -288,7 +197,7 @@
 	</div>
 
 	<!-- 主体内容 -->
-	<div class="main">
+	<div class="main" id="top">
 		<div class="w">
 			<!-- 文章列表 -->
 			<div class="list home_list">
@@ -305,21 +214,23 @@
 				<ul>
 					<li v-for="blog in blogs">
 						<!-- 文章缩略图 -->
-						<div class="left">
-							<a href="javascript:;" @click="openBlog(blog.id)">
-								<img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5e7d37251bc04bf48caafe62eae2991e~tplv-k3u1fbpfcp-zoom-crop-mark:1304:1304:1304:734.awebp?" alt="">
+						<div class="left" @click="openBlog(blog.id)">
+							<a href="javascript:;">
+<!--								<img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5e7d37251bc04bf48caafe62eae2991e~tplv-k3u1fbpfcp-zoom-crop-mark:1304:1304:1304:734.awebp?" alt="">-->
+								<img src="images/logo.jpg" alt="">
 							</a>
 
-							<span class="tags_blue">开发记录</span>
+							<span class="tags_blue">{{blog.category}}</span>
 						</div>
 
 						<!-- 文章内容 -->
 						<div class="right">
 							<!-- 文章标题 -->
-							<h2>
-								<a href="javascript:;" @click="openBlog(blog.id)">
-									<span class="tags_purple">精品</span> <span class="tags_red">置顶</span> <span
-										class="tags_yellow">推荐</span>
+							<h2 @click="openBlog(blog.id)">
+								<a href="javascript:;">
+<!--									<span class="tags_purple">精品</span> <span class="tags_red">置顶</span> <span-->
+<!--										class="tags_yellow">推荐</span>-->
+									<span class="tags_yellow">{{blog.category}}</span>
 									{{blog.title}}
 								</a>
 							</h2>
@@ -332,61 +243,22 @@
 							<div class="meta">
 								<!-- 作者头像 -->
 								<a href="javascript:;">
-									<img src="./image/user.png" alt="">
+									<img src="./image/user1.png" alt="">
 									<span>{{blog.author}}</span>
 								</a>
 
 								<div>
 									<!-- 文章点赞数 -->
-									<a href="javascript:;"><i class="iconfont icon-dianzan"></i>{{blog.likes}}</a>
+									<a href="javascript:;"><i class="iconfont icon-dianzan"
+															  @click="good(blog.id), blog.likes += 1"
+															  onclick="style='color: red; pointer-events: none;'"></i>{{blog.likes}}</a>
 									<!-- 文章浏览量 -->
-									<a href="javascript:;"><i class="iconfont icon-shoucang"></i>{{blog.collected}}</a>
+									<a href="javascript:;"><i class="iconfont icon-shoucang"
+															  @click="collect(blog.id), blog.collected += 1"
+															  onclick="style='color: yellow; pointer-events: none;'"
+															  :style="userCollections.includes(blog.id)? 'color:yellow; pointer-events: none;':''"></i>{{blog.collected}}</a>
 									<!-- 文章发布时间 -->
 									<a href="javascript:;"><i class="iconfont icon-shijian"></i>{{blog.releaseDate}}</a>
-								</div>
-							</div>
-						</div>
-					</li>
-
-					<li>
-						<!-- 文章缩略图 -->
-						<div class="left">
-							<img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/720d976d5b5947c187b8f7039126c10e~tplv-k3u1fbpfcp-zoom-crop-mark:3024:3024:3024:1702.awebp?"
-								alt="">
-
-							<span class="tags_yellow">大前端</span>
-						</div>
-
-						<!-- 文章内容 -->
-						<div class="right">
-							<!-- 文章标题 -->
-							<h2>
-								<a href="javascript:;">
-									<span class="tags_red">置顶</span>
-									一个96年前端的2022年中总结 (落户,看房,还贷,被裁)
-								</a>
-							</h2>
-
-							<!-- 文章摘要 -->
-							<p class="list-length">「时光不负，创作不停，本文正在参加2022年中总结征文大赛」 落户 关于落户这个事, 就是一个很突然的想法,很突然,
-								得知天津有个"海河英才计划",只要是本科生, 就比较容易落户,所以就想着试一试, </p>
-
-							<!-- 文章信息 -->
-							<div class="meta">
-								<!-- 作者头像 -->
-								<a href="javascript:;">
-									<img src="./image/user.png" alt="">
-									<span>Admin</span>
-								</a>
-
-								<div>
-									<!-- 文章点赞数 -->
-									<a href="javascript:;"><i class="iconfont icon-dianzan"></i>869</a>
-									<!-- 文章浏览量 -->
-									<a href="javascript:;"><i class="iconfont icon-huo"
-											style="color: #ee7273"></i>85971</a>
-									<!-- 文章发布时间 -->
-									<a href="javascript:;"><i class="iconfont icon-shijian"></i>2022-4-21 </a>
 								</div>
 							</div>
 						</div>
@@ -395,13 +267,13 @@
 
 				<!-- 分页 -->
 				<div class="pagination">
-					<a href="javascript:;" @click="prevPage()">‹</a>
-					<a href="javascript:;"
+					<a href="#top" @click="isPageOne? '':prevPage()">‹</a>
+					<a href="#"
 					   v-for="i of conditions.total"
 					   :class="i == conditions.currentPage? 'paginationAction':''"
 					   @click="goToPage(i)"
 					>{{i}}</a>
-					<a href="javascript:;" @click="nextPage()">›</a>
+					<a href="#top" @click="isLastPage? '':nextPage()">›</a>
 				</div>
 
 				<!-- 加载列表 -->
@@ -419,8 +291,8 @@
 						<!-- 背景图片 -->
 						<div class="author-bg">
 							<!-- 头像 -->
-							<div class="avatar">
-								<img src="./image/user1.png" alt="">
+							<div class="avatar" @click="uploadImg()">
+								<a href="javascript:;"><img src="./image/user1.png" alt=""></a>
 							</div>
 						</div>
 
@@ -444,15 +316,15 @@
 							<div class="register" v-if="user.id == 0"><a href="javascript:;" @click="registeDialogVisible=true">注册</a></div>
 
 							<!-- 更换 -->
-							<div class="login" v-if="user.id > 0"><a href="javascript:;" @click="loginDialogVisible=true">切换用户</a></div>
+							<div class="login" style="background-color: green;" v-if="user.id > 0"><a href="javascript:;" @click="loginDialogVisible=true">切换用户</a></div>
 
 							<span></span>
 
 							<!-- 注销 -->
-							<div class="register" v-if="user.id > 0"><a href="javascript:;" @click="registeDialogVisible=true">退出登录</a></div>
+							<div class="register" style="background-color: darkred;" v-if="user.id > 0"><a href="javascript:;" @click="logout()">退出登录</a></div>
 						</div>
 					</div>
-					
+
 					<!-- 标签栏 -->
 					<div class="containerA">
 						<!-- 标题 -->
@@ -470,7 +342,7 @@
 
 						<!-- 标签 -->
 						<div class="containerA_Tags">
-							<a href="javascript:;"
+							<a href="#"
 							   v-for="item in categories"
 							   @click="getBlogsByCategory(item)">{{item}}</a>
 						</div>
@@ -522,36 +394,47 @@
 	</div>
 
 	<!-- 登录窗口 -->
-    <el-dialog
-            title="咕噜星"
-            :visible.sync="loginDialogVisible"
-            width="30%"
-            center
-            :close-on-click-modal="false"
+		<el-dialog
+			:lock-scroll="false"
+			:visible.sync="loginDialogVisible"
+			width="30%"
+			center
+			:close-on-click-modal="false"
             custom-class="customLoginDialog">
-        <el-button @click="registeDialogVisible = true, loginDialogVisible = false">注册</el-button>
-        <el-input v-model="loginInfo.account" placeholder="请输入账号" prefix-icon="el-icon-user"></el-input>
-        <el-input placeholder="请输入密码" v-model="loginInfo.password" show-password></el-input>
-        <span slot="footer" class="dialog-footer">
-                <el-button type="primary" @click="login()">登 录</el-button>
-            </span>
-    </el-dialog>
+			<h1>LOGIN</h1>
+			<input type="text" placeholder="帐号" v-model="loginInfo.account" @blur="checkAccLen()">
+			<span class="lenCheck" v-if="accTooLong">账号长度不能超过12</span>
+			<input type="password" placeholder="密码" v-model="loginInfo.password" @blur="checkPwdLen()">
+			<span class="lenCheck" v-if="pwdTooLong">密码长度不能超过20</span>
+			<button type="submit" @click="login()">Login</button>
+			<div class="control">
+				<span>没有帐号？<a href="javascript:;"
+							  @click="loginDialogVisible=false, registeDialogVisible=true">Register</a></span>
+			</div>
+	</el-dialog>
 
     <!-- 注册窗口 -->
     <el-dialog
-            title="咕噜星"
-            :visible.sync="registeDialogVisible"
-            width="30%"
-            center
-            :close-on-click-modal="false"
-            custom-class="customLoginDialog">
-        <el-button @click="loginDialogVisible = true, registeDialogVisible = false">登录</el-button>
-        <el-input v-model="registeInfo.username" placeholder="请输入昵称"></el-input>
-        <el-input v-model="registeInfo.account" placeholder="请输入账号" prefix-icon="el-icon-user"></el-input>
-        <el-input placeholder="请输入密码" v-model="registeInfo.password" show-password></el-input>
-        <span slot="footer" class="dialog-footer">
-                <el-button type="primary" @click="registe()">注 册</el-button>
-            </span>
+			:lock-scroll="false"
+			:visible.sync="registeDialogVisible"
+			width="30%"
+			center
+			:close-on-click-modal="false"
+			custom-class="customLoginDialog">
+		<h1 class="register">REGISTER</h1>
+		<input type="text" placeholder="昵称" v-model="registeInfo.username" @blur="checkNewNameLen()">
+		<span class="lenCheck" v-if="usernameTooLong">昵称长度不能超过10</span>
+		<input type="text" placeholder="帐号" v-model="registeInfo.account" @blur="checkNewAccLen()">
+		<span class="lenCheck" v-if="newAccTooLong">账号长度不能超过12</span>
+		<input type="password" placeholder="密码" v-model="registeInfo.password" @blur="checkNewPwdLen()">
+		<span class="lenCheck" v-if="newPwdTooLong">密码长度不能超过20</span>
+		<input type="password" placeholder="确认密码" v-model="registeInfo.confirmPwd" @blur="checkTwiceInputPwd()">
+		<span class="lenCheck" v-if="checkNewPwd">两次输入的密码不一致</span>
+		<button type="submit" @click="registe()">Register</button>
+		<div class="registerText">
+			<span>已有帐号？<a href="javascript:;" class="registerA"
+						  @click="loginDialogVisible=true, registeDialogVisible=false">Login</a></span>
+		</div>
     </el-dialog>
 
 	</div>
@@ -566,15 +449,185 @@
 	<script>
 		new Vue({
 			el: '#app',
+			/*
+				获取用户信息并初始化博客列表,获取分类信息
+			 */
 			mounted() {
-				this.init();
+				this.getBaseInfo();
 			},
 			methods: {
+				getBaseInfo(){
+					let currUserId = sessionStorage.getItem('currUserId');
+					this.user.id = parseInt(currUserId == null? '0':currUserId);
+					this.getUserInfo();
+					this.getCollectBlogIds();
+					this.getBlogsByPageAndCondition();
+					this.getCategories();
+				},
 				init(){
+					sessionStorage.removeItem("collect");
+					sessionStorage.removeItem("history");
 					this.getBlogsByPageAndCondition();
 				},
+				/*
+					请求用户收藏的博客的ID集合
+				 */
+				getCollectBlogIds(){
+					axios({
+						method: "get",
+						url: "http://localhost:8080/gulustar/user/getCollectBlogIds?userId=" + this.user.id,
+					}).then(resp => {
+						this.userCollections = resp.data;
+					});
+				},
+				/*
+					用户收藏博客
+				 */
+				collect(blogId){
+					if (this.user.id == 0){
+						this.$message({
+							center: true,
+							duration: 1000,
+							showClose: true,
+							message: '请先登录',
+							type: 'info'
+						});
+						return;
+					}
+
+					axios({
+						method: "put",
+						url: "http://localhost:8080/gulustar/user/collect",
+						data: {id: blogId, userId: this.user.id}
+					});
+					this.getCollectBlogIds();
+				},
+				/*
+					点赞
+				 */
+				good(id){
+					axios({
+						method: "put",
+						url: "http://localhost:8080/gulustar/blog/addLikes",
+						data: id
+					});
+				},
+				/*
+					上传头像
+				 */
+				uploadImg(){
+					alert("上传头像");
+				},
+				/*
+					获取全部分类
+				 */
+				getCategories(){
+					axios({
+						method: "get",
+						url: "http://localhost:8080/gulustar/blog/getCategories"
+					}).then(resp => {
+						if (resp.data != null){
+							this.categories = resp.data;
+						}
+					});
+				},
+				/*
+					退出登录：清除session里的用户ID
+				 */
+				logout(){
+					sessionStorage.removeItem("currUserId");
+					this.user.id = 0;
+					this.user.username = '咕噜星用户';
+					this.user.status = 1;
+					this.user.isAdmin = 0;
+				},
+				/*
+					获取用户信息
+				 */
+				getUserInfo(){
+					axios({
+						method: "get",
+						url: "http://localhost:8080/gulustar/user/getUserById?id=" + this.user.id
+					}).then(resp => {
+						if (resp.data != null){
+							this.user = resp.data;
+						}
+					});
+				},
+				/*
+					注册时检查2次密码是否一致
+				 */
+				checkTwiceInputPwd(){
+					if (this.registeInfo.password != this.registeInfo.confirmPwd){
+						this.checkNewPwd = true;
+					}else {
+						this.checkNewPwd = false;
+					}
+				},
+				/*
+					注册时检查密码长度
+				 */
+				checkNewPwdLen(){
+					if (this.registeInfo.password != '' && this.registeInfo.password.length > 20){
+						this.newPwdTooLong = true;
+					}else {
+						this.newPwdTooLong = false;
+					}
+				},
+				/*
+					检查注册时账号长度
+				 */
+				checkNewAccLen(){
+					if (this.registeInfo.account != '' && this.registeInfo.account.length > 12){
+						this.newAccTooLong = true;
+					}else {
+						this.newAccTooLong = false;
+					}
+				},
+				/*
+					注册时检查昵称长度
+				 */
+				checkNewNameLen(){
+					if (this.registeInfo.username != '' && this.registeInfo.username.length > 10){
+						this.usernameTooLong = true;
+					}else {
+						this.usernameTooLong = false;
+					}
+				},
+				/*
+					检查账号长度
+				 */
+				checkAccLen(){
+					if (this.loginInfo.account != '' && this.loginInfo.account.length > 12){
+						this.accTooLong = true;
+					}else {
+						this.accTooLong = false;
+					}
+				},
+				/*
+					检查密码长度
+				 */
+				checkPwdLen(){
+					if (this.loginInfo.password != '' && this.loginInfo.password.length > 20){
+						this.pwdTooLong = true;
+					}else {
+						this.pwdTooLong = false;
+					}
+				},
 				getHistory(){
+					if (this.user.id == 0){
+						this.$message({
+							center: true,
+							duration: 1000,
+							showClose: true,
+							message: '请先登录',
+							type: 'info'
+						});
+						return;
+					}
+
 					this.conditions.currentPage = 1;
+					this.isPageOne = true;
 					sessionStorage.removeItem("collect");
 					sessionStorage.setItem("history", "true");
 
@@ -587,12 +640,25 @@
 						this.blogs = resp.data.blogs;
 						this.conditions.total = resp.data.total;
 					});
+					this.conditions.category = '';
 				},
 				/*
 					获取收藏的博客: 页数改为第一页,发送用户ID去后端查询
 				 */
 				getCollections(){
+					if (this.user.id == 0){
+						this.$message({
+							center: true,
+							duration: 1000,
+							showClose: true,
+							message: '请先登录',
+							type: 'info'
+						});
+						return;
+					}
+
 					this.conditions.currentPage = 1;
+					this.isPageOne = true;
 					sessionStorage.removeItem("history");
 					sessionStorage.setItem("collect", "true");
 
@@ -605,15 +671,26 @@
 						this.blogs = resp.data.blogs;
 						this.conditions.total = resp.data.total;
 					});
+					this.conditions.category = '';
 				},
 				/*
 					打开指定博客：把博客ID传给下个页面
 				 */
 				openBlog(id){
 					sessionStorage.setItem('currBlogId', id);
-					sessionStorage.setItem('currUserId', this.user.id);
+					this.addHistory(id);
 					// window.location.href='/gulustar/src/main/webapp/article.html';
 					window.location.href='/gulustar/article.html';
+				},
+				/*
+					添加浏览记录
+				 */
+				addHistory(id){
+					axios({
+						method: "put",
+						url: "http://localhost:8080/gulustar/user/addUserHistory",
+						data: {userId: this.user.id, blogId: id}
+					});
 				},
 				/*
 					根据分类查询: 根据分类查询，回到第一页开始显示
@@ -621,6 +698,7 @@
 				getBlogsByCategory(category){
 					this.conditions.category = category;
 					this.conditions.currentPage = 1;
+					this.isPageOne = true;
 
 					if (sessionStorage.getItem("collect") == "true"){
 						this.getCollections();
@@ -632,19 +710,37 @@
 					}
 
 					this.getBlogsByPageAndCondition();
+					this.conditions.category = '';
 				},
 				/*
 					前往指定页数 指定页数然后查询
 				 */
 				goToPage(i){
 					this.conditions.currentPage = i;
+					this.checkPage();
 					this.getBlogsByPageAndCondition();
+				},
+				/*
+					检查是不是第一页或最后一页，并设置对应bool值
+				 */
+				checkPage(){
+					if (this.conditions.currentPage == this.conditions.total){
+						this.isLastPage = true;
+					}else {
+						this.isLastPage = false;
+					}
+					if (this.conditions.currentPage == 1){
+						this.isPageOne = true;
+					}else {
+						this.isPageOne = false;
+					}
 				},
 				/*
 					上一页 页数-1然后查询
 				 */
 				prevPage(){
 					this.conditions.currentPage -= 1;
+					this.checkPage();
 					this.getBlogsByPageAndCondition();
 				},
 				/*
@@ -652,6 +748,7 @@
 				 */
 				nextPage(){
 					this.conditions.currentPage += 1;
+					this.checkPage();
 					this.getBlogsByPageAndCondition();
 				},
 				/*
@@ -665,6 +762,9 @@
 					if (sessionStorage.getItem("history") == "true"){
 						this.getHistory();
 						return;
+					}
+					if (this.conditions.currentPage == 1){
+						this.isPageOne = true;
 					}
 
 					axios({
@@ -703,12 +803,21 @@
 							this.init();
 							this.$message({
 								message: '登陆成功',
-								type: 'success'
+								type: 'success',
+								duration: 1000,
+								showClose: true
 							});
+							sessionStorage.setItem("currUserId", this.user.id);
+							for (let i in this.loginInfo) {
+								this.loginInfo[i] = '';
+							}
+							this.getBaseInfo();
 						}else {
 							this.$message({
 								message: '用户名或密码错误',
-								type: 'warning'
+								type: 'warning',
+								duration: 1000,
+								showClose: true
 							});
 						}
 					});
@@ -718,6 +827,28 @@
 					根据返回值提示用户是否注册成功
 				 */
 				registe(){
+					for (let i in this.registeInfo) {
+						if (this.registeInfo[i] == ''){
+							this.$message({
+								message: '注册信息不能为空，请检查',
+								duration: 1000,
+								showClose: true,
+								type: 'warning'
+							});
+							return;
+						}
+					}
+
+					if (this.usernameTooLong || this.newAccTooLong || this.newPwdTooLong || this.checkNewPwd){
+						this.$message({
+							message: '您的注册信息有误，请检查',
+							duration: 1000,
+							showClose: true,
+							type: 'warning'
+						});
+						return;
+					}
+
 					axios({
 						method: "put",
 						url: "http://localhost:8080/gulustar/user/registe",
@@ -760,7 +891,8 @@
 					registeInfo: {                      //注册信息 包括账号、昵称、密码
 						username: '',
 						account: '',
-						password: ''
+						password: '',
+						confirmPwd: ''
 					},
 					blogs: [							//展示在主页的所有博客对象
 						{								//包括id、标题、简介、点赞数、收藏数、发布日期、作者
@@ -789,7 +921,16 @@
 						currentPage: 1,
 						size: 7
 					},
-					categories: ['分类1', '分类2'],		//分类标签
+					categories: ['测试分类1', '测试分类2'],//分类标签
+					accTooLong: false,					//判断账号长度
+					pwdTooLong: false,					//密码长度
+					usernameTooLong: false,				//昵称长度
+					newAccTooLong: false,				//注册时账号长度
+					newPwdTooLong: false,				//注册时密码长度
+					checkNewPwd: false,					//2次密码是否一样
+					isPageOne: false,					//是第一页
+					isLastPage: false,					//是最后一页
+					userCollections: [],				//用户收藏的博客的ID集合
 				}
 			}
 		})

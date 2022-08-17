@@ -37,7 +37,11 @@ public interface UserService {
      */
     BlogPageBean selectHistory(Integer userId, Conditions conditions);
 
-
+    /**
+     * 用户收藏，取消收藏
+     * @param
+     * @return
+     */
     boolean collectionBlog(Integer userId, String blogId);
 
     boolean deleteCollection(Integer userId, String blogId);

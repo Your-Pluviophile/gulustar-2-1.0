@@ -9,6 +9,7 @@ import java.util.List;
 public class Blog {
     Integer id;
     Integer userId;         //作者
+    String author;          //作者名
     String category;        //分类
     String title;           //标题
     String description;     //简介
@@ -22,6 +23,14 @@ public class Blog {
 
     public String getCategory() {
         return category;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public void setCategory(String category) {
