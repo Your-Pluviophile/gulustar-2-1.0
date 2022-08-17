@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gulustar.mapper.BlogMapper">
+
+    <resultMap id="blogResultMap" type="gulustar.pojo.Blog">
+        <result column="user_id" property="userId"/>
+        <result column="release_date" property="releaseDate"/>
+        <result column="modify_date" property="modifyDate"/>
+        <result column="image_url" property="imageUrl"/>
+    </resultMap>
+
+    <resultMap id="commentResultMap" type="gulustar.pojo.Comment">
+        <result column="create_time" property="createTime"/>
+        <result column="image_url" property="imageUrl"/>
+    </resultMap>
+
+    <resultMap id="historyResultMap" type="gulustar.pojo.History">
+        <result column="user_id" property="userId"/>
+        <result column="blog_id" property="blogId"/>
+    </resultMap>
+
+    <select id="selectCollectCount" resultType="java.lang.Integer">
+        select count(*)
+        from user_collection uc, blog b
+        where uc.blog_id = b.id and uc.user_id = #{userId}
+        <if test="conditions.keyword != null and conditions.keyword != ''">
+            <bind name="bindKeyword" value="'%' + conditions.keyword + '%'"></bind>
+            and (b.title like #{bindKeyword}
+            or b.description like #{bindKeyword}
+            or b.content like #{bindKeyword})
+        </if>
+        <if test="conditions.category != null and conditions.category != ''">
+            and b.category = #{conditions.category}
+        </if>
+    </select>
+
+    <select id="selectCommentsByIds" resultMap="commentResultMap">
+        SELECT c.content, c.create_time, u.username, u.image_url
+        FROM comment c,user u
+        WHERE c.id in
+        <if test="ids.size() == 0">
+            (-1)
+        </if>
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+         AND u.id = c.user_id
+        ORDER BY create_time DESC;
+    </select>
+
+    <select id="selectCountByCondition" resultType="java.lang.Integer">
+        select count(*)
+        from blog
+        <where>
+            <if test="conditions.keyword != null and conditions.keyword != ''">
+                <bind name="bindKeyword" value="'%' + conditions.keyword + '%'"></bind>
+                (title like #{bindKeyword}
+                or description like #{bindKeyword}
+                or content like #{bindKeyword})
+            </if>
+            <if test="conditions.category != null and conditions.category != ''">
+                and category = #{conditions.category}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByPageAndCondition" resultMap="blogResultMap">
+        SELECT b.*, u.username author, u.image_url
+        FROM blog b, USER u
+        <where>
+            b.user_id = u.id
+            <if test="Conditions.keyword != null and Conditions.keyword != ''">
+                <bind name="bindKeyword" value="'%' + Conditions.keyword + '%'"></bind>
+                (b.title like #{bindKeyword}
+                or b.description like #{bindKeyword}
+                or b.content like #{bindKeyword})
+            </if>
+            <if test="Conditions.category != null and Conditions.category != ''">
+                and b.category = #{Conditions.category}
+            </if>
+        </where>
+        limit #{start}, #{size};
+    </select>
+
+    <select id="selectCollect" resultMap="blogResultMap">
+        select b.*, u.username author, u.image_url
+        from user_collection uc, blog b, user u
+        where uc.blog_id = b.id and uc.user_id = #{userId} and u.id = #{userId}
+        <if test="conditions.keyword != null and conditions.keyword != ''">
+            <bind name="bindKeyword" value="'%' + conditions.keyword + '%'"></bind>
+            and (b.title like #{bindKeyword}
+            or b.description like #{bindKeyword}
+            or b.content like #{bindKeyword})
+        </if>
+        <if test="conditions.category != null and conditions.category != ''">
+            and b.category = #{conditions.category}
+        </if>
+        order by b.release_date desc
+        limit #{conditions.currentPage}, #{conditions.size}
+    </select>
+
+    <select id="selectByKeyword" resultMap="blogResultMap">
+        select *
+        from blog
+        <where>
+            <bind name="bindKeyword" value="'%' + keyword + '%'"></bind>
+            title like #{bindKeyword}
+            or description like #{bindKeyword}
+            or content like #{bindKeyword}
+        </where>
+    </select>
+</mapper>

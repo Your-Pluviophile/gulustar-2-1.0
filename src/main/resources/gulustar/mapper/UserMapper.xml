@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gulustar.mapper.UserMapper">
+
+    <resultMap id="userResultMap" type="gulustar.pojo.User">
+        <result column="is_admin" property="isAdmin"/>
+        <result column="image_url" property="imageUrl"/>
+    </resultMap>
+
+    <resultMap id="followResultMap" type="gulustar.pojo.Follow">
+        <result column="follow_id" property="followId"/>
+        <result column="user_id" property="userId"/>
+    </resultMap>
+
+    <resultMap id="blogResultMap" type="gulustar.pojo.Blog">
+        <result column="user_id" property="userId"/>
+        <result column="release_date" property="releaseDate"/>
+        <result column="modify_date" property="modifyDate"/>
+        <result column="image_url" property="imageUrl"/>
+    </resultMap>
+
+    <select id="selectAllHistoryByAccount" resultMap="blogResultMap">
+        select b.*, u.username author, u.image_url
+        from user_history uh, blog b, user u
+        where uh.blog_id = b.id and uh.user_id = #{userId} and u.id = #{userId}
+        <if test="conditions.keyword != null and conditions.keyword != ''">
+            <bind name="bindKeyword" value="'%' + conditions.keyword + '%'"></bind>
+            and (b.title like #{bindKeyword}
+            or b.description like #{bindKeyword}
+            or b.content like #{bindKeyword})
+        </if>
+        <if test="conditions.category != null and conditions.category != ''">
+            and b.category = #{conditions.category}
+        </if>
+        order by uh.browse_time desc
+        limit #{conditions.currentPage}, #{conditions.size}
+    </select>
+
+    <select id="selectHistoryCount" resultType="java.lang.Integer">
+        select count(*)
+        from user_history uh, blog b
+        where uh.blog_id = b.id and uh.user_id = #{userId}
+        <if test="conditions.keyword != null and conditions.keyword != ''">
+            <bind name="bindKeyword" value="'%' + conditions.keyword + '%'"></bind>
+            and (b.title like #{bindKeyword}
+            or b.description like #{bindKeyword}
+            or b.content like #{bindKeyword})
+        </if>
+        <if test="conditions.category != null and conditions.category != ''">
+            and b.category = #{conditions.category}
+        </if>
+    </select>
+</mapper>
