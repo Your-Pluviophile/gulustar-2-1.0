@@ -38,7 +38,7 @@
 
     <select id="selectCommentsByIds" resultMap="commentResultMap">
         SELECT c.content, c.create_time, u.username, u.image_url
-        FROM comment c,user u
+        FROM comment c, `user` u
         WHERE c.id in
         <if test="ids.size() == 0">
             (-1)
@@ -68,7 +68,7 @@
 
     <select id="selectByPageAndCondition" resultMap="blogResultMap">
         SELECT b.*, u.username author, u.image_url
-        FROM blog b, USER u
+        FROM blog b, `user` u
         <where>
             b.user_id = u.id
             <if test="Conditions.keyword != null and Conditions.keyword != ''">
@@ -86,7 +86,7 @@
 
     <select id="selectCollect" resultMap="blogResultMap">
         select b.*, u.username author, u.image_url
-        from user_collection uc, blog b, user u
+        from user_collection uc, blog b, `user` u
         where uc.blog_id = b.id and uc.user_id = #{userId} and u.id = #{userId}
         <if test="conditions.keyword != null and conditions.keyword != ''">
             <bind name="bindKeyword" value="'%' + conditions.keyword + '%'"></bind>

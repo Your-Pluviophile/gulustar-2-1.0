@@ -4,14 +4,22 @@ import com.alibaba.fastjson.JSON;
 import gulustar.pojo.*;
 import gulustar.service.BlogService;
 import gulustar.service.impl.BlogServiceImpl;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *  拦截并处理博客相关操作请求
@@ -20,6 +28,28 @@ import java.util.List;
 public class BlogServlet extends BaseServlet {
 
     private BlogService blogService = new BlogServiceImpl();
+
+    public void upload(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        //获取form表单
+        FileItemFactory factory = new DiskFileItemFactory();
+        ServletFileUpload sf = new ServletFileUpload(factory);
+        List<FileItem> fileItems = sf.parseRequest(req);
+
+        Blog blog = new Blog();
+        for (FileItem fileItem : fileItems) {
+            String fileName = fileItem.getName();
+            String dir_path = req.getServletContext().getRealPath("user_upload");
+            File dir = new File(dir_path);
+            if (!dir.exists()) {
+                dir.mkdir();
+            }
+            String file_name = UUID.randomUUID().toString();
+            String suffix = fileName.substring(fileItem.getName().lastIndexOf("."));
+            fileItem.write(new File(dir_path, file_name + suffix));
+            blog.setContent(dir_path + file_name + suffix);
+        }
+        blogService.addBlog(blog);
+    }
 
     /**
      * 点赞

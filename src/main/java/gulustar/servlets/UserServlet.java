@@ -31,7 +31,7 @@ public class UserServlet extends BaseServlet {
     //业务层方法叫 collectionBlog
 
     /**
-     * 上传图片
+     * 上传图片  获取form里的图片后  使用file write写到user_upload文件夹里
      * @throws IOException
      */
     public void uploadImg(HttpServletRequest req, HttpServletResponse resp) throws IOException{
@@ -54,9 +54,8 @@ public class UserServlet extends BaseServlet {
                     }
                 } else {
                     String image_name = fi.getName();
-                    System.out.println("image_name:" + image_name);
                     if (image_name != "") {
-                        String image_dir_path = req.getServletContext().getRealPath("/user_upload/");
+                        String image_dir_path = req.getServletContext().getRealPath("user_upload");
                         File image_dir = new File(image_dir_path);
                         if (!image_dir.exists()) {
                             image_dir.mkdir();

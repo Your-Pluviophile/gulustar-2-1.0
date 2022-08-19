@@ -1186,7 +1186,7 @@
     position: relative;
     width: 100%;
     height: 150px;
-    background: url(http://139.196.43.147/gallery/2022-07-19-22-35.jpg) no-repeat;
+    background: url(../images/universe.jpg) no-repeat;
     background-size: 100% 100%;
     transition: all 0.5s;
 }

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入icon页面图标 -->
+    <link rel="shortcut icon" href="./images/logo.jpg" />
+    <!-- 引入字体图标 -->
+    <link rel="stylesheet" href="./lib/font/iconfont.css">
+    <!-- 引入页面 CSS文件 -->
+    <link rel="stylesheet" href="./css/add.css">
+    <!-- 引入页面 初始化样式 -->
+    <link rel="stylesheet" href="./css/init.css">
+    <!-- 引入页面 公共样式 -->
+    <link rel="stylesheet" href="./css/public.css">
+    <!-- 引入页面 响应式样式 -->
+    <link rel="stylesheet" href="./css/Responsive.css">
+    <!-- 引入轮播图 -->
+    <link rel="stylesheet" href="./lib/swiper/swiper-bundle.min.css" />
+    <title>发布博客</title>
+</head>
+
+<body>
+<div id="app">
+<!-- 导航栏 -->
+<div class="nav">
+    <div class="w">
+        <!-- 一级导航 -->
+        <ul class="one">
+            <!-- 菜单 -->
+            <li class="item" id="menu">
+                <a href="javascript:;" style="display: inline-block;">
+                    <i class="iconfont icon-caidan1"></i>
+                </a>
+            </li>
+
+            <!-- logo -->
+            <li class="item1">
+                <a href="./" @click="init()">
+                    <!--						<img src="./image/logo2.png" alt="" id="logo">-->
+                    <img src="images/whiteLogo.png" alt="" id="logo">
+                </a>
+            </li>
+
+            <!-- 功能栏 -->
+            <li class="function">
+                <ol>
+                    <!-- 白天昼夜切换 -->
+                    <li id="HighlightToggle">
+                        <img src="./image/taiyang.png" alt="">
+                    </li>
+
+                    <li>
+                        <a href="javascript:;">
+                            <i class="iconfont icon-sousuo1"></i>
+                        </a>
+                    </li>
+                </ol>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- 遮罩层 -->
+<div class="mask"></div>
+
+<!-- 轮播图 -->
+<div class="banner">
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div class="text">
+                    <h3>
+                        <i class="iconfont icon-yubaofabu"></i>发布博客
+                    </h3>
+                    <p>Editor</p>
+                </div>
+
+                <img src="./images/settingsun.jpg" alt="">
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <!-- 引入swiper轮播图插件 -->
+    <script src="./lib/swiper/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            pagination: {
+                el: ".swiper-pagination",
+                dynamicBullets: true
+            },
+            autoplay: {
+                delay: 5000
+            },
+            loop: false,
+        });
+    </script>
+
+    <!-- 波纹 -->
+    <div class="ripple">
+        <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+             viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+            <defs>
+                <path id="gentle-wave"
+                      d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+            </defs>
+            <g class="parallax">
+                <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
+                <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+                <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+                <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+            </g>
+        </svg>
+    </div>
+</div>
+
+<!-- 主体内容 -->
+<div class="main main_links">
+    <div class="w">
+        <!-- 人脉圈 -->
+        <div class="contacts">
+<!--             小圆点 -->
+            <div class="dots">
+                <ol>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ol>
+            </div>
+
+            <!-- 描述 -->
+            <div class="describe">
+                <div class="article_Info">
+                    <form enctype="multipart/form-data" action="/blog/upload" method="post">
+                    <h2>标题</h2>
+                    <input type="text" v-model="blog.title">
+                    <br><br>
+
+                    <h2>分类</h2>
+                    <input type="text" v-model="blog.category">
+                    <br><br>
+
+                    <h2>简介</h2>
+                    <textarea style="border: 3px skyblue solid;
+                                    font-size: 14px;
+                                    border-radius:5px;
+                                    color: lightseagreen;
+                                    background-color: transparent;
+                                    width: 355px;height: 50px;
+                                    padding: 10px;
+                                    resize: none;" v-model="blog.description">
+                    </textarea>
+                    <br><br>
+
+                    <h2>博客内容</h2>
+                    <textarea id="myEditor" v-model="blog.content" name="content">
+                    </textarea>
+
+                    <br><br>
+
+                    <button type="submit"
+                    >发 布</button>
+                        <!--                            @click="submit()"-->
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- 底部 -->
+<div class="footer">
+    <div class="w">
+        <!-- 站点信息 -->
+        <div class="Web_info">
+            <!-- 站点名称 -->
+            <div class="Web_name">
+                <h1><a href="javascript:;">GuluStar</a></h1>
+                <div class="dian"></div>
+            </div>
+
+            <!-- 站点描述 -->
+            <div class="Web_describe">
+                <p>© 2022 <a href="javascript:;">GuluStar</a> - 也许，将会是最好用的博客管理系统！</p>
+                <p>Perhaps, it will be the best blog management system!</p>
+            </div>
+        </div>
+
+        <!-- ICP备案号 -->
+        <div class="ICP">
+            <a href="https://beian.miit.gov.cn/#/Integrated/index"><i
+                    class="iconfont icon-icp-license"></i>豫ICP备2020031040号-1</a>
+        </div>
+    </div>
+</div>
+
+<!-- 侧边工具栏 -->
+<div class="tool">
+
+    <div class="item">
+        <a href="javascript:;" id="returnTop">
+            <i class="iconfont icon-fanhuidingbu1"></i>
+        </a>
+    </div>
+</div>
+</div>
+
+<!-- import Vue before Element -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.8"></script>
+<!--import ajax-axios -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        methods: {
+            submit(){
+                axios({
+                    method: "post",
+                    url: "/gulustar/blog/upload",
+                    data: this.blog
+                }).then(resp => {
+
+                });
+            }
+        },
+        data() {
+            return {
+                blog: {
+                    title: '',
+                    userId: 0,
+                    category: '',
+                    description: '',
+                    content: ''
+                }
+            }
+        }
+    })
+</script>
+<script src="https://cdn.tiny.cloud/1/ogb03ytpumck61p57kf1jhsdl4krod7wy9xi78t5kscxsphb/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+        selector: '#myEditor',
+        plugins: 'a11ychecker advcode casechange export formatpainter image editimage linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tableofcontents tinycomments tinymcespellchecker',
+        toolbar: 'a11ycheck addcomment showcomments casechange checklist code export formatpainter image editimage pageembed permanentpen table tableofcontents',
+        height: 600,
+        language: 'zh_CN',
+        toolbar_mode: 'floating',
+        tinycomments_mode: 'embedded',
+        tinycomments_author: 'Author name',
+    });
+</script>
+<!-- 引入公共 JavaScript文件 -->
+<script src="./js/public.js"></script>
+<!-- 引入页面JavaScript文件 -->
+<script src="./js/links.js"></script>
+
+</body>
+
+</html>

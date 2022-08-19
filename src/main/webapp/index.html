@@ -5,10 +5,11 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
 	<!-- 引入饿了么ui样式 -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 	<!-- 引入icon页面图标 -->
-	<link rel="shortcut icon" href="favicon.ico"/>
+	<link rel="shortcut icon" href="./images/logo.jpg"/>
 	<!-- 引入字体图标 -->
 	<link rel="stylesheet" href="./lib/font/iconfont.css">
 	<!-- 后来引入的字体图标 -->
@@ -23,7 +24,7 @@
 	<link rel="stylesheet" href="./css/Responsive.css">
 	<!-- 引入轮播图 -->
 	<link rel="stylesheet" href="./lib/swiper/swiper-bundle.min.css" />
-	<title>GuluStar - 不断改善，成为最佳🎉</title>
+	<title>咕噜星</title>
 </head>
 
 <body>
@@ -44,12 +45,12 @@
 				<li class="item1">
 					<a href="./" @click="init()">
 <!--						<img src="./image/logo2.png" alt="" id="logo">-->
-						<img src="./images/02.png" alt="" id="logo">
+						<img src="images/whiteLogo.png" alt="" id="logo">
 					</a>
 				</li>
 
 				<li class="item1">
-					<a href="javascript:;">
+					<a href="./links.html">
 						<i class="iconfont icon-shouye"></i>小组介绍
 					</a>
 				</li>
@@ -104,22 +105,8 @@
 
 				<li class="item1" v-if="user.isAdmin == 1">
 					<a href="javascript:;">
-						<i class="iconfont icon-zhuti1"></i>管理系统
+						<i class="iconfont icon-zhuti1"></i>发布博客
 					</a>
-
-					<ul class="two" style="display: none;">
-						<li>
-							<a href="./links.html"><i class="iconfont icon-quanzi1"></i>人脉圈</a>
-						</li>
-
-						<li>
-							<a href="./circle.html"><i class="iconfont icon-pengyouquan1"></i>朋友圈</a>
-						</li>
-
-						<li>
-                            <a href="./bigData.html"><i class="iconfont icon-dashuju2"></i>大数据</a>
-                        </li>
-					</ul>
 				</li>
 
 				<!-- 功能栏 -->
@@ -154,7 +141,7 @@
 						<p>Constantly improve and become the best!</p>
 					</div>
 
-					<img src="http://139.196.43.147/gallery/t01d6f5fd3610da0a08.jpg" alt="">
+					<img src="images/astronaut.jpg" alt="">
 				</div>
 
 				<div class="swiper-slide">
@@ -163,7 +150,7 @@
 						<p>Only persistence can see the dawn!</p>
 					</div>
 
-					<img src="http://139.196.43.147/gallery/t012cde4a5058c156b7.jpg" alt="">
+					<img src="images/settingsun.jpg" alt="">
 				</div>
 
 				<div class="swiper-slide">
@@ -172,7 +159,7 @@
 						<p>Forever young, forever tearful!</p>
 					</div>
 
-					<img src="http://139.196.43.147/gallery/t01aaa82ef6d0f1ec87.jpg" alt="">
+					<img src="images/couple.jpg" alt="">
 				</div>
 			</div>
 			<div class="swiper-pagination"></div>
@@ -294,7 +281,7 @@
 							<!-- 头像 -->
 							<el-upload
 									class="avatar-uploader avatar"
-									action="http://localhost:8080/gulustar/user/uploadImg"
+									action="/user/uploadImg"
 									:show-file-list="false"
 									:on-success="handleAvatarSuccess"
 									:before-upload="beforeAvatarUpload">
@@ -482,7 +469,7 @@
 				getCollectBlogIds(){
 					axios({
 						method: "get",
-						url: "http://localhost:8080/gulustar/user/getCollectBlogIds?userId=" + this.user.id,
+						url: "/user/getCollectBlogIds?userId=" + this.user.id,
 					}).then(resp => {
 						this.userCollections = resp.data;
 					});
@@ -504,7 +491,7 @@
 
 					axios({
 						method: "put",
-						url: "http://localhost:8080/gulustar/user/collect",
+						url: "/user/collect",
 						data: {id: blogId, userId: this.user.id}
 					});
 					this.getCollectBlogIds();
@@ -515,7 +502,7 @@
 				good(id){
 					axios({
 						method: "put",
-						url: "http://localhost:8080/gulustar/blog/addLikes",
+						url: "/blog/addLikes",
 						data: id
 					});
 				},
@@ -531,7 +518,7 @@
 				getCategories(){
 					axios({
 						method: "get",
-						url: "http://localhost:8080/gulustar/blog/getCategories"
+						url: "/blog/getCategories"
 					}).then(resp => {
 						if (resp.data != null){
 							this.categories = resp.data;
@@ -547,6 +534,7 @@
 					this.user.username = '咕噜星用户';
 					this.user.status = 1;
 					this.user.isAdmin = 0;
+					this.user.imageUrl = null;
 				},
 				/*
 					获取用户信息
@@ -554,7 +542,7 @@
 				getUserInfo(){
 					axios({
 						method: "get",
-						url: "http://localhost:8080/gulustar/user/getUserById?id=" + this.user.id
+						url: "/user/getUserById?id=" + this.user.id
 					}).then(resp => {
 						if (resp.data != null){
 							this.user = resp.data;
@@ -645,7 +633,7 @@
 
 					axios({
 						method: "get",
-						url: "http://localhost:8080/gulustar/user/getUserHistory?userId=" + this.user.id +
+						url: "/user/getUserHistory?userId=" + this.user.id +
 								"&currentPage=" + this.conditions.currentPage + "&size=" + this.conditions.size +
 								"&keyword=" + this.conditions.keyword + "&category=" + this.conditions.category,
 					}).then(resp => {
@@ -676,7 +664,7 @@
 
 					axios({
 						method: "get",
-						url: "http://localhost:8080/gulustar/blog/queryCollectByUserId?userId=" + this.user.id +
+						url: "/blog/queryCollectByUserId?userId=" + this.user.id +
 								"&currentPage=" + this.conditions.currentPage + "&size=" + this.conditions.size +
 								"&keyword=" + this.conditions.keyword + "&category=" + this.conditions.category,
 					}).then(resp => {
@@ -692,7 +680,7 @@
 					sessionStorage.setItem('currBlogId', id);
 					this.addHistory(id);
 					// window.location.href='/gulustar/src/main/webapp/article.html';
-					window.location.href='/gulustar/article.html';
+					window.location.href='./article.html';
 				},
 				/*
 					添加浏览记录
@@ -700,7 +688,7 @@
 				addHistory(id){
 					axios({
 						method: "put",
-						url: "http://localhost:8080/gulustar/user/addUserHistory",
+						url: "/user/addUserHistory",
 						data: {userId: this.user.id, blogId: id}
 					});
 				},
@@ -781,7 +769,7 @@
 
 					axios({
 						method: "post",
-						url: "http://localhost:8080/gulustar/blog/getBlogsByPageAndCondition",
+						url: "/blog/getBlogsByPageAndCondition",
 						data: this.conditions
 					}).then(resp => {
 						this.blogs = resp.data.blogs;
@@ -794,7 +782,7 @@
 				getAllBlogs(){
 					axios({
 						method: "get",
-						url: "http://localhost:8080/gulustar/blog/getAllBlogs",
+						url: "/blog/getAllBlogs",
 					}).then(resp => {
 						this.blogs = resp.data;
 					});
@@ -806,7 +794,7 @@
 				login(){
 					axios({
 						method: "post",
-						url: "http://localhost:8080/gulustar/user/login",
+						url: "/user/login",
 						data: this.loginInfo
 					}).then(resp => {
 						if (resp.data != null){
@@ -883,7 +871,7 @@
 
 					axios({
 						method: "put",
-						url: "http://localhost:8080/gulustar/user/registe",
+						url: "/user/registe",
 						data: this.registeInfo
 					}).then(resp => {
 						if (resp.data == "OK"){
@@ -927,24 +915,24 @@
 						confirmPwd: ''
 					},
 					blogs: [							//展示在主页的所有博客对象
-						{								//包括id、标题、简介、点赞数、收藏数、发布日期、作者
-							id: 5,
-							title: 'testtitle',
-							description: 'testdes',
-							likes: 0,
-							collected: 0,
-							releaseDate: '2022-08-14',
-							author: 'aaa'
-						},
-						{
-							id: 1,
-							title: 'test1title',
-							description: 'test1des',
-							likes: 1,
-							collected: 1,
-							releaseDate: '2022-08-13',
-							author: 'bbb'
-						}
+						// {								//包括id、标题、简介、点赞数、收藏数、发布日期、作者
+						// 	id: 5,
+						// 	title: 'testtitle',
+						// 	description: 'testdes',
+						// 	likes: 0,
+						// 	collected: 0,
+						// 	releaseDate: '2022-08-14',
+						// 	author: 'aaa'
+						// },
+						// {
+						// 	id: 1,
+						// 	title: 'test1title',
+						// 	description: 'test1des',
+						// 	likes: 1,
+						// 	collected: 1,
+						// 	releaseDate: '2022-08-13',
+						// 	author: 'bbb'
+						// }
 					],
 					conditions: {						//查询条件： 关键词、分类、总页数、页数、条数
 						keyword: '',
@@ -953,7 +941,7 @@
 						currentPage: 1,
 						size: 7
 					},
-					categories: ['测试分类1', '测试分类2'],//分类标签
+					categories: [],						//分类标签
 					accTooLong: false,					//判断账号长度
 					pwdTooLong: false,					//密码长度
 					usernameTooLong: false,				//昵称长度

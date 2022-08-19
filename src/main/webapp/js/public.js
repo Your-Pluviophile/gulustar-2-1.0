@@ -188,7 +188,7 @@
 
                 // 修改logo
                 // logo.src = './image/logo.png';
-                logo.src = './images/03.png';
+                logo.src = './images/blackLogo.png';
 
                 // 导航栏左侧菜单按钮
                 menu.style.color = '#333';
@@ -229,7 +229,7 @@
                         }
 
                         // logo.src = './image/logo2.png';
-                        logo.src = './images/02.png';
+                        logo.src = './images/whiteLogo.png';
                     } else {
                         nav.style.backgroundColor = '#fff';
                     }
@@ -238,7 +238,7 @@
                 nav.style.backgroundColor = 'transparent';
 
                 // logo.src = './image/logo2.png';
-                logo.src = './images/02.png';
+                logo.src = './images/whiteLogo.png';
 
                 menu.style.color = '#fff';
 
@@ -347,10 +347,10 @@
             if (banner) {
                 if (info.flag) {
                     // logo.src = './image/logo.png';
-                    logo.src = './images/03.png';
+                    logo.src = './images/blackLogo.png';
                 } else {
                     // logo.src = './image/logo2.png';
-                    logo.src = './images/02.png';
+                    logo.src = './images/whiteLogo.png';
                 }
             }
         }
@@ -397,7 +397,7 @@
                         commentTextarea:'#292929',
                         commentList:'#343637'
                     },
-                    author_bg: 'url(http://139.196.43.147/gallery/t015a66384456670422.jpg)'
+                    author_bg: 'url(./images/universe.jpg)'
                 }
 
                 // 持久化到本地存储
@@ -430,13 +430,13 @@
                     }
 
                     // logo.src = './image/logo2.png';
-                    logo.src = './images/02.png';
+                    logo.src = './images/whiteLogo.png';
                 }
                 // 没有轮播图的页面样式 
                 else {
                     nav.style.backgroundColor = '#1d1f20';
                     // logo.src = './image/logo2.png';
-                    logo.src = './images/02.png';
+                    logo.src = './images/whiteLogo.png';
                     menu.style.color = '#fff';
 
                     // 批量修改
@@ -492,7 +492,7 @@
                         commentTextarea:'#f2f7ff',
                         commentList:'#fbfcfc'
                     },
-                    author_bg: 'url(http://139.196.43.147/gallery/2022-07-19-22-35.jpg)'
+                    author_bg: 'url(./images/city.jpg)'
                 }
 
                 localStorage.setItem("HighlightToggleObj", JSON.stringify(obj))
@@ -516,7 +516,7 @@
                         }
 
                         // logo.src = './image/logo.png';
-                        logo.src = './images/03.png';
+                        logo.src = './images/blackLogo.png';
                     } else {
                         nav.style.backgroundColor = 'transparent';
                         menu.style.color = '#fff';
@@ -530,14 +530,14 @@
                         }
 
                         // logo.src = './image/logo2.png';
-                        logo.src = './images/02.png';
+                        logo.src = './images/whiteLogo.png';
                     }
                 }
                 // 没有轮播图的页面样式 
                 else {
                     nav.style.backgroundColor = '#fff';
                     // logo.src = './image/logo.png';
-                    logo.src = './images/02.png';
+                    logo.src = './images/whiteLogo.png';
                     menu.style.color = '#333';
 
                     // 批量修改

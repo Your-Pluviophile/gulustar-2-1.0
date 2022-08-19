@@ -46,7 +46,7 @@ public interface UserMapper {
      * @param user
      * @return
      */
-    @Insert("insert into user values " +
+    @Insert("insert into `user` values " +
             "(null, #{username}, null, #{account}, #{password}, #{isAdmin}, #{status})")
     boolean addUser(User user);
 
@@ -55,7 +55,7 @@ public interface UserMapper {
      * 将更改后的用户数据封装成user对象,再调用此方法
      * @param user
      */
-    @Update("UPDATE user SET " +
+    @Update("UPDATE `user` SET " +
             "username = #{username}," +
             "image_url = #{imageUrl} " +
             "where id = #{id}")
@@ -76,7 +76,7 @@ public interface UserMapper {
      * @param id
      * @return
      */
-    @Select("select * from user where id = #{id}")
+    @Select("select * from `user` where id = #{id}")
     @ResultMap("userResultMap")
     User selectById(@Param("id") Integer id);
 

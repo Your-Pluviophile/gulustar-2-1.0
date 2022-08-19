@@ -5,7 +5,7 @@
 <configuration>
 
     <typeAliases>
-        <package name="gulustar.dao.pojo"/>
+        <package name="gulustar.pojo"/>
     </typeAliases>
 
     <environments default="development">
@@ -13,8 +13,8 @@
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql:///gulustar_db"/>
-                <property name="username" value="root"/>
+                <property name="url" value="jdbc:mysql://49.235.68.71:3306/gulustar_db"/>
+                <property name="username" value="gulustar"/>
                 <property name="password" value="abc123"/>
             </dataSource>
         </environment>

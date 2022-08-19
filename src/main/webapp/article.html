@@ -8,7 +8,7 @@
 	<!-- 引入饿了么ui样式 -->
 	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 	<!-- 引入icon页面图标 -->
-	<link rel="shortcut icon" href="favicon.ico" />
+	<link rel="shortcut icon" href="./images/logo.jpg" />
 	<!-- 引入字体图标 -->
 	<link rel="stylesheet" href="./lib/font/iconfont.css">
 	<!-- 引入页面 CSS文件 -->
@@ -44,7 +44,7 @@
 				<li class="item1">
 					<a href="./" @click="goToHomePage()">
 						<!--						<img src="./image/logo2.png" alt="" id="logo">-->
-						<img src="./images/02.png" alt="" id="logo">
+						<img src="images/whiteLogo.png" alt="" id="logo">
 					</a>
 				</li>
 
@@ -85,21 +85,6 @@
 					<a href="./" @click="setHistoryNow()">
 						<i class="iconfont icon-zuzhijiagou1"></i>阅览历史
 					</a>
-
-					<!-- 二级导航 -->
-<!--					<ul class="two" style="display: none;">-->
-<!--						<li>-->
-<!--							<a href="javascript:;">Vue</a>-->
-<!--						</li>-->
-
-<!--						<li>-->
-<!--							<a href="javascript:;">React</a>-->
-<!--						</li>-->
-
-<!--						<li>-->
-<!--							<a href="javascript:;">Angular</a>-->
-<!--						</li>-->
-<!--					</ul>-->
 				</li>
 
 				<li class="item1" v-if="user.isAdmin == 1">
@@ -245,41 +230,7 @@
 
 					<!-- 文章内容 -->
 					<div class="article_Info">
-						<h1>大厂裁员下，程序员如何做“副业”？</h1><br><br>
-						<p>大家好，我是杨成功。</p><br>
-						<p>前几天有幸看了<i
-								class="s">尤雨溪</i>尤大的直播，他们谈到一个话题，是说目前前端人，或者是整个程序员群体如何做副业？近年来互联网行情下降，好多人都在思考要不要搞个副业来抵御风险。
-						</p><br>
-						<p>这不又来事了，这两天又爆了互联网大裁员。继阿里“向社会输送人才”之后，京东又搞了个“毕业礼”，整的小伙伴们人心惶惶。副业的关注度又一波升级。<br>
-						</p>
-						<p>那今天我们就来聊聊，程序员做副业这件事。</p><br>
-						<img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5e7d37251bc04bf48caafe62eae2991e~tplv-k3u1fbpfcp-zoom-crop-mark:1304:1304:1304:734.awebp?"
-							 alt="">
-						<h2>代码片段</h2>
-						<div class="pre">
-							<!-- 代码高亮 -->
-							<pre style="margin:0;">
-									<b><code contenteditable="false" class="language-javascript" >
- function unique(arr) {
-    if (!Array.isArray(arr)) {
-        console.log('type error!')
-        return
-    }
-    var array = [];
-    for (var i = 0; i < arr.length; i++) {
-        if (array .indexOf(arr[i]) === -1) {
-            array .push(arr[i])
-        }
-    }
-    return array;
- }
-									</code></b>
-    							</pre>
-							<!-- 调用代码高亮 -->
-							<script>
-								hljs.initHighlightingOnLoad();
-							</script>
-						</div>
+						{{blog.content}}
 					</div>
 
 					<!-- 点赞 / 收藏 -->
@@ -401,7 +352,7 @@
 							<!-- 头像 -->
 							<el-upload
 									class="avatar-uploader avatar"
-									action="http://localhost:8080/gulustar/user/uploadImg"
+									action="/user/uploadImg"
 									:show-file-list="false"
 									:on-success="handleAvatarSuccess"
 									:before-upload="beforeAvatarUpload">
@@ -696,7 +647,7 @@
 				getUserInfo(){
 					axios({
 						method: "get",
-						url: "http://localhost:8080/gulustar/user/getUserById?id=" + this.user.id
+						url: "/user/getUserById?id=" + this.user.id
 					}).then(resp => {
 						if (resp.data != null){
 							this.user = resp.data;
@@ -726,7 +677,7 @@
 					this.newComment.userId = this.user.id;
 					axios({
 						method: "put",
-						url: "http://localhost:8080/gulustar/blog/addComment",
+						url: "/blog/addComment",
 						data: this.newComment
 					}).then(resp => {
 						if (resp.data == 'OK'){
@@ -750,7 +701,7 @@
 				getContentAndCommentList(){
 					axios({
 						method: "get",
-						url: "http://localhost:8080/gulustar/blog/getContendAndCommentList?blogId=" + this.blog.id,
+						url: "/blog/getContendAndCommentList?blogId=" + this.blog.id,
 					}).then(resp => {
 						this.blog.content = resp.data.content;
 						this.comment = resp.data.comment;
@@ -763,7 +714,7 @@
 				login(){
 					axios({
 						method: "post",
-						url: "http://localhost:8080/gulustar/user/login",
+						url: "/user/login",
 						data: this.loginInfo
 					}).then(resp => {
 						if (resp.data != null){
@@ -810,7 +761,7 @@
 
 					axios({
 						method: "put",
-						url: "http://localhost:8080/gulustar/user/registe",
+						url: "/user/registe",
 						data: this.registeInfo
 					}).then(resp => {
 						if (resp.data == "OK"){

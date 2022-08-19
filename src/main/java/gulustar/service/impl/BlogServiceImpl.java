@@ -11,6 +11,7 @@ import gulustar.util.SqlSessionFactoryUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
+import java.io.*;
 import java.util.List;
 
 /**
@@ -19,6 +20,22 @@ import java.util.List;
  */
 public class BlogServiceImpl implements BlogService{
     SqlSessionFactory sqlSessionFactory = SqlSessionFactoryUtils.getSqlSessionFactory();
+
+    /**
+     * 添加博客
+     * @return
+     */
+    @Override
+    public boolean addBlog(Blog blog) {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        BlogMapper blogMapper = sqlSession.getMapper(BlogMapper.class);
+
+        boolean addBlog = blogMapper.addBlog(blog);
+
+        sqlSession.commit();
+        sqlSession.close();
+        return addBlog;
+    }
 
     /**
      * 添加一条评论 对象里包含博客，用户ID 和 评论内容
@@ -49,12 +66,27 @@ public class BlogServiceImpl implements BlogService{
      * @return
      */
     @Override
-    public Blog getOneBlog(Integer id) {
+    public Blog getOneBlog(Integer id) throws IOException {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         BlogMapper blogMapper = sqlSession.getMapper(BlogMapper.class);
 
         //查询博客内容和评论集合,把评论集合封装到博客对象里
         Blog blog = blogMapper.selectOneBlog(id);
+        //获取文件地址 数据库存的是文件地址
+        String path = blog.getContent();
+        //获取文件内容 并设置到content属性
+        FileInputStream fileInputStream = new FileInputStream(new File(path));
+        InputStreamReader reader = new InputStreamReader(fileInputStream);
+        BufferedReader buffReader = new BufferedReader(reader);
+        String strTmp = "";
+        StringBuilder content = new StringBuilder();
+        while((strTmp = buffReader.readLine()) != null){
+            System.out.println(strTmp);
+            content.append(strTmp);
+        }
+        buffReader.close();
+        blog.setContent(content.toString());
+        //获取存在数据库的评论ID集合  然后查询评论并设置到属性
         List<Integer> commentIds = blogMapper.selectCommentIdList(id);
         List<Comment> comments = blogMapper.selectCommentsByIds(commentIds);
         blog.setComment(comments);

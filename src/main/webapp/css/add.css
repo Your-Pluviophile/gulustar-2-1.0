@@ -1,0 +1,93 @@
+/* 人脉圈 */
+.main .contacts{
+    overflow: hidden;
+    width: 1250px;
+    padding-bottom: 20px;
+    border-radius: 3px;
+    background-color: var(--Yuexing-bg);
+    box-shadow: 0 1px 3px rgb(26 26 26 / 20%);
+    transition: all 0.5s;
+}
+.main .contacts .dots{
+    padding: 0 20px;
+    margin-bottom: 15px;
+}
+
+/* 输入框 */
+input {
+    background-color: transparent;
+    width: 20%;
+    color: lightseagreen;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid skyblue;
+    padding: 5px 0;
+    text-indent: 5px;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+button[type="submit"] {
+    width: 8%;
+    height: 32px;
+    margin: 20px 550px;
+    font-size: 14px;
+    color: #fff;
+    border: none;
+    border-radius: 16px;
+    background-image: linear-gradient(to right, #48c6ef -100%, #6f86d6 100%);
+    transition: .4s;
+}
+button[type="submit"]:hover {
+    background-image: linear-gradient(to right, #48c6ef 0%, #6f86d6 200%);
+}
+
+/* 描述 */
+.main .contacts .describe{
+    width: 100%;
+    padding: 0 20px;
+}
+
+.comment{
+    padding: 0 20px;
+}
+
+/* 友联适配 690屏幕 */
+@media screen and (max-width:690px) {
+    .main .contacts .contactsList .item {
+        width: 49%;
+    }
+
+    .main .contacts .contactsList .item>a {
+        width: 100%;
+    }
+}
+
+/* 友联适配 505屏幕 */
+@media screen and (max-width:505px) {
+    .main .contacts .contactsList {
+        padding: 0 10px
+    }
+
+    .main .contacts .contactsList .item {
+        width: 49%;
+    }
+
+    .main .contacts .contactsList .item>a {
+        margin-bottom: 10px;
+    }
+
+    .main .contacts .contactsList .item img {
+        width: 36px;
+        height: 36px;
+        margin-right: 10px;
+    }
+
+    .main .contacts .contactsList .item .text h4 {
+        width: 90px;
+    }
+
+    .main .contacts .contactsList .item .text p {
+        width: 90px;
+    }
+}
