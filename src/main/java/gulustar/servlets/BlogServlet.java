@@ -31,23 +31,55 @@ public class BlogServlet extends BaseServlet {
 
     public void upload(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         //获取form表单
+        req.setCharacterEncoding("utf-8");
         FileItemFactory factory = new DiskFileItemFactory();
         ServletFileUpload sf = new ServletFileUpload(factory);
         List<FileItem> fileItems = sf.parseRequest(req);
 
         Blog blog = new Blog();
+        User user = (User) req.getSession().getAttribute("user");
+        Integer userId = user.getId();
+        blog.setUserId(userId);
+
         for (FileItem fileItem : fileItems) {
-            String fileName = fileItem.getName();
-            String dir_path = req.getServletContext().getRealPath("user_upload");
-            File dir = new File(dir_path);
-            if (!dir.exists()) {
-                dir.mkdir();
+            //获取form表单里的name
+            String fieldName = fileItem.getFieldName();
+            //判断是博客内容还是其他
+            if ("content".equals(fieldName) || "cover".equals(fieldName)){
+                String dir_path = req.getServletContext().getRealPath("user_upload");
+                File dir = new File(dir_path);
+                if (!dir.exists()) {
+                    dir.mkdir();
+                }
+                String file_name = UUID.randomUUID().toString();
+                String suffix = "content".equals(fieldName)? ".txt":".jpg";
+                fileItem.write(new File(dir_path, file_name + suffix));
+
+                switch (fieldName){
+                    case "content":
+                        blog.setContent(dir_path + "/" + file_name + suffix);
+                        break;
+                    case "cover":
+                        blog.setCover(file_name + suffix);
+                }
+            }else {
+                String value = new String(fileItem.getString().getBytes("ISO-8859-1"), "UTF-8");
+                switch (fieldName){
+                    case "title":
+                        blog.setTitle(value);
+                        break;
+                    case "category":
+                        blog.setCategory(value);
+                        break;
+                    case "description":
+                        blog.setDescription(value);
+                        break;
+                    default:
+                        throw new Exception("表单name不对");
+                }
             }
-            String file_name = UUID.randomUUID().toString();
-            String suffix = fileName.substring(fileItem.getName().lastIndexOf("."));
-            fileItem.write(new File(dir_path, file_name + suffix));
-            blog.setContent(dir_path + file_name + suffix);
         }
+
         blogService.addBlog(blog);
     }
 

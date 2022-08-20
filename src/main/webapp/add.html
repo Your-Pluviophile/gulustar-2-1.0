@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入饿了么ui样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <!-- 引入icon页面图标 -->
     <link rel="shortcut icon" href="./images/logo.jpg" />
     <!-- 引入字体图标 -->
@@ -134,13 +136,21 @@
             <!-- 描述 -->
             <div class="describe">
                 <div class="article_Info">
-                    <form enctype="multipart/form-data" action="/blog/upload" method="post">
+                    <form enctype="multipart/form-data" action="/blog/upload" method="post" target="myIframe">
+                    <iframe name="myIframe" style="display:none"></iframe>
+
                     <h2>标题</h2>
-                    <input type="text" v-model="blog.title">
+                        <input type="text" v-model="blog.title" name="title">
+                    <br><br>
+
+                        <input type="hidden" v-model="user.Id" name="userId" disabled >
+
+                    <h2>封面</h2>
+                        <input type="file" name="cover" class="input-file">
                     <br><br>
 
                     <h2>分类</h2>
-                    <input type="text" v-model="blog.category">
+                    <input type="text" v-model="blog.category" name="category">
                     <br><br>
 
                     <h2>简介</h2>
@@ -151,19 +161,17 @@
                                     background-color: transparent;
                                     width: 355px;height: 50px;
                                     padding: 10px;
-                                    resize: none;" v-model="blog.description">
+                                    resize: none;" v-model="blog.description" name="description">
                     </textarea>
                     <br><br>
 
                     <h2>博客内容</h2>
-                    <textarea id="myEditor" v-model="blog.content" name="content">
+                    <textarea id="myEditor" name="content">
                     </textarea>
 
                     <br><br>
 
-                    <button type="submit"
-                    >发 布</button>
-                        <!--                            @click="submit()"-->
+                        <button type="submit" @click="submit()">发 布</button>
                     </form>
                 </div>
             </div>
@@ -214,17 +222,31 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2.7.8"></script>
 <!--import ajax-axios -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!-- import Element JavaScript -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script>
     new Vue({
         el: '#app',
         methods: {
             submit(){
-                axios({
-                    method: "post",
-                    url: "/gulustar/blog/upload",
-                    data: this.blog
-                }).then(resp => {
+                this.$message({
+                    message: '发布成功',
+                    type: 'success',
+                    duration: 1000,
+                    showClose: true
+                });
+            },
+            getUserInfo(){
+                let currUserId = sessionStorage.getItem('currUserId');
+                this.user.id = parseInt(currUserId == null? '0':currUserId);
 
+                axios({
+                    method: "get",
+                    url: "/user/getUserById?id=" + this.user.id
+                }).then(resp => {
+                    if (resp.data != null){
+                        this.user = resp.data;
+                    }
                 });
             }
         },
@@ -235,7 +257,10 @@
                     userId: 0,
                     category: '',
                     description: '',
-                    content: ''
+                },
+                user: {
+                    id: 0,
+                    username: ''
                 }
             }
         }

@@ -49,7 +49,7 @@
 				</li>
 
 				<li class="item1">
-					<a href="./index.html">
+					<a href="./links.html">
 						<i class="iconfont icon-shouye"></i>小组介绍
 					</a>
 				</li>
@@ -60,51 +60,10 @@
 					</a>
 				</li>
 
-<!--				<li class="item1">-->
-<!--					<a href="./index.html">-->
-<!--						<i class="iconfont icon-yuandaima"></i>关注的人-->
-<!--					</a>-->
-
-<!--					&lt;!&ndash; 二级导航 &ndash;&gt;-->
-<!--					<ul class="two" style="display: none;">-->
-<!--						<li>-->
-<!--							<a href="javascript:;">HTML5</a>-->
-<!--						</li>-->
-
-<!--						<li>-->
-<!--							<a href="javascript:;">CSS3</a>-->
-<!--						</li>-->
-
-<!--						<li>-->
-<!--							<a href="javascript:;">JavaScript</a>-->
-<!--						</li>-->
-<!--					</ul>-->
-<!--				</li>-->
-
 				<li class="item1">
 					<a href="./" @click="setHistoryNow()">
 						<i class="iconfont icon-zuzhijiagou1"></i>阅览历史
 					</a>
-				</li>
-
-				<li class="item1" v-if="user.isAdmin == 1">
-					<a href="javascript:;">
-						<i class="iconfont icon-zhuti1"></i>管理系统
-					</a>
-
-					<ul class="two" style="display: none;">
-						<li>
-							<a href="./links.html"><i class="iconfont icon-quanzi1"></i>人脉圈</a>
-						</li>
-
-						<li>
-							<a href="./circle.html"><i class="iconfont icon-pengyouquan1"></i>朋友圈</a>
-						</li>
-
-						<li>
-							<a href="./bigData.html"><i class="iconfont icon-dashuju2"></i>大数据</a>
-						</li>
-					</ul>
 				</li>
 
 				<!-- 功能栏 -->
@@ -126,97 +85,6 @@
 		</div>
 	</div>
 
-	<!-- 移动端的侧边导航栏 -->
-	<div class="mNav">
-		<!-- 头像 -->
-		<div class="user">
-			<img src="./image/user.png" alt="">
-			<span>Yuexing</span>
-			<p>不断改善成为最佳!</p>
-		</div>
-
-		<!-- 导航栏 -->
-		<ul>
-			<li class="item">
-				<a href="./index.html">
-					<i class="iconfont icon-shouye"></i>首页
-				</a>
-			</li>
-
-			<li class="item">
-				<a href="./category.html">
-					<i class="iconfont icon-bijiben1"></i>开发记录
-				</a>
-			</li>
-
-			<li class="item">
-				<a href="javascript:;" id="twoNav">
-					<i class="iconfont icon-yuandaima"></i>大前端
-				</a>
-
-				<!-- 二级导航 -->
-				<ul class="two">
-					<li>
-						<a href="javascript:;">HTML5</a>
-					</li>
-
-					<li>
-						<a href="javascript:;">CSS3</a>
-					</li>
-
-					<li>
-						<a href="javascript:;">JavaScript</a>
-					</li>
-				</ul>
-			</li>
-
-			<li class="item">
-				<a href="javascript:;" id="twoNav">
-					<i class="iconfont icon-zuzhijiagou1"></i>框架
-				</a>
-
-				<!-- 二级导航 -->
-				<ul class="two">
-					<li>
-						<a href="javascript:;">Vue</a>
-					</li>
-
-					<li>
-						<a href="javascript:;">React</a>
-					</li>
-
-					<li>
-						<a href="javascript:;">Angular</a>
-					</li>
-				</ul>
-			</li>
-
-			<li class="item">
-				<a href="javascript:;" id="twoNav">
-					<i class="iconfont icon-zhuti1"></i>扩展
-				</a>
-
-				<ul class="two">
-					<li>
-						<a href="./links.html">
-							<i class="iconfont icon-quanzi1"></i>人脉圈
-						</a>
-					</li>
-
-					<li>
-						<a href="./circle.html">
-							<i class="iconfont icon-pengyouquan1"></i>朋友圈
-						</a>
-					</li>
-
-					<li>
-						<a href="./bigData.html"><i class="iconfont icon-dashuju2"></i>大数据</a>
-					</li>
-				</ul>
-			</li>
-		</ul>
-	</div>
-
 	<!-- 遮罩层 -->
 	<div class="mask"></div>
 
@@ -229,20 +97,21 @@
 				<div class="article">
 
 					<!-- 文章内容 -->
-					<div class="article_Info">
-						{{blog.content}}
+					<div class="article_Info"><h1>{{blog.title}}</h1></div>
+					<br>
+					<div class="article_Info" v-html="blog.content">
 					</div>
 
 					<!-- 点赞 / 收藏 -->
-					<div class="post_list">
-						<a href="javascript:;" class="post_list_Fabulous">
-							<i class="iconfont icon-dianzan"> 点赞</i>
-						</a>
+<!--					<div class="post_list">-->
+<!--						<a href="javascript:;" class="post_list_Fabulous">-->
+<!--							<i class="iconfont icon-dianzan"> 点赞</i>-->
+<!--						</a>-->
 
-						<a href="javascript:;" class="post_list_Collection">
-							<i class="iconfont icon-aixin"> 收藏</i>
-						</a>
-					</div>
+<!--						<a href="javascript:;" class="post_list_Collection">-->
+<!--							<i class="iconfont icon-aixin"> 收藏</i>-->
+<!--						</a>-->
+<!--					</div>-->
 
 					<!-- 评论 -->
 					<div class="comment">
@@ -797,7 +666,8 @@
 					}],
 					blog: {									//博客内容: id，内容
 						id: 1,
-						content: 'hello world'
+						title: 'aaaaaa',
+						content: '<p>啊啊啊啊啊</p>'
 					},
 					user: {									//当前用户
 						id: 0,

@@ -11,6 +11,7 @@ public class Blog {
     Integer userId;         //作者
     String author;          //作者名
     String imageUrl;        //作者头像图片
+    String cover;           //封面
     String category;        //分类
     String title;           //标题
     String description;     //简介
@@ -21,6 +22,20 @@ public class Blog {
     Integer status;         //状态(是否已被删除)
     Date releaseDate;       //发布时间
     Date modifyDate;        //修改时间
+
+    public Blog() {
+        this.likes = 0;
+        this.collected = 0;
+        this.status = 1;
+    }
+
+    public String getCover() {
+        return cover;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
+    }
 
     public String getCategory() {
         return category;

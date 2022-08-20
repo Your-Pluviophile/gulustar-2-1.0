@@ -52,13 +52,14 @@ CREATE TABLE user_history(
 CREATE TABLE blog(
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	user_id INT,				#作者
+	cover VARCHAR(50),
 	category varchar(100),
 	title VARCHAR(100),
 	`description` VARCHAR(100),	#简介
 	content VARCHAR(10000),     #内容
-	likes INT,                  #点赞数
-	collected INT,              #收藏数
-	STATUS INT,
+	likes INT default 0,        #点赞数
+	collected INT default 0,    #收藏数
+	STATUS INT default 1,
 	release_date TIMESTAMP,
 	modify_date TIMESTAMP
 );
