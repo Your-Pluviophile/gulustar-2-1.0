@@ -4,14 +4,20 @@ import com.alibaba.fastjson.JSON;
 import gulustar.pojo.*;
 import gulustar.service.UserService;
 import gulustar.service.impl.UserServiceImpl;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import javax.servlet.ServletInputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.BufferedReader;
-import java.io.IOException;
+import java.io.*;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *  拦截并处理用户相关操作请求
@@ -21,9 +27,79 @@ public class UserServlet extends BaseServlet {
 
     private UserService userService = new UserServiceImpl();
 
-
     //添加收藏  --------------------------悠悠球-------------------------
     //业务层方法叫 collectionBlog
+
+    /**
+     * 上传图片  获取form里的图片后  使用file write写到user_upload文件夹里
+     * @throws IOException
+     */
+    public void uploadImg(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+        FileItemFactory factory = new DiskFileItemFactory();
+        ServletFileUpload sf = new ServletFileUpload(factory);
+        try {
+            if (!ServletFileUpload.isMultipartContent(req)) {
+                throw new Exception("no multipartcontent");
+            }
+            List<FileItem> formData = sf.parseRequest(req);
+            for (FileItem fi : formData) {
+                if (fi.isFormField()) {
+                    System.out.println("field_name:" + fi.getFieldName() + ":" + fi.getString("UTF-8"));
+                    switch (fi.getFieldName()) {
+                        case "name":
+                            System.out.println("receive name");
+                            break;
+                        default:
+                            System.out.println("unknow data");
+                    }
+                } else {
+                    String image_name = fi.getName();
+                    if (image_name != "") {
+                        String image_dir_path = req.getServletContext().getRealPath("user_upload");
+                        File image_dir = new File(image_dir_path);
+                        if (!image_dir.exists()) {
+                            image_dir.mkdir();
+                        }
+                        String file_name = UUID.randomUUID().toString();
+                        String suffix = image_name.substring(fi.getName().lastIndexOf("."));
+                        fi.write(new File(image_dir_path, file_name + suffix));
+
+                        //更新用户头像地址
+                        User user = (User) req.getSession().getAttribute("user");
+                        user.setImageUrl(file_name + suffix);
+                        userService.updateUserInfo(user);
+
+                        resp.setContentType("text/json;charset=utf-8");
+                        resp.getWriter().write(file_name + suffix);
+                    } else {
+                        throw new Exception("no file receive");
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            resp.getWriter().write("false");
+        }
+    }
+
+    /**
+     * 获取指定用户
+     * @param req
+     * @param resp
+     * @throws IOException
+     */
+    public void getUserById(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        //获取用户ID
+        int id = Integer.parseInt(req.getParameter("id"));
+
+        //业务层处理
+        User user = userService.getUserById(id);
+
+        //将结果转为JSON返回
+        String json = JSON.toJSONString(user);
+        resp.setContentType("text/json;charset=utf-8");
+        resp.getWriter().write(json);
+    }
 
     /**
      * 登录 用获取到的账号密码信息查询、返回查询结果 结果不为null说明登录成功
@@ -52,18 +128,6 @@ public class UserServlet extends BaseServlet {
     }
 
     /**
-     * 退出登录，清除session的属性
-     */
-    public void logout(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        HttpSession session = req.getSession(false);
-        User user = (User) session.getAttribute("user");
-
-        //清除session的属性
-        session.removeAttribute("user");
-        resp.getWriter().write("退出成功");
-    }
-
-    /**
      * 注册方法：把封装的user对象发给业务层处理,给前端返回布尔值结果
      */
     public void registe(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -83,7 +147,7 @@ public class UserServlet extends BaseServlet {
     }
 
     /**
-     * 查询关注的人，把user传给业务层
+     * 查询关注的人，把user传给业务层 (本次项目删除此功能)
      * @param req
      * @param resp
      * @throws IOException
@@ -119,8 +183,8 @@ public class UserServlet extends BaseServlet {
         //获取请求参数 页数
         int currentPage = Integer.parseInt(req.getParameter("currentPage"));
         int size = Integer.parseInt(req.getParameter("size"));
-        String keyword = req.getParameter("keyword");
-        String category = req.getParameter("category");
+        String keyword = new String(req.getParameter("keyword").getBytes("iso-8859-1"), "utf-8");
+        String category = new String(req.getParameter("category").getBytes("iso-8859-1"), "utf-8");
         //封装为对象
         Conditions conditions = new Conditions();
         conditions.setCurrentPage(currentPage);
@@ -146,65 +210,50 @@ public class UserServlet extends BaseServlet {
         //获取当前用户信息
         BufferedReader reader = request.getReader();
         String params = reader.readLine();
-        User user = JSON.parseObject(params, User.class);
-        Blog blog = JSON.parseObject(params, Blog.class);
-        History history = new History(user.getId(),blog.getId());
+        History history = JSON.parseObject(params, History.class);
         userService.addUserHistory(history);
     }
-    /**
-     * 用户添加收藏
-     * @param request
-     * @param response
-     */
-    public void collectionBlog(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        //获取当前线路
-        String blogId = request.getParameter ("blogId");
-
-        //获取当前登录用户
-        User user = (User) request.getSession().getAttribute("user");
-        Integer userId;
-        if (user == null){
-            response.getWriter().write("请先登录！");
-            return;
-        }else{
-             userId = user.getId ();
-        }
-
-        //判断是否添加收藏
-        boolean blog = userService.collectionBlog(userId,blogId);
-        //将结果转为JSON返回
-        String json = JSON.toJSONString(blog);
-        response.setContentType("text/json;charset=utf-8");
-        response.getWriter().write(json);
-
-    }
 
     /**
-     * 用户取消收藏
+     * 用户收藏博客
      * @param request
      * @param response
+     * @throws IOException
      */
-    public void deleteCollection(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        //获取当前线路
-        String blogId = request.getParameter ("blogId");
+    public void collect(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //获取用户ID和博客ID
+        BufferedReader reader = request.getReader();
+        String params = reader.readLine();
+        //只是用来封装  Blog类的userId指的是作者
+        Blog getParams = JSON.parseObject(params, Blog.class);
+        Integer userId = getParams.getUserId();
+        Integer blogId = getParams.getId();
 
-        //获取当前登录用户
-        User user = (User) request.getSession().getAttribute("user");
-        Integer userId;
-        if (user == null){
-            response.getWriter().write("请先登录！");
-            return;
-        }else{
-            userId = user.getId ();
-        }
+        //业务层处理
+        boolean collectOK = userService.collect(userId, blogId);
 
-        //判断是否取消收藏
-        boolean blog = userService.deleteCollection(userId,blogId);
         //将结果转为JSON返回
-        String json = JSON.toJSONString(blog);
+        String json = JSON.toJSONString(collectOK);
         response.setContentType("text/json;charset=utf-8");
         response.getWriter().write(json);
     }
 
+    /**
+     * 获取用户收藏的博客的ID集合
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    public void getCollectBlogIds(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //获取用户ID
+        int userId = Integer.parseInt(request.getParameter("userId"));
 
+        //业务层查询
+        List<Integer> ids = userService.getCollectBlogIds(userId);
+
+        //将结果转为JSON返回
+        String json = JSON.toJSONString(ids);
+        response.setContentType("text/json;charset=utf-8");
+        response.getWriter().write(json);
+    }
 }

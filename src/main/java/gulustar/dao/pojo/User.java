@@ -1,4 +1,4 @@
-package gulustar.dao.pojo;
+package gulustar.pojo;
 
 import java.util.List;
 
@@ -17,7 +17,6 @@ public class User {
         this.isAdmin = 0;
         this.status = 1;
     }
-
 
     public Integer getId() {
         return id;
@@ -92,9 +91,9 @@ public class User {
     }
 
     /**
-     * 初始化用户信息
+     *  初始化用户信息
      */
-    public void init() {
+    public void init(){
         this.status = 1;
         this.isAdmin = 0;
     }

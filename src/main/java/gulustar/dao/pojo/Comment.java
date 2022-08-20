@@ -8,10 +8,19 @@ import java.sql.Date;
 public class Comment {
     Integer id;
     String content;
+    String imageUrl;    //评论者头像图片
     String username;    //谁评论的 数据库里是用户ID 查询时使用多表查询直接封装用户名
     Integer userId;     //前端新增评论的时候封装JSON用 用户ID
     Integer blogId;     //前端新增评论的时候封装JSON用 博客ID
     Date createTime;    //评论时间
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public Integer getBlogId() {
         return blogId;

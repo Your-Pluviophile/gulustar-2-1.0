@@ -5,10 +5,11 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
 	<!-- 引入饿了么ui样式 -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 	<!-- 引入icon页面图标 -->
-	<link rel="shortcut icon" href="favicon.ico"/>
+	<link rel="shortcut icon" href="./images/logo.jpg"/>
 	<!-- 引入字体图标 -->
 	<link rel="stylesheet" href="./lib/font/iconfont.css">
 	<!-- 后来引入的字体图标 -->
@@ -23,7 +24,7 @@
 	<link rel="stylesheet" href="./css/Responsive.css">
 	<!-- 引入轮播图 -->
 	<link rel="stylesheet" href="./lib/swiper/swiper-bundle.min.css" />
-	<title>GuluStar - 不断改善，成为最佳🎉</title>
+	<title>咕噜星</title>
 </head>
 
 <body>
@@ -44,12 +45,12 @@
 				<li class="item1">
 					<a href="./" @click="init()">
 <!--						<img src="./image/logo2.png" alt="" id="logo">-->
-						<img src="./images/02.png" alt="" id="logo">
+						<img src="images/whiteLogo.png" alt="" id="logo">
 					</a>
 				</li>
 
 				<li class="item1">
-					<a href="javascript:;">
+					<a href="./links.html">
 						<i class="iconfont icon-shouye"></i>小组介绍
 					</a>
 				</li>
@@ -103,23 +104,9 @@
 				</li>
 
 				<li class="item1" v-if="user.isAdmin == 1">
-					<a href="javascript:;">
-						<i class="iconfont icon-zhuti1"></i>管理系统
+					<a href="./add.html">
+						<i class="iconfont icon-zhuti1"></i>发布博客
 					</a>
-
-					<ul class="two" style="display: none;">
-						<li>
-							<a href="./links.html"><i class="iconfont icon-quanzi1"></i>人脉圈</a>
-						</li>
-
-						<li>
-							<a href="./circle.html"><i class="iconfont icon-pengyouquan1"></i>朋友圈</a>
-						</li>
-
-						<li>
-                            <a href="./bigData.html"><i class="iconfont icon-dashuju2"></i>大数据</a>
-                        </li>
-					</ul>
 				</li>
 
 				<!-- 功能栏 -->
@@ -154,7 +141,7 @@
 						<p>Constantly improve and become the best!</p>
 					</div>
 
-					<img src="http://139.196.43.147/gallery/t01d6f5fd3610da0a08.jpg" alt="">
+					<img src="images/astronaut.jpg" alt="">
 				</div>
 
 				<div class="swiper-slide">
@@ -163,7 +150,7 @@
 						<p>Only persistence can see the dawn!</p>
 					</div>
 
-					<img src="http://139.196.43.147/gallery/t012cde4a5058c156b7.jpg" alt="">
+					<img src="images/settingsun.jpg" alt="">
 				</div>
 
 				<div class="swiper-slide">
@@ -172,7 +159,7 @@
 						<p>Forever young, forever tearful!</p>
 					</div>
 
-					<img src="http://139.196.43.147/gallery/t01aaa82ef6d0f1ec87.jpg" alt="">
+					<img src="images/couple.jpg" alt="">
 				</div>
 			</div>
 			<div class="swiper-pagination"></div>
@@ -217,7 +204,7 @@
 						<div class="left" @click="openBlog(blog.id)">
 							<a href="javascript:;">
 <!--								<img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5e7d37251bc04bf48caafe62eae2991e~tplv-k3u1fbpfcp-zoom-crop-mark:1304:1304:1304:734.awebp?" alt="">-->
-								<img src="images/logo.jpg" alt="">
+								<img :src="'./user_upload/' + blog.cover" alt="">
 							</a>
 
 							<span class="tags_blue">{{blog.category}}</span>
@@ -241,9 +228,10 @@
 
 							<!-- 文章信息 -->
 							<div class="meta">
-								<!-- 作者头像 -->
+								<!-- 用户头像 -->
 								<a href="javascript:;">
-									<img src="./image/user1.png" alt="">
+									<img :src="blog.imageUrl != null?
+									 './user_upload/' + blog.imageUrl : './image/user1.png'" alt="">
 									<span>{{blog.author}}</span>
 								</a>
 
@@ -291,12 +279,18 @@
 						<!-- 背景图片 -->
 						<div class="author-bg">
 							<!-- 头像 -->
-							<div class="avatar" @click="uploadImg()">
-								<a href="javascript:;"><img src="./image/user1.png" alt=""></a>
-							</div>
+							<el-upload
+									class="avatar-uploader avatar"
+									action="/user/uploadImg"
+									:show-file-list="false"
+									:on-success="handleAvatarSuccess"
+									:before-upload="beforeAvatarUpload">
+								<img v-if="user.imageUrl" :src="'./user_upload/' + user.imageUrl">
+								<i v-else class="el-icon-plus avatar-uploader-icon"></i>
+							</el-upload>
 						</div>
 
-						<!-- 作者信息 -->
+						<!-- 用户信息 -->
 						<div class="text">
 							<h4>
 								<a href="javascript:;">{{user.username}}</a>
@@ -475,7 +469,7 @@
 				getCollectBlogIds(){
 					axios({
 						method: "get",
-						url: "http://localhost:8080/gulustar/user/getCollectBlogIds?userId=" + this.user.id,
+						url: "/user/getCollectBlogIds?userId=" + this.user.id,
 					}).then(resp => {
 						this.userCollections = resp.data;
 					});
@@ -497,7 +491,7 @@
 
 					axios({
 						method: "put",
-						url: "http://localhost:8080/gulustar/user/collect",
+						url: "/user/collect",
 						data: {id: blogId, userId: this.user.id}
 					});
 					this.getCollectBlogIds();
@@ -508,7 +502,7 @@
 				good(id){
 					axios({
 						method: "put",
-						url: "http://localhost:8080/gulustar/blog/addLikes",
+						url: "/blog/addLikes",
 						data: id
 					});
 				},
@@ -524,7 +518,7 @@
 				getCategories(){
 					axios({
 						method: "get",
-						url: "http://localhost:8080/gulustar/blog/getCategories"
+						url: "/blog/getCategories"
 					}).then(resp => {
 						if (resp.data != null){
 							this.categories = resp.data;
@@ -540,6 +534,7 @@
 					this.user.username = '咕噜星用户';
 					this.user.status = 1;
 					this.user.isAdmin = 0;
+					this.user.imageUrl = null;
 				},
 				/*
 					获取用户信息
@@ -547,10 +542,15 @@
 				getUserInfo(){
 					axios({
 						method: "get",
-						url: "http://localhost:8080/gulustar/user/getUserById?id=" + this.user.id
+						url: "/user/getUserById?id=" + this.user.id
 					}).then(resp => {
 						if (resp.data != null){
 							this.user = resp.data;
+							if (resp.data.imageUrl == null){
+								this.imageUrl = "./image/user1.png";
+							}else {
+								this.imageUrl = "./user_upload/" + resp.data.imageUrl;
+							}
 						}
 					});
 				},
@@ -633,7 +633,7 @@
 
 					axios({
 						method: "get",
-						url: "http://localhost:8080/gulustar/user/getUserHistory?userId=" + this.user.id +
+						url: "/user/getUserHistory?userId=" + this.user.id +
 								"&currentPage=" + this.conditions.currentPage + "&size=" + this.conditions.size +
 								"&keyword=" + this.conditions.keyword + "&category=" + this.conditions.category,
 					}).then(resp => {
@@ -664,7 +664,7 @@
 
 					axios({
 						method: "get",
-						url: "http://localhost:8080/gulustar/blog/queryCollectByUserId?userId=" + this.user.id +
+						url: "/blog/queryCollectByUserId?userId=" + this.user.id +
 								"&currentPage=" + this.conditions.currentPage + "&size=" + this.conditions.size +
 								"&keyword=" + this.conditions.keyword + "&category=" + this.conditions.category,
 					}).then(resp => {
@@ -680,7 +680,7 @@
 					sessionStorage.setItem('currBlogId', id);
 					this.addHistory(id);
 					// window.location.href='/gulustar/src/main/webapp/article.html';
-					window.location.href='/gulustar/article.html';
+					window.location.href='./article.html';
 				},
 				/*
 					添加浏览记录
@@ -688,7 +688,7 @@
 				addHistory(id){
 					axios({
 						method: "put",
-						url: "http://localhost:8080/gulustar/user/addUserHistory",
+						url: "/user/addUserHistory",
 						data: {userId: this.user.id, blogId: id}
 					});
 				},
@@ -769,7 +769,7 @@
 
 					axios({
 						method: "post",
-						url: "http://localhost:8080/gulustar/blog/getBlogsByPageAndCondition",
+						url: "/blog/getBlogsByPageAndCondition",
 						data: this.conditions
 					}).then(resp => {
 						this.blogs = resp.data.blogs;
@@ -782,7 +782,7 @@
 				getAllBlogs(){
 					axios({
 						method: "get",
-						url: "http://localhost:8080/gulustar/blog/getAllBlogs",
+						url: "/blog/getAllBlogs",
 					}).then(resp => {
 						this.blogs = resp.data;
 					});
@@ -794,7 +794,7 @@
 				login(){
 					axios({
 						method: "post",
-						url: "http://localhost:8080/gulustar/user/login",
+						url: "/user/login",
 						data: this.loginInfo
 					}).then(resp => {
 						if (resp.data != null){
@@ -821,6 +821,26 @@
 							});
 						}
 					});
+				},
+				handleAvatarSuccess(res, file) {
+					this.user.imageUrl = "./user_upload/" + res;
+				},
+				beforeAvatarUpload(file) {
+					if (this.user.id == 0){
+						this.$message.error('请先登录');
+						return;
+					}
+
+					const isJPG = file.type === 'image/jpeg';
+					const isLt2M = file.size / 1024 / 1024 < 2;
+
+					if (!isJPG) {
+						this.$message.error('上传头像图片只能是 JPG 格式!');
+					}
+					if (!isLt2M) {
+						this.$message.error('上传头像图片大小不能超过 2MB!');
+					}
+					return isJPG && isLt2M;
 				},
 				/*
 					注册方法：把表单的信息封装为JSON对象发给后端
@@ -851,7 +871,7 @@
 
 					axios({
 						method: "put",
-						url: "http://localhost:8080/gulustar/user/registe",
+						url: "/user/registe",
 						data: this.registeInfo
 					}).then(resp => {
 						if (resp.data == "OK"){
@@ -895,24 +915,24 @@
 						confirmPwd: ''
 					},
 					blogs: [							//展示在主页的所有博客对象
-						{								//包括id、标题、简介、点赞数、收藏数、发布日期、作者
-							id: 5,
-							title: 'testtitle',
-							description: 'testdes',
-							likes: 0,
-							collected: 0,
-							releaseDate: '2022-08-14',
-							author: 'aaa'
-						},
-						{
-							id: 1,
-							title: 'test1title',
-							description: 'test1des',
-							likes: 1,
-							collected: 1,
-							releaseDate: '2022-08-13',
-							author: 'bbb'
-						}
+						// {								//包括id、标题、简介、点赞数、收藏数、发布日期、作者
+						// 	id: 5,
+						// 	title: 'testtitle',
+						// 	description: 'testdes',
+						// 	likes: 0,
+						// 	collected: 0,
+						// 	releaseDate: '2022-08-14',
+						// 	author: 'aaa'
+						// },
+						// {
+						// 	id: 1,
+						// 	title: 'test1title',
+						// 	description: 'test1des',
+						// 	likes: 1,
+						// 	collected: 1,
+						// 	releaseDate: '2022-08-13',
+						// 	author: 'bbb'
+						// }
 					],
 					conditions: {						//查询条件： 关键词、分类、总页数、页数、条数
 						keyword: '',
@@ -921,7 +941,7 @@
 						currentPage: 1,
 						size: 7
 					},
-					categories: ['测试分类1', '测试分类2'],//分类标签
+					categories: [],						//分类标签
 					accTooLong: false,					//判断账号长度
 					pwdTooLong: false,					//密码长度
 					usernameTooLong: false,				//昵称长度
@@ -931,6 +951,7 @@
 					isPageOne: false,					//是第一页
 					isLastPage: false,					//是最后一页
 					userCollections: [],				//用户收藏的博客的ID集合
+					imageUrl: '',						//上传图片地址
 				}
 			}
 		})

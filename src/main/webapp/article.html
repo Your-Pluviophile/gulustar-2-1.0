@@ -8,7 +8,7 @@
 	<!-- 引入饿了么ui样式 -->
 	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 	<!-- 引入icon页面图标 -->
-	<link rel="shortcut icon" href="favicon.ico" />
+	<link rel="shortcut icon" href="./images/logo.jpg" />
 	<!-- 引入字体图标 -->
 	<link rel="stylesheet" href="./lib/font/iconfont.css">
 	<!-- 引入页面 CSS文件 -->
@@ -44,12 +44,12 @@
 				<li class="item1">
 					<a href="./" @click="goToHomePage()">
 						<!--						<img src="./image/logo2.png" alt="" id="logo">-->
-						<img src="./images/02.png" alt="" id="logo">
+						<img src="images/whiteLogo.png" alt="" id="logo">
 					</a>
 				</li>
 
 				<li class="item1">
-					<a href="./index.html">
+					<a href="./links.html">
 						<i class="iconfont icon-shouye"></i>小组介绍
 					</a>
 				</li>
@@ -60,66 +60,10 @@
 					</a>
 				</li>
 
-<!--				<li class="item1">-->
-<!--					<a href="./index.html">-->
-<!--						<i class="iconfont icon-yuandaima"></i>关注的人-->
-<!--					</a>-->
-
-<!--					&lt;!&ndash; 二级导航 &ndash;&gt;-->
-<!--					<ul class="two" style="display: none;">-->
-<!--						<li>-->
-<!--							<a href="javascript:;">HTML5</a>-->
-<!--						</li>-->
-
-<!--						<li>-->
-<!--							<a href="javascript:;">CSS3</a>-->
-<!--						</li>-->
-
-<!--						<li>-->
-<!--							<a href="javascript:;">JavaScript</a>-->
-<!--						</li>-->
-<!--					</ul>-->
-<!--				</li>-->
-
 				<li class="item1">
 					<a href="./" @click="setHistoryNow()">
 						<i class="iconfont icon-zuzhijiagou1"></i>阅览历史
 					</a>
-
-					<!-- 二级导航 -->
-<!--					<ul class="two" style="display: none;">-->
-<!--						<li>-->
-<!--							<a href="javascript:;">Vue</a>-->
-<!--						</li>-->
-
-<!--						<li>-->
-<!--							<a href="javascript:;">React</a>-->
-<!--						</li>-->
-
-<!--						<li>-->
-<!--							<a href="javascript:;">Angular</a>-->
-<!--						</li>-->
-<!--					</ul>-->
-				</li>
-
-				<li class="item1" v-if="user.isAdmin == 1">
-					<a href="javascript:;">
-						<i class="iconfont icon-zhuti1"></i>管理系统
-					</a>
-
-					<ul class="two" style="display: none;">
-						<li>
-							<a href="./links.html"><i class="iconfont icon-quanzi1"></i>人脉圈</a>
-						</li>
-
-						<li>
-							<a href="./circle.html"><i class="iconfont icon-pengyouquan1"></i>朋友圈</a>
-						</li>
-
-						<li>
-							<a href="./bigData.html"><i class="iconfont icon-dashuju2"></i>大数据</a>
-						</li>
-					</ul>
 				</li>
 
 				<!-- 功能栏 -->
@@ -141,97 +85,6 @@
 		</div>
 	</div>
 
-	<!-- 移动端的侧边导航栏 -->
-	<div class="mNav">
-		<!-- 头像 -->
-		<div class="user">
-			<img src="./image/user.png" alt="">
-			<span>Yuexing</span>
-			<p>不断改善成为最佳!</p>
-		</div>
-
-		<!-- 导航栏 -->
-		<ul>
-			<li class="item">
-				<a href="./index.html">
-					<i class="iconfont icon-shouye"></i>首页
-				</a>
-			</li>
-
-			<li class="item">
-				<a href="./category.html">
-					<i class="iconfont icon-bijiben1"></i>开发记录
-				</a>
-			</li>
-
-			<li class="item">
-				<a href="javascript:;" id="twoNav">
-					<i class="iconfont icon-yuandaima"></i>大前端
-				</a>
-
-				<!-- 二级导航 -->
-				<ul class="two">
-					<li>
-						<a href="javascript:;">HTML5</a>
-					</li>
-
-					<li>
-						<a href="javascript:;">CSS3</a>
-					</li>
-
-					<li>
-						<a href="javascript:;">JavaScript</a>
-					</li>
-				</ul>
-			</li>
-
-			<li class="item">
-				<a href="javascript:;" id="twoNav">
-					<i class="iconfont icon-zuzhijiagou1"></i>框架
-				</a>
-
-				<!-- 二级导航 -->
-				<ul class="two">
-					<li>
-						<a href="javascript:;">Vue</a>
-					</li>
-
-					<li>
-						<a href="javascript:;">React</a>
-					</li>
-
-					<li>
-						<a href="javascript:;">Angular</a>
-					</li>
-				</ul>
-			</li>
-
-			<li class="item">
-				<a href="javascript:;" id="twoNav">
-					<i class="iconfont icon-zhuti1"></i>扩展
-				</a>
-
-				<ul class="two">
-					<li>
-						<a href="./links.html">
-							<i class="iconfont icon-quanzi1"></i>人脉圈
-						</a>
-					</li>
-
-					<li>
-						<a href="./circle.html">
-							<i class="iconfont icon-pengyouquan1"></i>朋友圈
-						</a>
-					</li>
-
-					<li>
-						<a href="./bigData.html"><i class="iconfont icon-dashuju2"></i>大数据</a>
-					</li>
-				</ul>
-			</li>
-		</ul>
-	</div>
-
 	<!-- 遮罩层 -->
 	<div class="mask"></div>
 
@@ -244,54 +97,21 @@
 				<div class="article">
 
 					<!-- 文章内容 -->
-					<div class="article_Info">
-						<h1>大厂裁员下，程序员如何做“副业”？</h1><br><br>
-						<p>大家好，我是杨成功。</p><br>
-						<p>前几天有幸看了<i
-								class="s">尤雨溪</i>尤大的直播，他们谈到一个话题，是说目前前端人，或者是整个程序员群体如何做副业？近年来互联网行情下降，好多人都在思考要不要搞个副业来抵御风险。
-						</p><br>
-						<p>这不又来事了，这两天又爆了互联网大裁员。继阿里“向社会输送人才”之后，京东又搞了个“毕业礼”，整的小伙伴们人心惶惶。副业的关注度又一波升级。<br>
-						</p>
-						<p>那今天我们就来聊聊，程序员做副业这件事。</p><br>
-						<img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5e7d37251bc04bf48caafe62eae2991e~tplv-k3u1fbpfcp-zoom-crop-mark:1304:1304:1304:734.awebp?"
-							 alt="">
-						<h2>代码片段</h2>
-						<div class="pre">
-							<!-- 代码高亮 -->
-							<pre style="margin:0;">
-									<b><code contenteditable="false" class="language-javascript" >
- function unique(arr) {
-    if (!Array.isArray(arr)) {
-        console.log('type error!')
-        return
-    }
-    var array = [];
-    for (var i = 0; i < arr.length; i++) {
-        if (array .indexOf(arr[i]) === -1) {
-            array .push(arr[i])
-        }
-    }
-    return array;
- }
-									</code></b>
-    							</pre>
-							<!-- 调用代码高亮 -->
-							<script>
-								hljs.initHighlightingOnLoad();
-							</script>
-						</div>
+					<div class="article_Info"><h1>{{blog.title}}</h1></div>
+					<br>
+					<div class="article_Info" v-html="blog.content">
 					</div>
 
 					<!-- 点赞 / 收藏 -->
-					<div class="post_list">
-						<a href="javascript:;" class="post_list_Fabulous">
-							<i class="iconfont icon-dianzan"> 点赞</i>
-						</a>
+<!--					<div class="post_list">-->
+<!--						<a href="javascript:;" class="post_list_Fabulous">-->
+<!--							<i class="iconfont icon-dianzan"> 点赞</i>-->
+<!--						</a>-->
 
-						<a href="javascript:;" class="post_list_Collection">
-							<i class="iconfont icon-aixin"> 收藏</i>
-						</a>
-					</div>
+<!--						<a href="javascript:;" class="post_list_Collection">-->
+<!--							<i class="iconfont icon-aixin"> 收藏</i>-->
+<!--						</a>-->
+<!--					</div>-->
 
 					<!-- 评论 -->
 					<div class="comment">
@@ -309,7 +129,8 @@
 
 						<!-- 评论者信息 -->
 						<div class="comment_info">
-							<img src="./image/user.png" alt="">
+							<img :src="user.imageUrl != null?
+									 './user_upload/' + user.imageUrl : './image/user1.png'" alt="">
 							<input type="text" v-model="user.username" disabled>
 							<a href="javascript:;" @click="addComment()">提交评论</a>
 						</div>
@@ -330,7 +151,8 @@
 								<li v-for="item in comment">
 									<!-- 评论者信息 -->
 									<div class="comment_user">
-										<img src="https://q2.qlogo.cn/headimg_dl?dst_uin=3311118881&spec=100" alt="">
+										<img :src="item.imageUrl != null?
+									 './user_upload/' + item.imageUrl : './image/user1.png'" alt="">
 										<div>
 											<span>{{item.username}}</span>
 											<span>{{item.createTime}}</span>
@@ -397,9 +219,15 @@
 						<!-- 背景图片 -->
 						<div class="author-bg">
 							<!-- 头像 -->
-							<div class="avatar">
-								<img src="./image/user1.png" alt="">
-							</div>
+							<el-upload
+									class="avatar-uploader avatar"
+									action="/user/uploadImg"
+									:show-file-list="false"
+									:on-success="handleAvatarSuccess"
+									:before-upload="beforeAvatarUpload">
+								<img v-if="user.imageUrl" :src="'./user_upload/' + user.imageUrl">
+								<i v-else class="el-icon-plus avatar-uploader-icon"></i>
+							</el-upload>
 						</div>
 
 						<!-- 作者信息 -->
@@ -662,16 +490,41 @@
 						this.pwdTooLong = false;
 					}
 				},
+				handleAvatarSuccess(res, file) {
+					this.user.imageUrl = "./user_upload/" + res;
+				},
+				beforeAvatarUpload(file) {
+					if (this.user.id == 0){
+						this.$message.error('请先登录');
+						return;
+					}
+
+					const isJPG = file.type === 'image/jpeg';
+					const isLt2M = file.size / 1024 / 1024 < 2;
+
+					if (!isJPG) {
+						this.$message.error('上传头像图片只能是 JPG 格式!');
+					}
+					if (!isLt2M) {
+						this.$message.error('上传头像图片大小不能超过 2MB!');
+					}
+					return isJPG && isLt2M;
+				},
 				/*
 					获取用户信息
 				 */
 				getUserInfo(){
 					axios({
 						method: "get",
-						url: "http://localhost:8080/gulustar/user/getUserById?id=" + this.user.id
+						url: "/user/getUserById?id=" + this.user.id
 					}).then(resp => {
 						if (resp.data != null){
 							this.user = resp.data;
+							if (resp.data.imageUrl == null){
+								this.imageUrl = "./image/user1.png";
+							}else {
+								this.imageUrl = "./user_upload/" + resp.data.imageUrl;
+							}
 						}
 					});
 				},
@@ -693,7 +546,7 @@
 					this.newComment.userId = this.user.id;
 					axios({
 						method: "put",
-						url: "http://localhost:8080/gulustar/blog/addComment",
+						url: "/blog/addComment",
 						data: this.newComment
 					}).then(resp => {
 						if (resp.data == 'OK'){
@@ -717,7 +570,7 @@
 				getContentAndCommentList(){
 					axios({
 						method: "get",
-						url: "http://localhost:8080/gulustar/blog/getContendAndCommentList?blogId=" + this.blog.id,
+						url: "/blog/getContendAndCommentList?blogId=" + this.blog.id,
 					}).then(resp => {
 						this.blog.content = resp.data.content;
 						this.comment = resp.data.comment;
@@ -730,7 +583,7 @@
 				login(){
 					axios({
 						method: "post",
-						url: "http://localhost:8080/gulustar/user/login",
+						url: "/user/login",
 						data: this.loginInfo
 					}).then(resp => {
 						if (resp.data != null){
@@ -777,7 +630,7 @@
 
 					axios({
 						method: "put",
-						url: "http://localhost:8080/gulustar/user/registe",
+						url: "/user/registe",
 						data: this.registeInfo
 					}).then(resp => {
 						if (resp.data == "OK"){
@@ -813,7 +666,8 @@
 					}],
 					blog: {									//博客内容: id，内容
 						id: 1,
-						content: 'hello world'
+						title: 'aaaaaa',
+						content: '<p>啊啊啊啊啊</p>'
 					},
 					user: {									//当前用户
 						id: 0,
@@ -842,6 +696,7 @@
 					checkNewPwd: false,					//2次密码是否一样
 					loginDialogVisible: false,          //用来控制显示登录窗口
 					registeDialogVisible: false,        //控制显示注册窗口
+					imageUrl: '',						//上传图片地址
 				}
 			}
 		})

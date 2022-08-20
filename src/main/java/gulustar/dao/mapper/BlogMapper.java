@@ -125,7 +125,7 @@ public interface BlogMapper {
      * @return
      */
     @Insert("insert into blog values " +
-            "(null, #{userId}, #{category}, #{title}, #{description}, #{content}, #{likes}," +
+            "(null, #{userId}, #{cover}, #{category}, #{title}, #{description}, #{content}, #{likes}," +
             " #{collected}, #{status}, now(), now())")
     boolean addBlog(Blog blog);
 

@@ -1186,7 +1186,7 @@
     position: relative;
     width: 100%;
     height: 150px;
-    background: url(http://139.196.43.147/gallery/2022-07-19-22-35.jpg) no-repeat;
+    background: url(../images/universe.jpg) no-repeat;
     background-size: 100% 100%;
     transition: all 0.5s;
 }
@@ -1213,7 +1213,6 @@
     background-color: #fff;
     border-radius: 50%;
     text-align: center;
-    transition: all 0.5s;
 }
 
 /* 头像 */
@@ -1223,9 +1222,22 @@
     border-radius: 50%;
 }
 
-/* 鼠标经过作者头像就让他旋转 */
-.function .author-bg .avatar:hover {
-    transform: translateX(-50%) rotate(180deg);
+.avatar-uploader .el-upload {
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+}
+.avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 78px;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
 }
 
 /* 作者信息 */

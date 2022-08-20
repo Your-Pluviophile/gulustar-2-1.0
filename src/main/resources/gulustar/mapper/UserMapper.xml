@@ -6,6 +6,7 @@
 
     <resultMap id="userResultMap" type="gulustar.dao.pojo.User">
         <result column="is_admin" property="isAdmin"/>
+        <result column="image_url" property="imageUrl"/>
     </resultMap>
 
     <resultMap id="followResultMap" type="gulustar.pojo.Follow">
@@ -17,12 +18,13 @@
         <result column="user_id" property="userId"/>
         <result column="release_date" property="releaseDate"/>
         <result column="modify_date" property="modifyDate"/>
+        <result column="image_url" property="imageUrl"/>
     </resultMap>
 
     <select id="selectAllHistoryByAccount" resultMap="blogResultMap">
-        select b.*
-        from user_history uh, blog b
-        where uh.blog_id = b.id and uh.user_id = #{userId}
+        select b.*, u.username author, u.image_url
+        from user_history uh, blog b, user u
+        where uh.blog_id = b.id and uh.user_id = #{userId} and u.id = #{userId}
         <if test="conditions.keyword != null and conditions.keyword != ''">
             <bind name="bindKeyword" value="'%' + conditions.keyword + '%'"></bind>
             and (b.title like #{bindKeyword}

@@ -1,9 +1,6 @@
 package gulustar.mapper;
 
-import gulustar.pojo.Blog;
-import gulustar.pojo.Conditions;
-import gulustar.pojo.History;
-import gulustar.pojo.User;
+import gulustar.pojo.*;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -49,8 +46,8 @@ public interface UserMapper {
      * @param user
      * @return
      */
-    @Insert("insert into user values " +
-            "(null, #{username}, #{account}, #{password}, #{isAdmin}, #{status})")
+    @Insert("insert into `user` values " +
+            "(null, #{username}, null, #{account}, #{password}, #{isAdmin}, #{status})")
     boolean addUser(User user);
 
     /**
@@ -58,11 +55,11 @@ public interface UserMapper {
      * 将更改后的用户数据封装成user对象,再调用此方法
      * @param user
      */
-    @Update("UPDATE user SET " +
-            "username = #{username},password = #{password}," +
-            "is_admin = #{is_admin},status = #{status} " +
+    @Update("UPDATE `user` SET " +
+            "username = #{username}," +
+            "image_url = #{imageUrl} " +
             "where id = #{id}")
-    void updateById(User user);
+    boolean updateById(User user);
 
     /**
      * 根据当前用户id查询关注的人id(本次项目不实装此功能、未测试)
@@ -79,7 +76,7 @@ public interface UserMapper {
      * @param id
      * @return
      */
-    @Select("select * from user where id = #{id}")
+    @Select("select * from `user` where id = #{id}")
     @ResultMap("userResultMap")
     User selectById(@Param("id") Integer id);
 

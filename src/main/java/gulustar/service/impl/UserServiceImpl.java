@@ -164,8 +164,7 @@ public class UserServiceImpl implements UserService {
      * @param blogId
      * @return
      */
-    @Override
-    public boolean deleteCollection(Integer userId, String blogId){
+    boolean deleteCollection(Integer userId,Integer blogId){
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         boolean b = userMapper.deleteCollection(userId, blogId);
@@ -178,8 +177,7 @@ public class UserServiceImpl implements UserService {
      * @param blogId
      * @return
      */
-    @Override
-     public boolean collectionBlog(Integer userId, String blogId){
+    public boolean collect(Integer userId, Integer blogId){
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         BlogMapper blogMapper = sqlSession.getMapper(BlogMapper.class);
@@ -199,7 +197,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public List<Integer> selectCollectBlogIds(Integer userId) {
+    public List<Integer> getCollectBlogIds(Integer userId) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
 
@@ -207,6 +205,23 @@ public class UserServiceImpl implements UserService {
 
         sqlSession.close();
         return ids;
+    }
+
+    /**
+     * 更新用户信息
+     * @param user
+     * @return
+     */
+    @Override
+    public boolean updateUserInfo(User user) {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+
+        boolean update = userMapper.updateById(user);
+        sqlSession.commit();
+        sqlSession.close();
+
+        return update;
     }
 
 }
