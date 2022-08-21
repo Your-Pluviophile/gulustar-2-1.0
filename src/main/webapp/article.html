@@ -342,16 +342,16 @@
 			center
 			:close-on-click-modal="false"
 			custom-class="customLoginDialog">
-		<h1>LOGIN</h1>
+		<h1>登录</h1>
 		<input type="text" placeholder="帐号" v-model="loginInfo.account" @blur="checkAccLen()">
 		<span class="lenCheck" v-if="accTooLong">账号长度不能超过12</span>
 		<input type="password" placeholder="密码" v-model="loginInfo.password" @blur="checkPwdLen()">
 		<span class="lenCheck" v-if="pwdTooLong">密码长度不能超过20</span>
-		<button type="submit" @click="login()">Login</button>
-<!--		<div class="control">-->
-<!--				<span>没有帐号？<a href="javascript:;"-->
-<!--							  @click="loginDialogVisible=false, registeDialogVisible=true">Register</a></span>-->
-<!--		</div>-->
+		<button type="submit" @click="login()">登录</button>
+		<div class="control">
+				<span>没有帐号？<a href="javascript:;"
+							  @click="loginDialogVisible=false, registeDialogVisible=true">注册</a></span>
+		</div>
 	</el-dialog>
 
 	<!-- 注册窗口 -->
@@ -362,7 +362,7 @@
 			center
 			:close-on-click-modal="false"
 			custom-class="customLoginDialog">
-		<h1 class="register">REGISTER</h1>
+		<h1 class="register">注册</h1>
 		<input type="text" placeholder="昵称" v-model="registeInfo.username" @blur="checkNewNameLen()">
 		<span class="lenCheck" v-if="usernameTooLong">昵称长度不能超过10</span>
 		<input type="text" placeholder="帐号" v-model="registeInfo.account" @blur="checkNewAccLen()">
@@ -371,11 +371,11 @@
 		<span class="lenCheck" v-if="newPwdTooLong">密码长度不能超过20</span>
 		<input type="password" placeholder="确认密码" v-model="registeInfo.confirmPwd" @blur="checkTwiceInputPwd()">
 		<span class="lenCheck" v-if="checkNewPwd">两次输入的密码不一致</span>
-		<button type="submit" @click="registe()">Register</button>
-<!--		<div class="registerText">-->
-<!--			<span>已有帐号？<a href="javascript:;" class="registerA"-->
-<!--						  @click="loginDialogVisible=true, registeDialogVisible=false">Login</a></span>-->
-<!--		</div>-->
+		<button type="submit" @click="registe()">注册</button>
+		<div class="registerText">
+			<span>已有帐号？<a href="javascript:;" class="registerA"
+						  @click="loginDialogVisible=true, registeDialogVisible=false">登录</a></span>
+		</div>
 	</el-dialog>
 </div>
 

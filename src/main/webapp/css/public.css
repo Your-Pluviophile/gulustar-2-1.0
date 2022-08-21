@@ -1583,22 +1583,23 @@
 
 .customLoginDialog{
     border-radius: 10px;
-    background-image: linear-gradient(to right, #48c6ef 0%, #6f86d6 200%);
+    background-color: #373737;
     display: flex;
     align-items: center;
     flex-direction: column;
 }
+/*background-image: linear-gradient(to right, #48c6ef 0%, #6f86d6 200%);*/
 
 /* 登录框标题 */
 .customLoginDialog h1{
-    margin: 0 0 25px 155px;
+    margin: 0 0 25px 175px;
     /* 大写 */
     text-transform: uppercase;
     color: #fff;
     letter-spacing: 5px;
 }
 .customLoginDialog .register{
-    margin: 0 0 25px 125px;
+    margin: 0 0 25px 175px;
     /* 大写 */
     text-transform: uppercase;
     color: #fff;
@@ -1614,7 +1615,7 @@
     border: none;
     border-bottom: 2px solid rgba(255, 255, 255, 0.7);
     padding: 5px 0;
-    margin: 8px 85px;
+    margin: 8px 83px;
     text-indent: 5px;
     font-size: 14px;
     letter-spacing: 1px;
@@ -1632,7 +1633,7 @@
 .customLoginDialog button[type="submit"] {
     width: 60%;
     height: 32px;
-    margin: 30px 85px 10px;
+    margin: 30px 82px 10px;
     font-size: 14px;
     color: #fff;
     border: none;
@@ -1649,7 +1650,7 @@
 /* 去注册 小字 */
 .customLoginDialog .control {
     color: #fff;
-    margin: 5px 0 20px 140px;
+    margin: 10px 0 5px 150px;
     font-size: 13px;
 }
 .customLoginDialog .control a {
