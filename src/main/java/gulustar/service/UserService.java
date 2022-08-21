@@ -31,11 +31,6 @@ public interface UserService {
     boolean registe(User user);
 
     /**
-     * 用户关注的人(本次不实装、未测试)
-     */
-    List<User> selectAllFollowByAccount(User user);
-
-    /**
      * 记录用户浏览
      * @param history
      */

@@ -147,27 +147,6 @@ public class UserServlet extends BaseServlet {
     }
 
     /**
-     * 查询关注的人，把user传给业务层 (本次项目删除此功能)
-     * @param req
-     * @param resp
-     * @throws IOException
-     */
-    public void myFollows(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        //获取当前用户信息
-        BufferedReader reader = req.getReader();
-        String params = reader.readLine();
-        User user = JSON.parseObject(params, User.class);
-
-        //调用service层，查询关注的人
-        List<User> users = userService.selectAllFollowByAccount(user);
-
-        //将结果转为JSON返回
-        String json = JSON.toJSONString(users);
-        resp.setContentType("text/json;charset=utf-8");
-        resp.getWriter().write(json);
-    }
-
-    /**
      * 查询所有用户历史记录
      * @param req
      * @param resp

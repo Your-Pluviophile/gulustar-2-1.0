@@ -90,6 +90,13 @@ public interface UserMapper {
     boolean addUserHistory(History history);
 
     /**
+     * 更新用户浏览记录时间
+     * @return
+     */
+    @Update("update user_history set browse_time = now() where user_id = #{userId} and blog_id = #{blogId}")
+    boolean updateUserHistory(History history);
+
+    /**
      * 根据当前用户id所有历史记录
      * @param
      * @return
