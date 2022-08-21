@@ -41,7 +41,6 @@
             <!-- logo -->
             <li class="item1">
                 <a href="./" @click="init()">
-                    <!--						<img src="./image/logo2.png" alt="" id="logo">-->
                     <img src="images/whiteLogo.png" alt="" id="logo">
                 </a>
             </li>
@@ -138,7 +137,6 @@
                 <div class="article_Info">
                     <form enctype="multipart/form-data" action="/blog/upload" method="post" target="myIframe">
                     <iframe name="myIframe" style="display:none"></iframe>
-
                     <h2>标题</h2>
                         <input type="text" v-model="blog.title" name="title">
                     <br><br>
@@ -154,14 +152,7 @@
                     <br><br>
 
                     <h2>简介</h2>
-                    <textarea style="border: 3px skyblue solid;
-                                    font-size: 14px;
-                                    border-radius:5px;
-                                    color: lightseagreen;
-                                    background-color: transparent;
-                                    width: 355px;height: 50px;
-                                    padding: 10px;
-                                    resize: none;" v-model="blog.description" name="description">
+                    <textarea v-model="blog.description" name="description">
                     </textarea>
                     <br><br>
 
@@ -230,7 +221,7 @@
         methods: {
             submit(){
                 this.$message({
-                    message: '发布成功',
+                    message: '已发送请求',
                     type: 'success',
                     duration: 1000,
                     showClose: true

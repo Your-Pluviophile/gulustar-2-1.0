@@ -348,10 +348,10 @@
 		<input type="password" placeholder="密码" v-model="loginInfo.password" @blur="checkPwdLen()">
 		<span class="lenCheck" v-if="pwdTooLong">密码长度不能超过20</span>
 		<button type="submit" @click="login()">Login</button>
-		<div class="control">
-				<span>没有帐号？<a href="javascript:;"
-							  @click="loginDialogVisible=false, registeDialogVisible=true">Register</a></span>
-		</div>
+<!--		<div class="control">-->
+<!--				<span>没有帐号？<a href="javascript:;"-->
+<!--							  @click="loginDialogVisible=false, registeDialogVisible=true">Register</a></span>-->
+<!--		</div>-->
 	</el-dialog>
 
 	<!-- 注册窗口 -->
@@ -372,10 +372,10 @@
 		<input type="password" placeholder="确认密码" v-model="registeInfo.confirmPwd" @blur="checkTwiceInputPwd()">
 		<span class="lenCheck" v-if="checkNewPwd">两次输入的密码不一致</span>
 		<button type="submit" @click="registe()">Register</button>
-		<div class="registerText">
-			<span>已有帐号？<a href="javascript:;" class="registerA"
-						  @click="loginDialogVisible=true, registeDialogVisible=false">Login</a></span>
-		</div>
+<!--		<div class="registerText">-->
+<!--			<span>已有帐号？<a href="javascript:;" class="registerA"-->
+<!--						  @click="loginDialogVisible=true, registeDialogVisible=false">Login</a></span>-->
+<!--		</div>-->
 	</el-dialog>
 </div>
 
@@ -572,7 +572,7 @@
 						method: "get",
 						url: "/blog/getContendAndCommentList?blogId=" + this.blog.id,
 					}).then(resp => {
-						this.blog.content = resp.data.content;
+						this.blog = resp.data;
 						this.comment = resp.data.comment;
 					});
 				},
