@@ -1593,15 +1593,14 @@
 
 /* 登录框标题 */
 .customLoginDialog h1{
-    /*margin: 0 0 25px 175px;*/
-    text-align: center;
+    margin: 0 0 25px 42%;
     /* 大写 */
     text-transform: uppercase;
     color: #fff;
     letter-spacing: 5px;
 }
 .customLoginDialog .register{
-    /*margin: 0 0 25px 175px;*/
+    margin: 0 0 25px 42%;
     /* 大写 */
     text-transform: uppercase;
     color: #fff;
