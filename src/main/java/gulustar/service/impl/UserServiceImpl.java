@@ -82,49 +82,30 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 通过用户id 查询用户关注的人
-     */
-    @Override
-    public List<User> selectAllFollowByAccount(User user) {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-
-        //根据用户id，查询当前用户关注的人id
-        List<Integer> follow_ids = userMapper.selectAllFollowsByAccount(user.getId());
-        List<User> users = null;
-        for (int id : follow_ids) {
-            //根据用户id查询用户
-            users.add(userMapper.selectById(id));
-        }
-        sqlSession.close();
-        return users;
-    }
-
-
-    //-------------------------------------得进-------------------------------------
-    /**
      * 记录用户浏览历史
      * @param history
      */
     @Override
     public void addUserHistory(History history) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         BlogMapper blogmapper = sqlSession.getMapper(BlogMapper.class);
+
+        //查询是否存在相同浏览记录
         History sameHistory = blogmapper.selectSameHistory(history);
-        //如果有同样的历史记录则不写入
-        //则更新时间
+
+        //如果有同样的历史记录则更新时间
         if (sameHistory != null){
+            userMapper.updateUserHistory(history);
+            sqlSession.commit();
             sqlSession.close();
             return ;
         }else {
-            mapper.addUserHistory(history);
+            userMapper.addUserHistory(history);
             sqlSession.commit();
             sqlSession.close();
         }
     }
-    //-------------------------------------得进-------------------------------------
-
 
     /**
      * 根据用户id查询历史记录
@@ -167,8 +148,9 @@ public class UserServiceImpl implements UserService {
     boolean deleteCollection(Integer userId,Integer blogId){
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-        boolean b = userMapper.deleteCollection(userId, blogId);
-        return b;
+
+        boolean deleteCollection = userMapper.deleteCollection(userId, blogId);
+        return deleteCollection;
     }
 
     /**

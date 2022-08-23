@@ -81,6 +81,7 @@
                 and b.category = #{Conditions.category}
             </if>
         </where>
+        order by release_date desc
         limit #{start}, #{size};
     </select>
 
